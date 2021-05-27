@@ -1,16 +1,21 @@
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
+import numpy as np
 
 BASE_PATH = 'https://schedules.calpoly.edu/'
 HOME_PATH = 'depts_52-CENG_curr.htm'
 
 def main():
-	# List of tuple, first is name, second is phone number, third is courses teached (set)
-	personalInfo= []
-	# List of tuple, first is courseName, second is url
-	urls = set()
+	professorDF , urls = constructProfTable()
+	courseDF = constructCourseTable(urls)
 
+	print(professorDF)
+	print(courseDF)
+
+def constructProfTable():
+	profTable, urls = [], set()
+	
 	#obtain the content of the URL in HTML
 	page = requests.get(BASE_PATH + HOME_PATH)
 
@@ -43,30 +48,36 @@ def main():
 		# Get the phone number of professor
 		phoneNumber = tr.find('td', {'class': "personPhone"})
 
-		# Get the courses of professor
+		# Get the url of courses
 		raw_courses = tr.find_all('td', {'class': "courseName"})
-		courses = set()
+		# courses = set()
 		for course in raw_courses:
-			courseName = course.text
-			courses.add(courseName)
+		# 	courseName = course.text
+		# 	courses.add(courseName)
 			updateCourseUrl(urls, course)
 			
 		# If both name and phone number are not None, append to the personInfo list
 		if name and phoneNumber:
-			personalInfo.append((name.text, phoneNumber.text, courses))
+			if not phoneNumber.text:
+				profTable.append((name.text, np.nan))
+			else:
+				profTable.append((name.text, phoneNumber.text))
 
-	constructCourseTable(urls)
+	headers = ['Professor Name', 'Phone Number']
+	professorDF = pd.DataFrame(profTable, columns = headers)
+	return professorDF, urls
+	
 
 # Update the urls set to add new course url
 def updateCourseUrl(urls, course):
 	courseName = course.text
 	courseUrl = BASE_PATH + course.find('a')['href']
 	urls.add((courseName, courseUrl))
-
+	
 def constructCourseTable(urls):
 	courseTable = []
 	for url in urls:
-		courseName = url[0]
+		courseName = url[0].strip()
 		courseUrl = url[1]
 		page = requests.get(courseUrl)
 
@@ -79,37 +90,44 @@ def constructCourseTable(urls):
 		
 		classes = soup.find('tbody').find_all('tr')
 		
-		for c in classes:
+		for section in classes:
 			# if instruction doesn't exit, skip the class
-			instructor = c.find('td', {'class': 'personName'}).text
+			instructor = section.find('td', {'class': 'personName'}).text
 			if instructor == '\xa0':
 				continue
-			instructorName = c.find('td', {'class': 'personName'}).a['title']
+			instructorName = section.find('td', {'class': 'personName'}).a['title']
 			
-			courseSection = c.find('td', {'class': 'courseSection'}).text
-			courseNumber = c.find('td', {'class': 'courseClass'}).text
-			courseType = c.find('td', {'class': 'courseType'}).span.text
-			days = c.find('td', {'class': 'courseDays'}).text
-			if days == '\xa0':
-				days = ''
-			startTime = c.find('td', {'class': 'startTime'}).text
+			courseSection = section.find('td', {'class': 'courseSection'}).text
+			courseNumber = section.find('td', {'class': 'courseClass'}).text
+			if courseNumber == '****':
+				courseNumber = np.nan
+			courseType = section.find('td', {'class': 'courseType'}).span.text
+			courseDay = section.find('td', {'class': 'courseDays'}).text
+			if courseDay == '\xa0':
+				courseDay = np.nan
+			startTime = section.find('td', {'class': 'startTime'}).text
 			if startTime == '\xa0':
-				startTime = ''
-			endTime = c.find('td', {'class': 'endTime'}).text
+				startTime = np.nan
+			endTime = section.find('td', {'class': 'endTime'}).text
 			if endTime == '\xa0':
-				endTime = ''
-			locationCapacity = c.find('td', {'class': 'location'}).find_next('td').text
+				endTime = np.nan
+			locationCapacity = section.find('td', {'class': 'location'}).find_next('td').text
 			if locationCapacity == '\xa0':
-				locationCapacity = ''
-			enrollmentCapacity = c.find('td', {'class': 'location'}).find_all_next('td', limit=2)[1].text
-			enrolled = c.find('td', {'class': 'location'}).find_all_next('td', limit=3)[2].text
-			waitlist = c.find('td', {'class': 'location'}).find_all_next('td', limit=4)[3].text
-			drop = c.find('td', {'class': 'location'}).find_all_next('td', limit=5)[4].text
+				locationCapacity = np.nan
+			enrollmentCapacity = section.find('td', {'class': 'location'}).find_all_next('td', limit=2)[1].text
+			enrolled = section.find('td', {'class': 'location'}).find_all_next('td', limit=3)[2].text
+			waitlist = section.find('td', {'class': 'location'}).find_all_next('td', limit=4)[3].text
+			drop = section.find('td', {'class': 'location'}).find_all_next('td', limit=5)[4].text
 
-			courseTable.append((courseName, courseSection, courseNumber, courseType, days, startTime, endTime, \
-				locationCapacity, enrollmentCapacity, enrolled, waitlist, drop))
+			courseTable.append([courseName, courseSection, courseNumber, courseType, courseDay, startTime, endTime, \
+				locationCapacity, enrollmentCapacity, enrolled, waitlist, drop])
 			
-	print(courseTable)	
+	# Store the data into panda dataFrame
+	headers = ['Course Name', 'Section', 'Course Number', 'Course Type', 'Days', 'Start Time', 'End Time', 'Location Capacity' \
+		, 'Enrollment Capacity', 'Enrolled', 'Waitlisted', 'Dropped'] 
+	courseDF = pd.DataFrame(courseTable, columns = headers).sort_values(by=['Course Name', 'Section'])
+	
+	return courseDF
 
 if __name__ == "__main__":
 	main()
