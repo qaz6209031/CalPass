@@ -1,4 +1,5 @@
 import requests
+import sys
 import pandas as pd
 from bs4 import BeautifulSoup
 import numpy as np
@@ -17,12 +18,10 @@ def constructProfTable():
 	profTable, urls = [], set()
 	
 	#obtain the content of the URL in HTML
-	page = requests.get(BASE_PATH + HOME_PATH)
-
-	# Check if the page response correctly
-	if page.status_code != 200:
-		print('Error coneecting to page')
-		return
+	try:
+		page = requests.get(BASE_PATH + HOME_PATH)
+	except requests.exceptions.RequestException as err:
+		sys.exit('Connection error')
 
 	#Create a soup object that parses the HTML
 	soup = BeautifulSoup(page.text,"html.parser")
@@ -79,12 +78,11 @@ def constructCourseTable(urls):
 	for url in urls:
 		courseName = url[0].strip()
 		courseUrl = url[1]
-		page = requests.get(courseUrl)
 
-		# Check if the page response correctly
-		if page.status_code != 200:
-			print('Error coneecting to page')
-			return
+		try:
+			page = requests.get(courseUrl)
+		except requests.exceptions.RequestException as err:
+			sys.exit('Connection error')
 		
 		soup = BeautifulSoup(page.text,"html.parser")
 		
