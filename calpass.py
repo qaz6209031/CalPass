@@ -3,42 +3,47 @@ import sys
 import pandas as pd
 from bs4 import BeautifulSoup
 import numpy as np
+import re
 
 BASE_PATH = 'https://schedules.calpoly.edu/'
-HOME_PATH = 'depts_52-CENG_curr.htm'
+ENGINEERING_DEPT_URL = BASE_PATH + 'depts_52-CENG_curr.htm'
+SCIENCE_DEPT_URL = BASE_PATH + 'depts_76-CSM_curr.htm'
 
 def main():
-	professorDF , urls = constructProfTable()
-	courseDF = constructCourseTable(urls)
+	professorDF , courseUrls = constructProfTable()
+	courseDF = constructCourseTable(courseUrls)
 
 	print(professorDF)
 	print(courseDF)
 
 def constructProfTable():
-	profTable, urls = [], set()
+	profTable, courseUrls = [], set()
+	constructProfessor(ENGINEERING_DEPT_URL, 'Computer Science', courseUrls, profTable)
+	constructProfessor(SCIENCE_DEPT_URL, 'Statistics', courseUrls, profTable)
+
+	headers = ['Professor Name', 'Phone Number']
+	professorDF = pd.DataFrame(profTable, columns = headers)
+	return professorDF, courseUrls
 	
+def constructProfessor(webUrl, department, courseUrls, profTable):
 	#obtain the content of the URL in HTML
 	try:
-		page = requests.get(BASE_PATH + HOME_PATH)
+		page = requests.get(webUrl)
 	except requests.exceptions.RequestException as err:
 		sys.exit('Connection error')
-
+	
 	#Create a soup object that parses the HTML
 	soup = BeautifulSoup(page.text,"html.parser")
 
-	# Iterate all the <tr> tag of CS department, call parent three times to get back to tr tag 
-	for tr in soup.find(text='CENG-Computer Science & Software Engineering').parent.parent.parent.next_siblings:
+	# Iterate all the <tr> tag of department, call parent three times to get back to tr tag 
+	for tr in soup.find(text=re.compile(department)).parent.parent.parent.next_siblings:
 
 		# Skip the new line
 		if tr == '\n':
 			continue
-
-		# Break the loop if we found the next department which is computer engineering
-		try:
-			department = tr.th.span.text
-		except AttributeError:
-			department = ""
-		if department == 'CENG-Computer Engineering':
+		
+		# Stop when tr finds next department
+		if tr.find('span',  {'class': 'subjectDiv'}):
 			break
 		
 		# Get the name of the professor
@@ -49,33 +54,29 @@ def constructProfTable():
 
 		# Get the url of courses
 		raw_courses = tr.find_all('td', {'class': "courseName"})
-		# courses = set()
 		for course in raw_courses:
-		# 	courseName = course.text
-		# 	courses.add(courseName)
-			updateCourseUrl(urls, course)
+			updateCourseUrl(courseUrls, course)
 			
 		# If both name and phone number are not None, append to the personInfo list
 		if name and phoneNumber:
+			# Some professor doesn't have phone number
 			if not phoneNumber.text:
 				profTable.append((name.text, np.nan))
 			else:
 				profTable.append((name.text, phoneNumber.text))
 
-	headers = ['Professor Name', 'Phone Number']
-	professorDF = pd.DataFrame(profTable, columns = headers)
-	return professorDF, urls
-	
-
-# Update the urls set to add new course url
-def updateCourseUrl(urls, course):
+# Update the courseUrls set to add new course url
+def updateCourseUrl(courseUrls, course):
 	courseName = course.text
+	# If the course doesn't exist
+	if course.find('a') is None:
+		return
 	courseUrl = BASE_PATH + course.find('a')['href']
-	urls.add((courseName, courseUrl))
+	courseUrls.add((courseName, courseUrl))
 	
-def constructCourseTable(urls):
+def constructCourseTable(courseUrls):
 	courseTable = []
-	for url in urls:
+	for url in courseUrls:
 		courseName = url[0].strip()
 		courseUrl = url[1]
 
