@@ -21,7 +21,7 @@ def constructProfTable():
 	constructProfessor(ENGINEERING_DEPT_URL, 'Computer Science', courseUrls, profTable)
 	constructProfessor(SCIENCE_DEPT_URL, 'Statistics', courseUrls, profTable)
 
-	headers = ['Professor Name', 'Phone Number']
+	headers = ['Professor Name', 'Phone Number', 'Department']
 	professorDF = pd.DataFrame(profTable, columns = headers)
 	return professorDF, courseUrls
 	
@@ -56,14 +56,13 @@ def constructProfessor(webUrl, department, courseUrls, profTable):
 		raw_courses = tr.find_all('td', {'class': "courseName"})
 		for course in raw_courses:
 			updateCourseUrl(courseUrls, course)
-			
+		
 		# If both name and phone number are not None, append to the personInfo list
 		if name and phoneNumber:
+			name = name.text
 			# Some professor doesn't have phone number
-			if not phoneNumber.text:
-				profTable.append((name.text, np.nan))
-			else:
-				profTable.append((name.text, phoneNumber.text))
+			phoneNumber = phoneNumber.text if phoneNumber.text else np.nan
+			profTable.append((name, phoneNumber, department))
 
 # Update the courseUrls set to add new course url
 def updateCourseUrl(courseUrls, course):
