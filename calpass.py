@@ -118,10 +118,10 @@ def constructCourseTable(courseUrls):
 			drop = section.find('td', {'class': 'location'}).find_all_next('td', limit=5)[4].text
 
 			courseTable.append([courseName, courseSection, courseNumber, courseType, courseDay, startTime, endTime, \
-				locationCapacity, enrollmentCapacity, enrolled, waitlist, drop])
+				instructor, locationCapacity, enrollmentCapacity, enrolled, waitlist, drop])
 			
 	# Store the data into panda dataFrame
-	headers = ['Course Name', 'Section', 'Course Number', 'Course Type', 'Days', 'Start Time', 'End Time', 'Location Capacity' \
+	headers = ['Course Name', 'Section', 'Course Number', 'Course Type', 'Days', 'Start Time', 'End Time', 'Professor', 'Location Capacity' \
 		, 'Enrollment Capacity', 'Enrolled', 'Waitlisted', 'Dropped'] 
 	courseDF = pd.DataFrame(courseTable, columns = headers).sort_values(by=['Course Name', 'Section'])
 	
