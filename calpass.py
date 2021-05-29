@@ -76,7 +76,7 @@ def updateCourseUrl(courseUrls, course):
 def constructCourseTable(courseUrls):
 	courseTable = []
 	for url in courseUrls:
-		courseName = url[0].strip()
+		course = url[0].strip()
 		courseUrl = url[1]
 
 		try:
@@ -86,6 +86,7 @@ def constructCourseTable(courseUrls):
 		
 		soup = BeautifulSoup(page.text,"html.parser")
 		
+		courseName = soup.h1.text
 		classes = soup.find('tbody').find_all('tr')
 		
 		for section in classes:
@@ -117,13 +118,13 @@ def constructCourseTable(courseUrls):
 			waitlist = section.find('td', {'class': 'location'}).find_all_next('td', limit=4)[3].text
 			drop = section.find('td', {'class': 'location'}).find_all_next('td', limit=5)[4].text
 
-			courseTable.append([courseName, courseSection, courseNumber, courseType, courseDay, startTime, endTime, \
+			courseTable.append([course, courseName, courseSection, courseNumber, courseType, courseDay, startTime, endTime, \
 				instructor, locationCapacity, enrollmentCapacity, enrolled, waitlist, drop])
 			
 	# Store the data into panda dataFrame
-	headers = ['Course Name', 'Section', 'Course Number', 'Course Type', 'Days', 'Start Time', 'End Time', 'Professor', 'Location Capacity' \
+	headers = ['Course', 'Name', 'Section', 'Course Number', 'Course Type', 'Days', 'Start Time', 'End Time', 'Professor', 'Location Capacity' \
 		, 'Enrollment Capacity', 'Enrolled', 'Waitlisted', 'Dropped'] 
-	courseDF = pd.DataFrame(courseTable, columns = headers).sort_values(by=['Course Name', 'Section'])
+	courseDF = pd.DataFrame(courseTable, columns = headers).sort_values(by=['Course', 'Section'])
 	
 	return courseDF
 
