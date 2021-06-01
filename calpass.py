@@ -12,16 +12,13 @@ SCIENCE_DEPT_URL = BASE_PATH + 'depts_76-CSM_curr.htm'
 def main():
 	professorDF , courseUrls = constructProfTable()
 	courseDF = constructCourseTable(courseUrls)
-
-	print(professorDF)
-	print(courseDF)
-
+	
 def constructProfTable():
 	profTable, courseUrls = [], set()
 	constructProfessor(ENGINEERING_DEPT_URL, 'Computer Science', courseUrls, profTable)
 	constructProfessor(SCIENCE_DEPT_URL, 'Statistics', courseUrls, profTable)
 
-	headers = ['Professor Name', 'Phone Number', 'Email', 'Department']
+	headers = ['name', 'number', 'email', 'department']
 	professorDF = pd.DataFrame(profTable, columns = headers)
 	return professorDF, courseUrls
 	
@@ -127,6 +124,26 @@ def constructCourseTable(courseUrls):
 	courseDF = pd.DataFrame(courseTable, columns = headers).sort_values(by=['Course', 'Section'])
 	
 	return courseDF
+
+"""Get the answer of professor related questions
+@type data: pandas DataFrame
+@param data: DataFrame contains all professor's information
+@type name: str
+@param name: professor's name
+@type hint: str
+@param hint: information about professor could be 'phone number', 'email', 'department'
+@rtype: str
+@returns: response based on the question
+"""
+def getProfessorInfo(data, name, hint):
+	# Retrieve the data from professor table
+	filter = (data['name'] == name)
+	table = data.loc[filter]
+	hint = hint.lower()
+	result = table[hint].iloc[0]
+	
+	response = 'Professor ' + name + "'s " + hint + ' is ' + result
+	return response
 
 if __name__ == "__main__":
 	main()
