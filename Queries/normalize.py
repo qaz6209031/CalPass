@@ -9,6 +9,7 @@ OUTPUT_FILENAME = 'normalized_final.txt'
 def main():
    var_pattern = r'\[([^\]]+)\]'
    var_set = set()
+   line_set = set()
 
    # idea: use dictionary to normalize variable names?
    # var_dict = {
@@ -25,13 +26,15 @@ def main():
          repl = normalize_var(match)
          var_set.add(repl)
          line = line.replace(match, repl, 1)
-         
-      line = line.split('|')
-      question = line[1].strip()
-      answer = line[2].strip()
+      
+      if line not in line_set:    
+         line_set.add(line)
+         line = line.split('|')
+         question = line[1].strip()
+         answer = line[2].strip()
 
-      out_file.write(question + ' | ')
-      out_file.write(answer + '\n')
+         out_file.write(question + ' | ')
+         out_file.write(answer + '\n')
          
    # test print to see how many variables there are
    #print(len(var_set))

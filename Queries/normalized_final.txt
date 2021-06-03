@@ -1,12 +1,9 @@
 When is [professor] teaching [class-number]? | List of [day]
-When is [professor] teaching [class-number]? | List of [day]
 What times is the course [class-number] being offered on [day]? | [start-time] for [class-number]
 What is [professor] [phonen]? | [phonen]
 Where is [class-number] being taught? | List of [location]
 What day(s) of the week is [professor] not teaching on? | List of [day]
-What day(s) of the week is [professor] not teaching on? | List of [day]
 In what building is [class-number] being offered? | [location]
-When is [professor] done teaching on [day]? | [end-time]
 When is [professor] done teaching on [day]? | [end-time]
 Tell me [professor] office location? | [location]
 Do you know [professor] office location? | [location]
@@ -15,7 +12,6 @@ Can you tell me the location of [professor]’s office? | [location]
 What is [professor] earliest lecture? | [start-time]
 Do you know [professor] first lecture? | [start-time]
 What is [professor] latest lecture? | [end-time]
-Do you know [professor] last lecture on [day]? | [end-time]
 Do you know [professor] last lecture on [day]? | [end-time]
 How many sections of [class-number] are being taught this quarter? | Number of Classes
 How many sections of [class-number] are being taught this quarter by [professor]? | Number of Classes
@@ -28,8 +24,6 @@ What [class-number] has the most amount of hours per week in the CSSE department
 What is the title of [professor] in the CSSE department? | [title]
 What is the title of [professor] in the Statistics department? | [title]
 How many upper division classes is [professor] teaching? | Number of classes
-How many upper division classes is [professor] teaching? | Number of classes
-How many lower division classes is [professor] teaching? | Number of classes
 How many lower division classes is [professor] teaching? | Number of classes
 What is the number of professors teaching [class-number] ? | Number of professors
 What is the number of professors teaching in the CSSE department? | Number of professors
@@ -160,7 +154,6 @@ Who is [professor]? | [professor]
 What is the capacity for [course][course]? | The capacity is [capacity] students.
 What is the capacity for [course]? | The max capacity for course [Section] is [Capacity[ students
 What college is [professor] affiliated with? | [college]
-What college is [professor] affiliated with? | [college]
 What college is professor [professor] affiliated with? | [college]
 What college is Dr. [professor] affiliated with? | [college]
 What day is [course] offered on? | [course] [course] is [day]
@@ -236,7 +229,6 @@ When are [professor]’s office hours today? | [professor] holds office hours at
 When are [professor]’s office hours? | [professor] holds office hours at [dayandtime]
 What classes does [professor] teach? | [professor] teaches these classes: [course]
 What courses does [professor] teach? | [professor] teaches these classes: [course]
-What classes does [professor] teach? | [professor] teaches these classes: [course]
 Which classes are taught by [professor]? | [professor] teaches these classes: [course]
 What course does [professor] teach? | [professor] teaches these classes: [course]
 What does [professor] teach? | [professor] teaches these classes: [course]
@@ -262,7 +254,6 @@ What is the course number of [coursename]? | [course]: [coursename]
 What class is [coursename]? | [course]: [coursename]
 What is the course code of [coursename]? | [course]: [coursename]
 How many sections of [course] are there? | [numberofsections]
-When does [course] start today? | [course] is offered at [timerange]
 When does [course] start today? | [course] is offered at [timerange]
 How many sections of [course]? | There are [numberofsections] sections of [course].
 What is [course] called? | [course] is known as [coursename].
@@ -538,10 +529,7 @@ Where is [professor]’s office? | [professor]’s office is in [location]
 When are [professor]’s office hours? | [professor]’s office hours are [time slot]
 Does [professor] teach [course code] in [term]? | [yes/no]
 What is [professor]’s full name? | [professor]’s full name is [professor]
-What is [professor]’s job title? | [professor]’s job title is [job title]
-What is [professor]’s phone number? | [professor]’s phone number is [phone num]
 Where is [professor]’s office? | [professor]’s office is in room [location]
-When are [professor]’s office hours? | [professor]’s office hours are [time slot]
 Who is the department chair of [course]? | [professor] is the chair of the [course] department
 How many sections of [course code] are being offered in [school term]? | There are [integer] sections available of [course code] in [school term]
 Is [course code] being offered in [school term]? | [yes/no]
@@ -611,7 +599,6 @@ When does [course code] end? | [days and times]
 Is [course code] lecture or lab? | [course code] is a [course type] section.
 Is [course code] a lecture? | [yes/no]
 Is [course code] a lab? | [yes/no]
-Does [course code] have a lab section? | [yes/no]
 What is the lab section for [course code]? | [course code]
 What is the lab for [course code]? | [course code]
 What is the activity section for [course code]? | [course code]
@@ -822,7 +809,6 @@ Do you offer [course] this quarter? | Yes or no
 Where do I look for the Statistic class schedule this quarter? | https://schedules.calpoly.edu/depts_76-CSM_curr.htm
 Where do I look for the CSSE class schedule this quarter? | https://schedules.calpoly.edu/depts_52-CENG_curr.htm
 Does the Computer Science department offer classes on the weekend? | No
-Is [professor] teaching [course] this quarter? | Yes or No
 Is [professor] teaching [course] this quarter? | Yes or No
 How do I contact [professor]? | Call [stats-faculty-phonenumber] or visit [location]
 Is [professor]’s office [location]? | Yes or No
