@@ -28,7 +28,7 @@ How many lower division classes is [professor] teaching? | Number of classes
 What is the number of professors teaching [class-number] ? | Number of professors
 What is the number of professors teaching in the CSSE department? | Number of professors
 What is the number of professors teaching in the Statistics department? | Number of professors
-Does the [location] have a class in session? | [yes
+Does the [location] have a class in session? | [yes]
 What time is [professor] teaching [class-number]? | [start-time]
 Tell me when [professor] is teaching [class-number] | List of [day]
 When is the course [class-number] being offered on [day]? | [start-time]
