@@ -1,75 +1,75 @@
-What is [professor] [phonen]? | [phonen]
-When is [professor] teaching [class-number]? | List of [day]
-What day(s) of the week is [professor] not teaching on? | List of [day]
-Tell me [professor] office location? | [location]
-Do you know [professor] office location? | [location]
-Can you tell me the location of [professor]’s office? | [location]
-What is [professor] earliest lecture? | [start-time]
-Do you know [professor] first lecture? | [start-time]
-What is [professor] latest lecture? | [end-time]
-Do you know [professor] last lecture on [day]? | [end-time]
-What is the title of [professor] in the CSSE department? | [title]
-What is the title of [professor] in the Statistics department? | [title]
-What time is [professor] teaching [class-number]? | [start-time]
-Tell me when [professor] is teaching [class-number] | List of [day]
-What is [professor]'s email address? | You can reach [professor] at [professor]@calpoly.edu.
-Which classes will [professor] be teaching? | [professor] will be teaching [class-sect-list]
-Which professor teaches the most classes? | [professor] teaches the most classes.
-Which professor teaches the most sections of [course]? | [professor] teaches the most sections of [course].
-Is [professor] teaching [course] in [term]? | Yes or No
-Is [professor] teaching in the [term]? | Yes or No
-Is [professor] teaching this [term]? | Yes or No
-Where is [professor]’s office? | [location]
-Where is [professor]’s office located? | [location]
-Where are [professor]’s office hours? | [location]
-Where can I find [professor] on campus for office hours? | [location]
-Where is [class-number] being taught? | List of [location]
-In what building is [class-number] being offered? | [location]
-How many sections of [class-number] are being taught this quarter? | Number of Classes
-How many sections of [class-number] are being taught this quarter by [professor]? | Number of Classes
-How many sections of [class-number] are being taught this quarter on [day]? | Number of Classes
-How many sections of [class-number] are being taught this quarter in [location]? | Number of Classes
-Is [course] being offered? | [yesno]
-Will [course] be offered? | [yesno]
-Who is teaching [course]? | [faculty-list] will be teaching [course]
-Who will be teaching [course]? | [faculty-list] will be teaching [course]
-What [course] classes are being offered? | [class-list]
-How many students are enrolled in [course code]? | [enroll count] students are enrolled in [course code]
-How many students are waitlisted for [course code]? | [waitlist total] students are waitlisted for [course code]
-How many distinct students are waitlisted for [course code]? | [waitlist distinct] students are distinctly waitlisted for [course code]
-How many waitlisted students are unaccommodated for [course code]? | [waitlist unaccom] waitlisted students are unaccomodated for [course code]
-How many students have dropped [course code]? | [drop count] students have dropped [course code]
-How many students have withdrawn from [course code]? | [withdraw count] students have withdrawn from [course code]
-Who is the instructor for [course]? | [professor] teaches [course]
-Who is the professor for [course]? | [professor] teaches [course]
-Who is the teacher for [course]? | [professor] teaches [course]
-Who is teaching [course]? | [professor] teaches [course]
-Who teaches [course]? | [professor] teaches [course]
-Is [course] offered in [term]? | Yes or No
-Can I take [course] in [term]? | Yes or No
-Is [course] available in [term]? | Yes or No
-Does the [location] have a class in session? | [yes]
-Is [location] [professor]’s office? | Yes or No
-Is [location] [professor]’s office hours? | Yes or No
-What is the capacity for [location]? | [lcap]
-What is the size of [location]? | [lcap]
-Who is using [location] in [term]? | [professor]
-Is [location] used in [term]? | Yes or No
-Which classes in [location] start before [time] on [day slot]? | [list_of(course code)]
-Which classes are in [location]? | [list_of(course code)]
-Which classes are located in [location]? | [list_of(course code)]
-Which classes are in [location] at [time] on [day slot]? | [list_of(course code)]
-Which classes are in [location] at [time]? | [list_of(course code)]
-Who has office hours in [location]? | [list_of(prof name)].
-Who has office hours in [location] at [time]? | [list_of(prof name)].
-Who has office hours in [location] on [day slot] at [time]? | [list_of(prof name)].
-What classes are taught in [location] | List of [class-number]’
-Tell me the classes that are taught in [location] | List of [class-number]’
-Can you give me the classes that are taught in [location] | List of [class-number]’
-Which classes are taught in [location] | List of [class-number]’
-How many classes are taught in [location] | Number of classes
-Is [location] Available after [time]? | Yes
-Is [location] Available before [time]? | No
-Who is using [location] [time]? | [professor] is using [location] [time]
-What's the capacity of [location]? | The capacity of [location] is 28
-What's the enrollment capacity of [location]? | The enrollment capacity of [location] is 40
+What is [professor] [phonen]? | [phonen] | 0
+When is [professor] teaching [course]? | List of [day] | 0
+What day(s) of the week is [professor] not teaching on? | List of [day] | 0
+Tell me [professor] office location? | [location] | 0
+Do you know [professor] office location? | [location] | 0
+Can you tell me the location of [professor]’s office? | [location] | 0
+What is [professor] earliest lecture? | [start-time] | 0
+Do you know [professor] first lecture? | [start-time] | 0
+What is [professor] latest lecture? | [end-time] | 0
+Do you know [professor] last lecture on [day]? | [end-time] | 0
+What is the title of [professor] in the CSSE department? | [title] | 0
+What is the title of [professor] in the Statistics department? | [title] | 0
+What time is [professor] teaching [course]? | [start-time] | 0
+Tell me when [professor] is teaching [course] | List of [day] | 0
+What is [professor]'s email address? | You can reach [professor] at [professor]@calpoly.edu. | 0
+Which classes will [professor] be teaching? | [professor] will be teaching [class-sect-list] | 0
+Which professor teaches the most classes? | [professor] teaches the most classes. | 0
+Which professor teaches the most sections of [course]? | [professor] teaches the most sections of [course]. | 0
+Is [professor] teaching [course] in [term]? | Yes or No | 0
+Is [professor] teaching in the [term]? | Yes or No | 0
+Is [professor] teaching this [term]? | Yes or No | 0
+Where is [professor]’s office? | [location] | 0
+Where is [professor]’s office located? | [location] | 0
+Where are [professor]’s office hours? | [location] | 0
+Where can I find [professor] on campus for office hours? | [location] | 0
+Where is [course] being taught? | List of [location] | 1
+In what building is [course] being offered? | [location] | 1
+How many sections of [course] are being taught this quarter? | Number of Classes | 1
+How many sections of [course] are being taught this quarter by [professor]? | Number of Classes | 1
+How many sections of [course] are being taught this quarter on [day]? | Number of Classes | 1
+How many sections of [course] are being taught this quarter in [location]? | Number of Classes | 1
+Is [course] being offered? | [yesno] | 1
+Will [course] be offered? | [yesno] | 1
+Who is teaching [course]? | [faculty-list] will be teaching [course] | 1
+Who will be teaching [course]? | [faculty-list] will be teaching [course] | 1
+What [course] classes are being offered? | [class-list] | 1
+How many students are enrolled in [course code]? | [enroll count] students are enrolled in [course code] | 1
+How many students are waitlisted for [course code]? | [waitlist total] students are waitlisted for [course code] | 1
+How many distinct students are waitlisted for [course code]? | [waitlist distinct] students are distinctly waitlisted for [course code] | 1
+How many waitlisted students are unaccommodated for [course code]? | [waitlist unaccom] waitlisted students are unaccomodated for [course code] | 1
+How many students have dropped [course code]? | [drop count] students have dropped [course code] | 1
+How many students have withdrawn from [course code]? | [withdraw count] students have withdrawn from [course code] | 1
+Who is the instructor for [course]? | [professor] teaches [course] | 1
+Who is the professor for [course]? | [professor] teaches [course] | 1
+Who is the teacher for [course]? | [professor] teaches [course] | 1
+Who is teaching [course]? | [professor] teaches [course] | 1
+Who teaches [course]? | [professor] teaches [course] | 1
+Is [course] offered in [term]? | Yes or No | 1
+Can I take [course] in [term]? | Yes or No | 1
+Is [course] available in [term]? | Yes or No | 1 
+Does the [location] have a class in session? | [yes] | 2
+Is [location] [professor]’s office? | Yes or No | 2
+Is [location] [professor]’s office hours? | Yes or No | 2
+What is the capacity for [location]? | [lcap] | 2
+What is the size of [location]? | [lcap] | 2
+Who is using [location] in [term]? | [professor] | 2
+Is [location] used in [term]? | Yes or No | 2
+Which classes in [location] start before [time] on [day slot]? | [list_of(course code)] | 2
+Which classes are in [location]? | [list_of(course code)] | 2
+Which classes are located in [location]? | [list_of(course code)] | 2
+Which classes are in [location] at [time] on [day slot]? | [list_of(course code)] | 2
+Which classes are in [location] at [time]? | [list_of(course code)] | 2
+Who has office hours in [location]? | [list_of(prof name)]. | 2
+Who has office hours in [location] at [time]? | [list_of(prof name)]. | 2
+Who has office hours in [location] on [day slot] at [time]? | [list_of(prof name)]. | 2
+What classes are taught in [location] | List of [course]’ | 2
+Tell me the classes that are taught in [location] | List of [course]’ | 2
+Can you give me the classes that are taught in [location] | List of [course]’ | 2
+Which classes are taught in [location] | List of [course]’ | 2
+How many classes are taught in [location] | Number of classes | 2
+Is [location] Available after [time]? | Yes | 2
+Is [location] Available before [time]? | No | 2
+Who is using [location] [time]? | [professor] is using [location] [time] | 2
+What's the capacity of [location]? | The capacity of [location] is 28 | 2
+What's the enrollment capacity of [location]? | The enrollment capacity of [location] is 40 | 2
