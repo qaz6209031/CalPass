@@ -8,19 +8,26 @@ ALL_PROF_NAMES = PROFESSOR_TABLE.name.tolist()
 PHONE_KEYS = ['phone', 'contact', 'call', 'number']
 OFFICE_LOCATION_KEYS = ['location', 'where']
 DEPARTMENT_KEYS = ['department']
-EMAILS_KEYS = ['email']
+EMAIL_KEYS = ['email']
 
 
 def main():
 	pass
 
-# Once the query get classified as professor, call this function and return proper response
+'''
+Once the query get classified as professor, call this function and return proper response
+Answered 30% of all professor related quesiton now
+Goal: 80%
+'''
 def getProfessorInfo(query):
 	# normalize query
 	query = normalizeQuery(query)
-	print('Query after normalization: ', query)
+	print('\nQuery after normalization: ', query)
 	name = extractEntity(query, ALL_PROF_NAMES)
 	print('Professor name: ', name)
+
+	if not name:
+		return None
 
 	# Pull out data based on name
 	filter = (PROFESSOR_TABLE['name'] == name)
@@ -34,16 +41,16 @@ def getProfessorInfo(query):
 	
 	if phone:
 		response = 'Professor ' + name + "'s phone number is " + PROFESSOR_TABLE['phone'].iloc[0]
-	elif officeHour:
+	elif officeLocation:
 		response = 'Professor ' + name + "'s office location is " + PROFESSOR_TABLE['office'].iloc[0]
 	elif department:
 		response = 'Professor ' + name + "'s department is " + PROFESSOR_TABLE['department'].iloc[0]
 	elif email:
 		response = 'Professor ' + name + "'s email is " + PROFESSOR_TABLE['email'].iloc[0]
 	else:
-		response = "Sorry I don't recognize this question, please try another one"
+		response = None
 
-	print(response)
+	return response
 
 # Logic related to course info
 def getCourseInfo():
