@@ -7,8 +7,8 @@ from bs4 import BeautifulSoup
 
 
 BASE_PATH = 'https://schedules.calpoly.edu/'
-ENGINEERING_DEPT_URL = BASE_PATH + 'depts_52-CENG_curr.htm'
-SCIENCE_DEPT_URL = BASE_PATH + 'depts_76-CSM_curr.htm'
+ENGINEERING_DEPT_URL = BASE_PATH + 'depts_52-CENG_2218.htm'
+SCIENCE_DEPT_URL = BASE_PATH + 'depts_76-CSM_2218.htm'
 
 def getData():
    professorDF , courseUrls = constructProfTable()
@@ -20,7 +20,7 @@ def constructProfTable():
 	constructProfessor(ENGINEERING_DEPT_URL, 'Computer Science', courseUrls, profTable)
 	constructProfessor(SCIENCE_DEPT_URL, 'Statistics', courseUrls, profTable)
 
-	headers = ['name', 'number', 'email', 'department']
+	headers = ['name', 'number', 'email', 'office', 'department']
 	professorDF = pd.DataFrame(profTable, columns = headers)
 	return professorDF, courseUrls
 	
@@ -49,19 +49,23 @@ def constructProfessor(webUrl, department, courseUrls, profTable):
 			continue
 		
 		# Get the name of the professor
-		name = tr.find('td', {'class': 'personName'}).text
+		name = tr.find('td', {'class': 'personName'}).text.replace(',', '')
 
 		# Get the phone number of professor
-		phoneNumber = tr.find('td', {'class': 'personPhone'}).text if tr.find('td', {'class': 'personPhone'}) else np.nan
+		phoneNumber = tr.find('td', {'class': 'personPhone'}).text if tr.find('td', {'class': 'personPhone'}).text != '' else np.nan
 
+		# Get the location of professor
+		office = tr.find('td', {'class': 'personLocation'}).text if tr.find('td', {'class': 'personLocation'}).text != '\xa0' else np.nan
+
+		# Get the email of professor
 		email = tr.find('td', {'class': 'personAlias'}).text + '@calpoly.edu'
 
 		# Get the url of courses
-		raw_courses = tr.find_all('td', {'class': 'courseName'})
+		raw_courses = tr.find_all('td', {'class': 'courseName'}) 
 		for course in raw_courses:
 			updateCourseUrl(courseUrls, course)
 		
-		profTable.append((name, phoneNumber, email, department))
+		profTable.append((name, phoneNumber, email, office, department))
 
 # Update the courseUrls set to add new course url
 def updateCourseUrl(courseUrls, course):
@@ -109,6 +113,9 @@ def constructCourseTable(courseUrls):
 			endTime = section.find('td', {'class': 'endTime'}).text
 			if endTime == '\xa0':
 				endTime = np.nan
+			location = section.find('td', {'class': 'location'}).text
+			if location == '\xa0':
+				location = np.nan
 			locationCapacity = section.find('td', {'class': 'location'}).find_next('td').text
 			if locationCapacity == '\xa0':
 				locationCapacity = np.nan
@@ -118,11 +125,11 @@ def constructCourseTable(courseUrls):
 			drop = section.find('td', {'class': 'location'}).find_all_next('td', limit=5)[4].text
 
 			courseTable.append([course, courseName, courseSection, courseNumber, courseType, courseDay, startTime, endTime, \
-				instructor, locationCapacity, enrollmentCapacity, enrolled, waitlist, drop])
+				instructor, location, locationCapacity, enrollmentCapacity, enrolled, waitlist, drop])
 			
 	# Store the data into panda dataFrame
-	headers = ['Course', 'Name', 'Section', 'Course Number', 'Course Type', 'Days', 'Start Time', 'End Time', 'Professor', 'Location Capacity' \
-		, 'Enrollment Capacity', 'Enrolled', 'Waitlisted', 'Dropped'] 
+	headers = ['Course', 'Name', 'Section', 'Course Number', 'Course Type', 'Days', 'Start Time', 'End Time', 'Professor', 'Location',\
+		 'Location Capacity', 'Enrollment Capacity', 'Enrolled', 'Waitlisted', 'Dropped'] 
 	courseDF = pd.DataFrame(courseTable, columns = headers).sort_values(by=['Course', 'Section'])
 	
 	return courseDF
