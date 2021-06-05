@@ -88,7 +88,7 @@ def updateCourseUrl(courseUrls, course):
 def constructCourseTable(courseUrls):
 	courseTable = []
 	for url in courseUrls:
-		course = url[0].strip()
+		course = url[0].strip().lower()
 		courseUrl = url[1]
 
 		try:
@@ -106,8 +106,8 @@ def constructCourseTable(courseUrls):
 			instructor = section.find('td', {'class': 'personName'}).text
 			if instructor == '\xa0':
 				continue
-			instructorName = section.find('td', {'class': 'personName'}).a['title']
-			
+			instructorName = section.find('td', {'class': 'personName'}).a['title'].replace(',', '').lower()
+
 			courseSection = section.find('td', {'class': 'courseSection'}).text
 			courseNumber = section.find('td', {'class': 'courseClass'}).text
 			if courseNumber == '****':
@@ -134,7 +134,7 @@ def constructCourseTable(courseUrls):
 			drop = section.find('td', {'class': 'location'}).find_all_next('td', limit=5)[4].text
 
 			courseTable.append([course, courseName, courseSection, courseNumber, courseType, courseDay, startTime, endTime, \
-				instructor, location, locationCapacity, enrollmentCapacity, enrolled, waitlist, drop])
+				instructorName, location, locationCapacity, enrollmentCapacity, enrolled, waitlist, drop])
 			
 	# Store the data into panda dataFrame
 	headers = ['Course', 'Name', 'Section', 'Course Number', 'Course Type', 'Days', 'Start Time', 'End Time', 'Professor', 'Location',\
@@ -143,3 +143,10 @@ def constructCourseTable(courseUrls):
 	
 	return courseDF
 
+def matchProfName(name, names):
+	first_name = name.split()[0]
+	for n in names:
+		full_first_name = n.split()[0]
+		if full_first_name == first_name:
+			return n
+	return first_name

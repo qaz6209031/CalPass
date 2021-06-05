@@ -10,17 +10,19 @@ def main():
 
 '''
 Once the query get classified as professor, call this function and return proper response
-Answered 30% of all professor related quesiton now
+Answered 68% of all professor related quesiton now
 Goal: 80%
 '''
 def getProfessorInfo(query):
 	ALL_PROF_NAMES = PROFESSOR_TABLE.name.tolist()
+	ALL_COURSES = COURSE_TABLE.Course.tolist()
 	PHONE_KEYS = ['phone', 'contact', 'call', 'number', 'reach', 'talk', 'get in touch']
 	OFFICE_LOCATION_KEYS = ['location', 'where']
 	DEPARTMENT_KEYS = ['department']
-	EMAIL_KEYS = ['email']
+	EMAIL_KEYS = ['email', 'message']
 	TITLE_KEYS = ['title', 'type of teacher']
-	COURSE_KEYS = ['courses', 'teach']
+	TEACH_KEYS = ['teach', 'teaching', 'taught', 'instruct', 'courses']
+	ALIAS_KEYS = ['alias', 'username']
 
 	# normalize query
 	query = normalizeQuery(query)
@@ -39,9 +41,9 @@ def getProfessorInfo(query):
 	department = extractEntity(query, DEPARTMENT_KEYS) 
 	email = extractEntity(query, EMAIL_KEYS) 
 	title = extractEntity(query, TITLE_KEYS) 
-	course = extractEntity(query, COURSE_KEYS) 
+	teach = extractEntity(query, TEACH_KEYS) 
+	alias = extractEntity(query, ALIAS_KEYS) 
 
-	
 	if phone:
 		response = 'Professor ' + name + "'s phone number is " + table['phone'].iloc[0]
 	elif officeLocation:
@@ -52,11 +54,18 @@ def getProfessorInfo(query):
 		response = 'Professor ' + name + "'s email is " + table['email'].iloc[0]
 	elif title:
 		response = 'Professor ' + name + "'s title is " + table['title'].iloc[0]
-	elif course:
+	elif alias:
+		response = 'Professor ' + name + "'s alia is " + table['email'].iloc[0].split('@')[0]
+	elif teach:
 		filter = (COURSE_TABLE['Professor'] == name)
 		courses = COURSE_TABLE.loc[filter].Course.to_list()
-		courseStr = ''.join(courses)
-		response = 'Professor ' + name + " is teaching " + courseStr + ' Fall 2021'
+		#Yes / No question
+		if any([query.startswith(w) for w in ['does', 'did', 'is']]):
+			course = extractEntity(query, ALL_COURSES) 
+			response = 'Yes' if course else 'No'
+		else:
+			courseStr = ' '.join(courses)
+			response = 'Professor ' + name + " is teaching " + courseStr + ' Fall 2021'
 	else:
 		response = None
 
