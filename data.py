@@ -54,6 +54,15 @@ def constructProfessor(webUrl, department, courseUrls, profTable):
 		# Get the phone number of professor
 		phoneNumber = tr.find('td', {'class': 'personPhone'}).text if tr.find('td', {'class': 'personPhone'}).text != '' else np.nan
 
+		# Get the tile of professor
+		title = tr.find('td', {'class': 'personTitle'}).text.lower()
+		if 'chair' in title:
+			title = 'chair'
+		elif 'instr' in title:
+			title = 'instructor faculty'
+		elif 'lecturer' in title:
+			title = 'lecturer'
+
 		# Get the location of professor
 		office = tr.find('td', {'class': 'personLocation'}).text if tr.find('td', {'class': 'personLocation'}).text != '\xa0' else np.nan
 
