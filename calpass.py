@@ -4,12 +4,6 @@ import re
 
 SIMILARITY = 0.8
 PROFESSOR_TABLE, COURSE_TABLE = getData()
-ALL_PROF_NAMES = PROFESSOR_TABLE.name.tolist()
-PHONE_KEYS = ['phone', 'contact', 'call', 'number']
-OFFICE_LOCATION_KEYS = ['location', 'where']
-DEPARTMENT_KEYS = ['department']
-EMAIL_KEYS = ['email']
-
 
 def main():
 	pass
@@ -20,11 +14,17 @@ Answered 30% of all professor related quesiton now
 Goal: 80%
 '''
 def getProfessorInfo(query):
+	ALL_PROF_NAMES = PROFESSOR_TABLE.name.tolist()
+	PHONE_KEYS = ['phone', 'contact', 'call', 'number', 'reach', 'talk', 'get in touch']
+	OFFICE_LOCATION_KEYS = ['location', 'where']
+	DEPARTMENT_KEYS = ['department']
+	EMAIL_KEYS = ['email']
+	TITLE_KEYS = ['title', 'type of teacher']
+	COURSE_KEYS = ['courses', 'teach']
+
 	# normalize query
 	query = normalizeQuery(query)
-	print('\nQuery after normalization: ', query)
 	name = extractEntity(query, ALL_PROF_NAMES)
-	print('Professor name: ', name)
 
 	if not name:
 		return None
@@ -38,15 +38,25 @@ def getProfessorInfo(query):
 	officeLocation = extractEntity(query, OFFICE_LOCATION_KEYS) 
 	department = extractEntity(query, DEPARTMENT_KEYS) 
 	email = extractEntity(query, EMAIL_KEYS) 
+	title = extractEntity(query, TITLE_KEYS) 
+	course = extractEntity(query, COURSE_KEYS) 
+
 	
 	if phone:
-		response = 'Professor ' + name + "'s phone number is " + PROFESSOR_TABLE['phone'].iloc[0]
+		response = 'Professor ' + name + "'s phone number is " + table['phone'].iloc[0]
 	elif officeLocation:
-		response = 'Professor ' + name + "'s office location is " + PROFESSOR_TABLE['office'].iloc[0]
+		response = 'Professor ' + name + "'s office location is " + table['office'].iloc[0]
 	elif department:
-		response = 'Professor ' + name + "'s department is " + PROFESSOR_TABLE['department'].iloc[0]
+		response = 'Professor ' + name + "'s department is " + table['department'].iloc[0]
 	elif email:
-		response = 'Professor ' + name + "'s email is " + PROFESSOR_TABLE['email'].iloc[0]
+		response = 'Professor ' + name + "'s email is " + table['email'].iloc[0]
+	elif title:
+		response = 'Professor ' + name + "'s title is " + table['title'].iloc[0]
+	elif course:
+		filter = (COURSE_TABLE['Professor'] == name)
+		courses = COURSE_TABLE.loc[filter].Course.to_list()
+		courseStr = ''.join(courses)
+		response = 'Professor ' + name + " is teaching " + courseStr + ' Fall 2021'
 	else:
 		response = None
 

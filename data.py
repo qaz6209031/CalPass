@@ -20,7 +20,7 @@ def constructProfTable():
 	constructProfessor(ENGINEERING_DEPT_URL, 'Computer Science', courseUrls, profTable)
 	constructProfessor(SCIENCE_DEPT_URL, 'Statistics', courseUrls, profTable)
 
-	headers = ['name', 'phone', 'email', 'office', 'department']
+	headers = ['name', 'phone', 'title', 'email', 'office', 'department']
 	professorDF = pd.DataFrame(profTable, columns = headers)
 	return professorDF, courseUrls
 	
@@ -74,7 +74,7 @@ def constructProfessor(webUrl, department, courseUrls, profTable):
 		for course in raw_courses:
 			updateCourseUrl(courseUrls, course)
 		
-		profTable.append((name, phoneNumber, email, office, department))
+		profTable.append((name, phoneNumber, title, email, office, department))
 
 # Update the courseUrls set to add new course url
 def updateCourseUrl(courseUrls, course):
