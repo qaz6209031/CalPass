@@ -48,8 +48,9 @@ def normalize_var(var):
    # To do, come out with more keywords here
    course_key_words = ['coursecode', 'department code', 'roomname', 'coursenumorname', 'coursenumber', 'class', 'class-code',
                        'major', 'csse-course', 'csse-courses', 'prereqs-csse-course', 'prereqs-stats-course', 'stats-course',
-                       'stats-section', 'csse-section', 'section']
-   bldg_key_words= ['room code', 'location', 'room', 'roomn', 'location', 'csse-faculty-office-location', 'stats-faculty-office-location']
+                       'stats-section', 'csse-section', 'section', 'class-sect', 'string', 'course_section', 'number_level',
+                       'class_number']
+   bldg_key_words= ['roomnumber', 'room code', 'location', 'room', 'roomn', 'location', 'csse-faculty-office-location', 'stats-faculty-office-location']
    var = var.lower()
    if var in profssor_key_words:
       var = 'professor'
