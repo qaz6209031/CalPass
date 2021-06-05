@@ -1,5 +1,5 @@
-import enum
 import pickle
+import random
 import nltk
 import numpy as np
 from sklearn import tree
@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 # nltk.download('averaged_perceptron_tagger')
 
 
-LABELS = ['Professor', 'Course', 'Building']
+LABELS = ['Professor', 'Course', 'Building', 'Other']
 
 def get_features(inText):
     allowed_pos = ["N", "W", "V"]
@@ -31,8 +31,12 @@ def get_data(filename):
     with open(filename, 'r', encoding='utf-8') as f:
         data = f.readlines()
     for line in data:
+        if line.strip()[-1] == '3': #ignore this label
+            continue
+        
         queries.append(line.split('|')[0].strip())
         labels.append(line.split('|')[2].strip())
+        
     #queries = [list(get_features(query)) for query in queries]
     return queries, labels
     
@@ -62,8 +66,8 @@ def create_vectorizer(fn):
     """
 
     questions, sample_labels = get_data(fn)
-    tfidf = TfidfVectorizer(ngram_range=(1,3),max_features=10000,
-                            norm='l1', tokenizer=nltk.word_tokenize,
+    tfidf = TfidfVectorizer(ngram_range=(1,2),max_features=1000,
+                            norm='l1', 
                             preprocessor=get_features)
     X = tfidf.fit_transform(questions)
     X = X.todense()
@@ -71,33 +75,70 @@ def create_vectorizer(fn):
 
 def show_stats(clf, x, y):
     preds = clf.predict(x)
+    print(type(preds), type(preds[0]))
     print(f"{accuracy_score(y, preds)=}")
     conf_matrix = confusion_matrix(y, preds)
     plt.xticks(np.arange(len(clf.classes_)),clf.classes_)
     plt.yticks(np.arange(len(clf.classes_)),clf.classes_)
     plt.imshow(conf_matrix,cmap=plt.cm.Blues)
-    plt.colorbar(ticks=[0,1,2,3])
+    plt.colorbar()
     plt.show()
+
+def label_inputs(clf, vect):
+    correct = total = 0
+    fn_2 = "Queries/normalized_with_intents_2.txt"
+    with open("Queries/normalized_final.txt", "r", encoding="utf-8") as read_file:
+        with open(fn_2, "w") as out_file:
+            while True:
+                chunk = [read_file.readline() for _ in range(5)]
+                if len(chunk[0]) == 0:
+                    break
+                ques = [c.split("|")[0] for c in chunk]
+                print(len(chunk), len(ques))
+                x_chunk = vect.transform(ques)
+                y_chunk = clf.predict(x_chunk)
+                for i, line in enumerate(ques):
+                    print(f"{i + 1}: {line}\tPREDICTED - {LABELS[int(y_chunk[i])]}")
+                user_check = input("Does this look good? (y/n) ").lower()
+                if user_check in ['y', 'yes']:
+                    for i,line in enumerate(chunk):
+                        out_file.write(line.strip() + " | " + y_chunk[i] + "\n")
+                    correct += 1
+                else:
+                    while True:
+                        user_list = input("Preferred answers, separate with spaces (0 - Professor, 1 - Course, 2 - Building): ").split()
+                        if len(user_list) == 5 or 'q' in user_list or 'quit' in user_list:
+                            break
+                        print("Only 5 responses please.")
+                    for i,line in enumerate(chunk):
+                        out_file.write(line.strip() + " | " + user_list[i] + "\n")
+                total += 1
 
 def main():
     # As of 6/2/21, this file has 25 of each label. See LABELS
-    fn = "Queries\\normalized_with_intents.txt"
+    fn = "Queries/normalized_with_intents.txt"
+    
     X, labels, vect = create_vectorizer(fn)
+    random.shuffle(X)
     print(len(X), len(labels))
-    x_train, x_test, y_train, y_test = train_test_split(X, labels, random_state=4, test_size=0.1)
+    x_train, x_test, y_train, y_test = train_test_split(X, labels, random_state=4, test_size=0.2)
     clf = tree.DecisionTreeClassifier()
     clf.fit(x_train, y_train)
+    for t in list(set(labels)):
+        print(list(y_train).count(t),"training data points for class",t)
     for i, datum in enumerate(y_test):
-        print(f"{i=}: predicted {clf.predict(x_test[i])}, actual {datum}")
-
+        if i % 3 == 0:
+            print(f"{i=}: predicted {clf.predict(x_test[i])}, actual {datum}")
+    print(f"{len(y_test)} testing points")
     show_stats(clf, x_test, y_test)
-    
+    # label_inputs(clf, vect)
+            
     """saving working data for faster loading next time
     pickle doesn't GUARANTEE working between different versions of sklearn
     """
-    # with open('Queries\\model.p', 'wb') as pkl:
+    # with open('Queries/model.pkl', 'wb') as pkl:
     #     pickle.dump(clf, pkl)
-    # with open('Queries\\data.p', 'wb') as pkl:
+    # with open('Queries/data.pkl', 'wb') as pkl:
     #     pickle.dump([X, labels, vect], pkl)
         
         

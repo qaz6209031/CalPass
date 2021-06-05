@@ -1,0 +1,1 @@
+When is [professor] teaching [class-number]? | List of [day]
