@@ -49,7 +49,7 @@ def constructProfessor(webUrl, department, courseUrls, profTable):
 			continue
 		
 		# Get the name of the professor
-		name = tr.find('td', {'class': 'personName'}).text.replace(',', '')
+		name = tr.find('td', {'class': 'personName'}).text.replace(',', '').lower()
 
 		# Get the phone number of professor
 		phoneNumber = tr.find('td', {'class': 'personPhone'}).text if tr.find('td', {'class': 'personPhone'}).text != '' else np.nan
