@@ -20,7 +20,7 @@ def constructProfTable():
 	constructProfessor(ENGINEERING_DEPT_URL, 'Computer Science', courseUrls, profTable)
 	constructProfessor(SCIENCE_DEPT_URL, 'Statistics', courseUrls, profTable)
 
-	headers = ['name', 'number', 'email', 'office', 'department']
+	headers = ['name', 'phone', 'email', 'office', 'department']
 	professorDF = pd.DataFrame(profTable, columns = headers)
 	return professorDF, courseUrls
 	
