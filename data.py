@@ -7,8 +7,8 @@ from bs4 import BeautifulSoup
 
 
 BASE_PATH = 'https://schedules.calpoly.edu/'
-ENGINEERING_DEPT_URL = BASE_PATH + 'depts_52-CENG_curr.htm'
-SCIENCE_DEPT_URL = BASE_PATH + 'depts_76-CSM_curr.htm'
+ENGINEERING_DEPT_URL = BASE_PATH + 'depts_52-CENG_2218.htm'
+SCIENCE_DEPT_URL = BASE_PATH + 'depts_76-CSM_2218.htm'
 
 def getData():
    professorDF , courseUrls = constructProfTable()
@@ -49,10 +49,10 @@ def constructProfessor(webUrl, department, courseUrls, profTable):
 			continue
 		
 		# Get the name of the professor
-		name = tr.find('td', {'class': 'personName'}).text
+		name = tr.find('td', {'class': 'personName'}).text.replace(',', '')
 
 		# Get the phone number of professor
-		phoneNumber = tr.find('td', {'class': 'personPhone'}).text if tr.find('td', {'class': 'personPhone'}) else np.nan
+		phoneNumber = tr.find('td', {'class': 'personPhone'}).text if tr.find('td', {'class': 'personPhone'}).text != '' else np.nan
 
 		# Get the location of professor
 		office = tr.find('td', {'class': 'personLocation'}).text if tr.find('td', {'class': 'personLocation'}).text != '\xa0' else np.nan
