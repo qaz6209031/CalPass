@@ -6,13 +6,15 @@ SIMILARITY = 0.8
 PROFESSOR_TABLE, COURSE_TABLE = getData()
 ALL_PROF_NAMES = PROFESSOR_TABLE.name.tolist()
 PHONE_KEYS = ['phone', 'contact', 'call', 'number']
-OFFICE_HOUR_KEYS = []
+OFFICE_LOCATION_KEYS = ['location', 'where']
+DEPARTMENT_KEYS = ['department']
+EMAILS_KEYS = ['email']
 
 
 def main():
-	getProfessorInfo("What is professor Lupo Christopher's number ")
 	pass
 
+# Once the query get classified as professor, call this function and return proper response
 def getProfessorInfo(query):
 	# normalize query
 	query = normalizeQuery(query)
@@ -26,8 +28,18 @@ def getProfessorInfo(query):
 
 	# Get the hint of query
 	phone = extractEntity(query, PHONE_KEYS) 
+	officeLocation = extractEntity(query, OFFICE_LOCATION_KEYS) 
+	department = extractEntity(query, DEPARTMENT_KEYS) 
+	email = extractEntity(query, EMAIL_KEYS) 
+	
 	if phone:
 		response = 'Professor ' + name + "'s phone number is " + PROFESSOR_TABLE['phone'].iloc[0]
+	elif officeHour:
+		response = 'Professor ' + name + "'s office location is " + PROFESSOR_TABLE['office'].iloc[0]
+	elif department:
+		response = 'Professor ' + name + "'s department is " + PROFESSOR_TABLE['department'].iloc[0]
+	elif email:
+		response = 'Professor ' + name + "'s email is " + PROFESSOR_TABLE['email'].iloc[0]
 	else:
 		response = "Sorry I don't recognize this question, please try another one"
 
