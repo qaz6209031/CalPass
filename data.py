@@ -109,6 +109,9 @@ def constructCourseTable(courseUrls):
 			endTime = section.find('td', {'class': 'endTime'}).text
 			if endTime == '\xa0':
 				endTime = np.nan
+			location = section.find('td', {'class': 'location'}).text
+			if location == '\xa0':
+				location = np.nan
 			locationCapacity = section.find('td', {'class': 'location'}).find_next('td').text
 			if locationCapacity == '\xa0':
 				locationCapacity = np.nan
@@ -118,11 +121,11 @@ def constructCourseTable(courseUrls):
 			drop = section.find('td', {'class': 'location'}).find_all_next('td', limit=5)[4].text
 
 			courseTable.append([course, courseName, courseSection, courseNumber, courseType, courseDay, startTime, endTime, \
-				instructor, locationCapacity, enrollmentCapacity, enrolled, waitlist, drop])
+				instructor, location, locationCapacity, enrollmentCapacity, enrolled, waitlist, drop])
 			
 	# Store the data into panda dataFrame
-	headers = ['Course', 'Name', 'Section', 'Course Number', 'Course Type', 'Days', 'Start Time', 'End Time', 'Professor', 'Location Capacity' \
-		, 'Enrollment Capacity', 'Enrolled', 'Waitlisted', 'Dropped'] 
+	headers = ['Course', 'Name', 'Section', 'Course Number', 'Course Type', 'Days', 'Start Time', 'End Time', 'Professor', 'Location',\
+		 'Location Capacity', 'Enrollment Capacity', 'Enrolled', 'Waitlisted', 'Dropped'] 
 	courseDF = pd.DataFrame(courseTable, columns = headers).sort_values(by=['Course', 'Section'])
 	
 	return courseDF
