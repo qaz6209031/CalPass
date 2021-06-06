@@ -1,11 +1,16 @@
 from data import getData
 from difflib import SequenceMatcher
+import nltk
+nltk.download('wordnet') # in order to use lemmatizer
+from nltk.stem import WordNetLemmatizer
 import re
 
+# similarity between two string
 SIMILARITY = 0.8
 PROFESSOR_TABLE, COURSE_TABLE = getData()
 
 def main():
+	
 	pass
 
 '''
@@ -14,10 +19,9 @@ Answered 68% of all professor related quesiton now
 Goal: 80%
 '''
 def getProfessorInfo(query):
-	ALL_PROF_NAMES = PROFESSOR_TABLE.name.tolist()
 	ALL_COURSES = COURSE_TABLE.Course.tolist()
 	PHONE_KEYS = ['phone', 'contact', 'call', 'number', 'reach', 'talk', 'get in touch']
-	OFFICE_LOCATION_KEYS = ['location', 'where']
+	OFFICE_LOCATION_KEYS = ['location', 'where', 'see']
 	DEPARTMENT_KEYS = ['department']
 	EMAIL_KEYS = ['email', 'message']
 	TITLE_KEYS = ['title', 'type of teacher']
@@ -26,7 +30,9 @@ def getProfessorInfo(query):
 
 	# normalize query
 	query = normalizeQuery(query)
-	name = extractEntity(query, ALL_PROF_NAMES)
+
+	# Get the name of professor
+	name = getName(query)
 
 	if not name:
 		return None
@@ -68,6 +74,10 @@ def getProfessorInfo(query):
 			response = 'Professor ' + name + " is teaching " + courseStr + ' Fall 2021'
 	else:
 		response = None
+	
+	print(name)
+	print(query)
+	print(response)
 
 	return response
 
@@ -82,10 +92,39 @@ def getBuildingInfo():
 def normalizeQuery(query):
 	# lowercase
 	query = query.lower()
+
 	# remove punctuation
 	query = re.sub(r'[^\w\s]', '', query)
-	
+
+	# Lemmatize
+	wnl = WordNetLemmatizer()
+	lemmatizedQuery = [wnl.lemmatize(word) for word in query.split()]
+	query = ' '.join(lemmatizedQuery)
+
 	return query
+
+def getName(query):
+	ALL_PROF_NAMES = PROFESSOR_TABLE.name.tolist()
+	# Get the name by full name
+	name = extractEntity(query, ALL_PROF_NAMES)
+	if name:
+		return name
+
+	# Get the name by last name
+	ALL_LAST_NAMES = [name.split(' ')[0] for name in ALL_PROF_NAMES]
+	lastName = extractEntity(query, ALL_LAST_NAMES)
+	for n in ALL_PROF_NAMES:
+		if n.startswith(lastName):
+			return n
+
+	# Get the name by first name
+	ALL_FIRST_NAMES = [name.split(' ')[1] for name in ALL_PROF_NAMES]
+	firstName = extractEntity(query, ALL_FIRST_NAMES)
+	for n in ALL_PROF_NAMES:
+		if firstName in n:
+			return n
+	return None
+
 '''
 extract entity from the query
 keywords are list of words that could be in query
