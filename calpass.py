@@ -80,7 +80,7 @@ def getProfessorInfo(query):
 	return response
 '''
 Logic related to course info
-Answered 42% percent of all course related question
+Answered 43% percent of all course related question
 '''
 def getCourseInfo(query):
 	ALL_COURSES = COURSE_TABLE.Course.tolist()
@@ -95,7 +95,9 @@ def getCourseInfo(query):
 	START_KEYS = ['start', 'start time']
 	END_KEYS = ['end', 'end time']
 	DAYS_KEYS = ['day']
-	ENROLL_KEYS = ['enroll', 'enrollment', 'capacity', 'available', 'open', 'remaining']
+	ENROLL_KEYS = ['enroll', 'enrollment', 'capacity', 'cap', 'available', 'open', 'remaining']
+	COURSE_NUMBER_KEYS = ['course number']
+	TYPE_KEYS = ['type']
 
 	courseName = getCourseName(query)
 	if not courseName:
@@ -112,7 +114,9 @@ def getCourseInfo(query):
 	end = extractEntity(query, END_KEYS, SIMILARITY) 
 	day = extractEntity(query, DAYS_KEYS, SIMILARITY) 
 	enroll = extractEntity(query, ENROLL_KEYS, SIMILARITY) 
-
+	courseNumber = extractEntity(query, COURSE_NUMBER_KEYS, SIMILARITY) 
+	types =  extractEntity(query, TYPE_KEYS, SIMILARITY) 
+	
 	response = ''
 	if waitlist:
 		for index, row in table.iterrows():
@@ -130,16 +134,23 @@ def getCourseInfo(query):
 			response += 'There are ' + row['Dropped'] + ' people drop ' + courseName + ' section ' + row['Section'] + '. '
 	elif start:
 		for index, row in table.iterrows():
-			response += 'Start time of ' + courseName + ' section ' + row['Section'] + ' is ' + row['Start Time'] + '. '
+			response += 'Start time of ' + courseName + ' section ' + row['Section'] + ' is ' + row['Days'] + ' ' + row['Start Time'] + '. '
 	elif end:
 		for index, row in table.iterrows():
-			response += 'End time of ' + courseName + ' section ' + row['Section'] + ' is ' + row['End Time'] + '. '
+			response += 'End time of ' + courseName + ' section ' + row['Section'] + ' is ' + row['Days'] + ' ' + row['End Time'] + '. '
 	elif day:
 		for index, row in table.iterrows():
 			response += courseName + ' section ' +  row['Section'] + ' will be taught in ' + row['Days'] + '. '
 	elif enroll:
+		response += 'Enrollment capacity of ' + courseName + ' is ' + table['Enrollment Capacity'].iloc[0] + '. '
 		for index, row in table.iterrows():
-			response += courseName + ' section ' +  row['Section'] + ' Enrollement Capacity: ' + row['Enrollment Capacity']+ ' Enrolled: ' + row['Enrolled'] + '. '
+			response += 'Section ' +  row['Section'] + ' enrolled: ' + row['Enrolled'] + '. '
+	elif courseNumber:
+		for index, row in table.iterrows():
+			response += courseName + ' section ' +  row['Section'] + ' has course number ' + row['Course Number'] + '. '
+	elif types:
+		for index, row in table.iterrows():
+			response += courseName + ' section ' +  row['Section'] + ' is ' + row['Course Type'] + '. '
 	else:
 		response = None
 	
@@ -187,6 +198,7 @@ def getProfName(query):
 	return None
 
 def getCourseName(query):
+	# Higer similarity ratio for matching names
 	SIMILARITY = 0.9
 	ALL_COURSES = COURSE_TABLE.Course.tolist()
 
