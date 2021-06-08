@@ -6,6 +6,7 @@ from nltk.stem import WordNetLemmatizer
 import re
 
 PROFESSOR_TABLE, COURSE_TABLE = getData()
+LOCATIONS = set(PROFESSOR_TABLE.office) | set(COURSE_TABLE.Location)
 
 def main():
 	pass
@@ -147,7 +148,45 @@ def getCourseInfo(query):
 
 # Logic related to building info
 def getBuildingInfo():
-	pass
+	query = normalizeQuery(query)
+	SIMILARITY = 0.8
+
+	COURSES_KEYS = ['class', 'classes', 'course', 'courses']
+	SECTIONS_KEYS = ['section', 'sections']
+	PROFESSOR_KEYS = ['professor', 'professors', 'teacher', 'teachers', 'instructor', 'faculty', 'office']
+	CAPACITY_KEYS = ['capacity', 'fit', 'size']
+	
+	buildingNum = getBulidingNum(query)
+	if not buildingNum:
+		return None
+
+	filteredProfsTable = PROFESSOR_TABLE.loc[PROFESSOR_TABLE['office'] == buildingNum]
+	filteredCoursesTable = COURSE_TABLE.loc[COURSE_TABLE['Location'] == buildingNum]
+
+	courses = extractEntity(query, COURSES_KEYS, SIMILARITY) 
+	sections = extractEntity(query, SECTIONS_KEYS, SIMILARITY)
+	professor = extractEntity(query, PROFESSOR_KEYS, SIMILARITY)
+	capacity = extractEntity(query, CAPACITY_KEYS, SIMILARITY)
+	
+	response = ''
+	if courses:
+		buildingStr = ', '.join(list(set(filteredCoursesTable.Location.tolist())))
+		response = f'The following courses are taught in {buildingNum}, {buildingStr}.'
+	elif sections:
+		courseSections = {f"{row['Course']}-{row['Section']}" for index, row in filteredCoursesTable.iterrows()}
+		buildingStr = ', '.join(courseSections)
+		response = f'The following sections are taught in {buildingNum}, {buildingStr}.'
+	elif professor:
+		for index, row in filteredProfsTable:
+			response += f"{row['name']}'s office is at {buildingNum}."
+	elif capacity:
+		for index, row in filteredCoursesTable:
+			response += f"{buildingNum}'s capacity for {row['Course']} is {row['Location Capacity']}."
+	else:
+		response = None
+	
+	return response
+
 
 def normalizeQuery(query):
 	# lowercase
@@ -193,6 +232,15 @@ def getCourseName(query):
 	name = extractEntity(query, ALL_COURSES, SIMILARITY)
 	if name:
 		return name
+
+	return None
+
+def getBulidingNum(query):
+	SIMILARITY = 0.9
+
+	buildingNum = extractEntity(query, LOCATIONS, SIMILARITY)
+	if buildingNum:
+		return buildingNum
 
 	return None
 
