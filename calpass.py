@@ -5,12 +5,9 @@ nltk.download('wordnet') # in order to use lemmatizer
 from nltk.stem import WordNetLemmatizer
 import re
 
-# similarity between two string
-SIMILARITY = 0.8
 PROFESSOR_TABLE, COURSE_TABLE = getData()
 
 def main():
-	
 	pass
 
 '''
@@ -27,12 +24,13 @@ def getProfessorInfo(query):
 	TITLE_KEYS = ['title', 'type of teacher']
 	TEACH_KEYS = ['teach', 'teaching', 'taught', 'instruct', 'courses']
 	ALIAS_KEYS = ['alias', 'username']
+	SIMILARITY = 0.8
 
 	# normalize query
 	query = normalizeQuery(query)
 
 	# Get the name of professor
-	name = getName(query)
+	name = getProfName(query)
 
 	if not name:
 		return None
@@ -42,13 +40,13 @@ def getProfessorInfo(query):
 	table = PROFESSOR_TABLE.loc[filter]
 
 	# Get the hint of query
-	phone = extractEntity(query, PHONE_KEYS) 
-	officeLocation = extractEntity(query, OFFICE_LOCATION_KEYS) 
-	department = extractEntity(query, DEPARTMENT_KEYS) 
-	email = extractEntity(query, EMAIL_KEYS) 
-	title = extractEntity(query, TITLE_KEYS) 
-	teach = extractEntity(query, TEACH_KEYS) 
-	alias = extractEntity(query, ALIAS_KEYS) 
+	phone = extractEntity(query, PHONE_KEYS, SIMILARITY) 
+	officeLocation = extractEntity(query, OFFICE_LOCATION_KEYS, SIMILARITY) 
+	department = extractEntity(query, DEPARTMENT_KEYS, SIMILARITY) 
+	email = extractEntity(query, EMAIL_KEYS, SIMILARITY) 
+	title = extractEntity(query, TITLE_KEYS, SIMILARITY) 
+	teach = extractEntity(query, TEACH_KEYS, SIMILARITY) 
+	alias = extractEntity(query, ALIAS_KEYS, SIMILARITY) 
 
 	if phone:
 		response = 'Professor ' + name + "'s phone number is " + table['phone'].iloc[0]
@@ -80,10 +78,72 @@ def getProfessorInfo(query):
 	print(response)
 
 	return response
+'''
+Logic related to course info
+Answered 42% percent of all course related question
+'''
+def getCourseInfo(query):
+	ALL_COURSES = COURSE_TABLE.Course.tolist()
+	query = normalizeQuery(query)
+	SIMILARITY = 0.8
 
-# Logic related to course info
-def getCourseInfo():
-	pass
+	WAIT_LIST_KEYS = ['waitlist', 'wait', 'waiting']
+	LOCATION_KEYS = ['location', 'where', 'building', 'room']
+	NAME_KEYS = ['name', 'called', 'description']
+	PROF_KEYS = ['who', 'professor', 'instructor', 'faculty']
+	DROP_KEYS = ['drop', 'dropped', 'withdraw']
+	START_KEYS = ['start', 'start time']
+	END_KEYS = ['end', 'end time']
+	DAYS_KEYS = ['day']
+	ENROLL_KEYS = ['enroll', 'enrollment', 'capacity', 'available', 'open', 'remaining']
+
+	courseName = getCourseName(query)
+	if not courseName:
+		return None
+	filter = (COURSE_TABLE['Course'] == courseName)
+	table = COURSE_TABLE.loc[filter]
+
+	waitlist = extractEntity(query, WAIT_LIST_KEYS, SIMILARITY) 
+	location = extractEntity(query, LOCATION_KEYS, SIMILARITY) 
+	name = extractEntity(query, NAME_KEYS, SIMILARITY) 
+	professor = extractEntity(query, PROF_KEYS, SIMILARITY) 
+	drop = extractEntity(query, DROP_KEYS, SIMILARITY) 
+	start = extractEntity(query, START_KEYS, SIMILARITY) 
+	end = extractEntity(query, END_KEYS, SIMILARITY) 
+	day = extractEntity(query, DAYS_KEYS, SIMILARITY) 
+	enroll = extractEntity(query, ENROLL_KEYS, SIMILARITY) 
+
+	response = ''
+	if waitlist:
+		for index, row in table.iterrows():
+			response += 'There are ' + row['Waitlisted'] + ' people on the waitlist of ' + courseName + ' section ' + row['Section'] + '. '
+	elif location:
+		for index, row in table.iterrows():
+			response += 'Location of ' + courseName + ' section ' + row['Section'] + ' is ' + row['Location'] + '. '
+	elif name:
+		response = courseName + ' is ' + table['Name'].iloc[0]
+	elif professor:
+		profString = ', '.join([prof for prof in list(set(table.Professor.to_list()))])
+		response = profString +  ' are teaching ' + courseName
+	elif drop:
+		for index, row in table.iterrows():
+			response += 'There are ' + row['Dropped'] + ' people drop ' + courseName + ' section ' + row['Section'] + '. '
+	elif start:
+		for index, row in table.iterrows():
+			response += 'Start time of ' + courseName + ' section ' + row['Section'] + ' is ' + row['Start Time'] + '. '
+	elif end:
+		for index, row in table.iterrows():
+			response += 'End time of ' + courseName + ' section ' + row['Section'] + ' is ' + row['End Time'] + '. '
+	elif day:
+		for index, row in table.iterrows():
+			response += courseName + ' section ' +  row['Section'] + ' will be taught in ' + row['Days'] + '. '
+	elif enroll:
+		for index, row in table.iterrows():
+			response += courseName + ' section ' +  row['Section'] + ' Enrollement Capacity: ' + row['Enrollment Capacity']+ ' Enrolled: ' + row['Enrolled'] + '. '
+	else:
+		response = None
+	
+	return response
 
 # Logic related to building info
 def getBuildingInfo():
@@ -103,33 +163,45 @@ def normalizeQuery(query):
 
 	return query
 
-def getName(query):
+def getProfName(query):
+	SIMILARITY = 0.9
 	ALL_PROF_NAMES = PROFESSOR_TABLE.name.tolist()
 	# Get the name by full name
-	name = extractEntity(query, ALL_PROF_NAMES)
+	name = extractEntity(query, ALL_PROF_NAMES, SIMILARITY)
 	if name:
 		return name
 
 	# Get the name by last name
 	ALL_LAST_NAMES = [name.split(' ')[0] for name in ALL_PROF_NAMES]
-	lastName = extractEntity(query, ALL_LAST_NAMES)
+	lastName = extractEntity(query, ALL_LAST_NAMES, SIMILARITY)
 	for n in ALL_PROF_NAMES:
 		if n.startswith(lastName):
 			return n
 
 	# Get the name by first name
 	ALL_FIRST_NAMES = [name.split(' ')[1] for name in ALL_PROF_NAMES]
-	firstName = extractEntity(query, ALL_FIRST_NAMES)
+	firstName = extractEntity(query, ALL_FIRST_NAMES, SIMILARITY)
 	for n in ALL_PROF_NAMES:
 		if firstName in n:
 			return n
 	return None
 
+def getCourseName(query):
+	SIMILARITY = 0.9
+	ALL_COURSES = COURSE_TABLE.Course.tolist()
+
+	name = extractEntity(query, ALL_COURSES, SIMILARITY)
+	if name:
+		return name
+
+	return None
+
 '''
 extract entity from the query
 keywords are list of words that could be in query
+similarity means how close two string are closed to each other (0 ~ 1) 1 means two string are equal
 '''
-def extractEntity(query, keywords):
+def extractEntity(query, keywords, similarity):
 	# Find the similarity between two strings, return value 0 ~ 1
 	def similar(a, b):
 		return SequenceMatcher(None, a, b).ratio()
@@ -146,7 +218,7 @@ def extractEntity(query, keywords):
 		length = len(key.split())
 		ngramList = ngrams(query, length)
 		for ngram in ngramList:
-			if similar(ngram, key) > SIMILARITY:
+			if similar(ngram, key) > similarity:
 				return key
 
 	return None
