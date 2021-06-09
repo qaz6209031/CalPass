@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 # nltk.download('averaged_perceptron_tagger')
 
 
-LABELS = ['Professor', 'Course', 'Building', 'Other']
+LABELS = ['Professor', 'Course', 'Building', 'Other', 'End']
 
 def get_features(inText):
     allowed_pos = ["N", "W", "V"]
@@ -76,7 +76,7 @@ def create_vectorizer(fn):
 def show_stats(clf, x, y):
     preds = clf.predict(x)
     print(type(preds), type(preds[0]))
-    print(f"{accuracy_score(y, preds)=}")
+    print(f"{accuracy_score(y, preds)}")
     conf_matrix = confusion_matrix(y, preds)
     plt.xticks(np.arange(len(clf.classes_)),clf.classes_)
     plt.yticks(np.arange(len(clf.classes_)),clf.classes_)
@@ -128,7 +128,7 @@ def main():
         print(list(y_train).count(t),"training data points for class",t)
     for i, datum in enumerate(y_test):
         if i % 3 == 0:
-            print(f"{i=}: predicted {clf.predict(x_test[i])}, actual {datum}")
+            print(f"{i}: predicted {clf.predict(x_test[i])}, actual {datum}")
     print(f"{len(y_test)} testing points")
     show_stats(clf, x_test, y_test)
     # label_inputs(clf, vect)
