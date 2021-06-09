@@ -1,5 +1,6 @@
 from math import ceil, e
 from os import read
+from os import path
 import pickle
 import random
 import nltk
@@ -23,45 +24,7 @@ import matplotlib.pyplot as plt
 
 
 LABELS = ["Professor", "Course", "Building", "Other", "End"]
-
-""" 258 Testing points with POS tags
-PorterStemmer -
-    accuracy 0.4844961240310077 from GaussianProcessClassifier
-    accuracy 0.41472868217054265 from RandomForestClassifier
-    accuracy 0.3992248062015504 from KNeighborsClassifier
-LancasterStemmer - 
-    accuracy 0.4806201550387597 from GaussianProcessClassifier  
-    accuracy 0.44573643410852715 from RandomForestClassifier
-    accuracy 0.43410852713178294 from KNeighborsClassifier
-EnglishStemmer - 
-    accuracy 0.4806201550387597 from GaussianProcessClassifier
-    accuracy 0.5 from RandomForestClassifier
-    accuracy 0.4844961240310077 from KNeighborsClassifier
-WordNetLemmatizer - 
-    accuracy 0.4806201550387597 from GaussianProcessClassifier
-    accuracy 0.4689922480620155 from RandomForestClassifier
-    accuracy 0.4186046511627907 from KNeighborsClassifier
-    
-258 Testing points with no POS tags
-PorterStemmer -
-    accuracy 0.4806201550387597 from GaussianProcessClassifier
-    accuracy 0.41472868217054265 from RandomForestClassifier
-    accuracy 0.40310077519379844 from KNeighborsClassifier
-LancasterStemmer - 
-    accuracy 0.4806201550387597 from GaussianProcessClassifier
-    accuracy 0.45348837209302323 from RandomForestClassifier
-    accuracy 0.41472868217054265 from KNeighborsClassifier
-EnglishStemmer - 
-    accuracy 0.4806201550387597 from GaussianProcessClassifier
-    accuracy 0.46511627906976744 from RandomForestClassifier
-    accuracy 0.45348837209302323 from KNeighborsClassifier
-WordNetLemmatizer - 
-    accuracy 0.4806201550387597 from GaussianProcessClassifier
-    accuracy 0.44573643410852715 from RandomForestClassifier
-    accuracy 0.43410852713178294 from KNeighborsClassifier
-    
-Moving to EnglishStemmer with POS
-"""
+TRAINED_FILE = "Queries/train_data.txt"
 
 
 def get_features(inText):
@@ -235,7 +198,7 @@ def test_forest():
 
 def main():
     # https://scikit-learn.org/stable/auto_examples/semi_supervised/plot_self_training_varying_threshold.html#sphx-glr-auto-examples-semi-supervised-plot-self-training-varying-threshold-py
-    fn = "Queries/normalized_with_intents.txt"
+    fn = TRAINED_FILE
 
     X, labels, vect = create_vectorizer(fn)
     random.shuffle(X)
@@ -280,14 +243,25 @@ def main():
     #     pickle.dump([X, labels, vect], pkl)
 
 
+def load_model():
+    # If the model doesn't exist, train the model
+    if not path.isfile("Queries/model.pkl") or not path.isfile("Queries/data.pkl"):
+        fn = TRAINED_FILE
+        x, y, vect = create_vectorizer(fn)
+        clf = create_clf(x, y)
+        with open("Queries/model.pkl", "wb") as pkl:
+            pickle.dump(clf, pkl)
+        with open("Queries/data.pkl", "wb") as pkl:
+            pickle.dump(vect, pkl)
+
+
 if __name__ == "__main__":
     # main()
     test_forest()
-    # fn = "Queries/normalized_with_intents.txt"
+    # fn = TRAINED_FILE
     # x, y, vect = create_vectorizer(fn)
     # clf = create_clf(x, y)
-    # query = "What are Professor Khosmood's office hours?"
+    # query = "what's the enrollment capacity of 014-0257?"
     # print(
     #     f"For query '{query}' predicting these probabilities {clf.predict_proba(vectorize_query(vect, query=query))}"
     # )
-

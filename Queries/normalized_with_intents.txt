@@ -857,3 +857,118 @@ Later||4
 Peace out||4
 I am out of here||4
 I gotta take off||4
+Goodbye||4
+bye||4
+See you next time||4
+Thank you||4
+Talk to you next time||4
+I have really enjoyed our conversation||4
+Take care||4
+Thank you very much for your time||4
+Excuse me, but I have to leave||4
+Have a nice day||4
+See you around||4
+See ya!||4
+I am off||4
+Take it easy||4
+Have a nice weekend||4
+Later||4
+Peace out||4
+I am out of here||4
+I gotta take off||4
+Goodbye||4
+bye||4
+See you next time||4
+Thank you||4
+Talk to you next time||4
+I have really enjoyed our conversation||4
+Take care||4
+Thank you very much for your time||4
+Excuse me, but I have to leave||4
+Have a nice day||4
+See you around||4
+See ya!||4
+I am off||4
+Take it easy||4
+Have a nice weekend||4
+Later||4
+Peace out||4
+I am out of here||4
+I gotta take off||4
+Goodbye||4
+bye||4
+See you next time||4
+Thank you||4
+Talk to you next time||4
+I have really enjoyed our conversation||4
+Take care||4
+Thank you very much for your time||4
+Excuse me, but I have to leave||4
+Have a nice day||4
+See you around||4
+See ya!||4
+I am off||4
+Take it easy||4
+Have a nice weekend||4
+Later||4
+Peace out||4
+I am out of here||4
+I gotta take off||4
+Goodbye||4
+bye||4
+See you next time||4
+Thank you||4
+Talk to you next time||4
+I have really enjoyed our conversation||4
+Take care||4
+Thank you very much for your time||4
+Excuse me, but I have to leave||4
+Have a nice day||4
+See you around||4
+See ya!||4
+I am off||4
+Take it easy||4
+Have a nice weekend||4
+Later||4
+Peace out||4
+I am out of here||4
+I gotta take off||4
+Does the [location] have a class in session?|[yes]|2
+What classes are taught in [location]|List of [class-number]|2
+Tell me the classes that are taught in [location]|List of [class-number]|2
+Can you give me the classes that are taught in [location]|List of [class-number]|2
+Which classes are taught in [location]|List of [class-number]|2
+How many classes are taught in [location]|Number of classes|2
+What is the number of sections of [class-number] being taught this quarter in [location]?|Number of sections|2
+Is [location] Available after [time]?|Yes|2
+Is [location] Available before [time]?|No|2
+Who is using [location] [time]?|[professor] is using [location] [time]|2
+What's the capacity of [location]?|The capacity of [location] is [int]|2
+What's the enrollment capacity of [location]?|The enrollment capacity of [location] is [int]|2
+Which classes are being taight in [location]?|[course] is being taught in [location]|2
+Does the [location] have a class in session?|[yes]|2
+What classes are taught in [location]|List of [class-number]|2
+Tell me the classes that are taught in [location]|List of [class-number]|2
+Can you give me the classes that are taught in [location]|List of [class-number]|2
+Which classes are taught in [location]|List of [class-number]|2
+How many classes are taught in [location]|Number of classes|2
+What is the number of sections of [class-number] being taught this quarter in [location]?|Number of sections|2
+Is [location] Available after [time]?|Yes|2
+Is [location] Available before [time]?|No|2
+Who is using [location] [time]?|[professor] is using [location] [time]|2
+What's the capacity of [location]?|The capacity of [location] is [int]|2
+What's the enrollment capacity of [location]?|The enrollment capacity of [location] is [int]|2
+Which classes are being taight in [location]?|[course] is being taught in [location]|2
+Does the [location] have a class in session?|[yes]|2
+What classes are taught in [location]|List of [class-number]|2
+Tell me the classes that are taught in [location]|List of [class-number]|2
+Can you give me the classes that are taught in [location]|List of [class-number]|2
+Which classes are taught in [location]|List of [class-number]|2
+How many classes are taught in [location]|Number of classes|2
+What is the number of sections of [class-number] being taught this quarter in [location]?|Number of sections|2
+Is [location] Available after [time]?|Yes|2
+Is [location] Available before [time]?|No|2
+Who is using [location] [time]?|[professor] is using [location] [time]|2
+What's the capacity of [location]?|The capacity of [location] is [int]|2
+What's the enrollment capacity of [location]?|The enrollment capacity of [location] is [int]|2
+Which classes are being taight in [location]?|[course] is being taught in [location]|2

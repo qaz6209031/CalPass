@@ -4,9 +4,9 @@ import nltk
 nltk.download('wordnet') # in order to use lemmatizer
 from nltk.stem import WordNetLemmatizer
 import re
+import numpy as np
 
 PROFESSOR_TABLE, COURSE_TABLE = getData()
-LOCATIONS = set(PROFESSOR_TABLE.office) | set(COURSE_TABLE.Location)
 
 def main():
 	pass
@@ -26,9 +26,6 @@ def getProfessorInfo(query):
 	TEACH_KEYS = ['teach', 'teaching', 'taught', 'instruct', 'courses']
 	ALIAS_KEYS = ['alias', 'username']
 	SIMILARITY = 0.8
-
-	# normalize query
-	query = normalizeQuery(query)
 
 	# Get the name of professor
 	name = getProfName(query)
@@ -81,7 +78,6 @@ Answered 43% percent of all course related question
 '''
 def getCourseInfo(query):
 	ALL_COURSES = COURSE_TABLE.Course.tolist()
-	query = normalizeQuery(query)
 	SIMILARITY = 0.8
 
 	WAIT_LIST_KEYS = ['waitlist', 'wait', 'waiting']
@@ -155,7 +151,6 @@ def getCourseInfo(query):
 
 # Logic related to building info
 def getBuildingInfo(query):
-	query = normalizeQuery(query)
 	SIMILARITY = 0.8
 
 	COURSES_KEYS = ['class', 'classes', 'course', 'courses']
@@ -163,7 +158,7 @@ def getBuildingInfo(query):
 	PROFESSOR_KEYS = ['professor', 'professors', 'teacher', 'teachers', 'instructor', 'faculty', 'office']
 	CAPACITY_KEYS = ['capacity', 'fit', 'size']
 	
-	buildingNum = getBulidingNum(query)
+	buildingNum = getBuildingNum(query)
 	if not buildingNum:
 		return None
 
@@ -236,7 +231,7 @@ def getProfName(query):
 
 def getCourseName(query):
 	# Higer similarity ratio for matching names
-	SIMILARITY = 0.9
+	SIMILARITY = 1
 	ALL_COURSES = COURSE_TABLE.Course.tolist()
 
 	name = extractEntity(query, ALL_COURSES, SIMILARITY)
@@ -245,8 +240,11 @@ def getCourseName(query):
 
 	return None
 
-def getBulidingNum(query):
-	SIMILARITY = 0.9
+def getBuildingNum(query):
+	LOCATIONS_RAW = set(PROFESSOR_TABLE.office) | set(COURSE_TABLE.Location)
+	# remove nan from locations
+	LOCATIONS = [loc for loc in LOCATIONS_RAW if str(loc) != 'nan'] 
+	SIMILARITY = 1
 
 	buildingNum = extractEntity(query, LOCATIONS, SIMILARITY)
 	if buildingNum:
@@ -276,7 +274,7 @@ def extractEntity(query, keywords, similarity):
 		length = len(key.split())
 		ngramList = ngrams(query, length)
 		for ngram in ngramList:
-			if similar(ngram, key) > similarity:
+			if similar(ngram, key) >= similarity:
 				return key
 
 	return None
