@@ -1,57 +1,57 @@
 import click
 import pickle
-import click_repl
-from sklearn import tree
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 import calpass
-from keywords import get_features
+from keywords import get_features, vectorize_query, LABELS
 
 @click.group(invoke_without_command=True)
+@click.option('--show_signal', default=False, is_flag=True, help='Display signal for chat bot response')
 @click.pass_context
-def cli(ctx):
-   if ctx.invoked_subcommand is None:
-      ctx.invoke(chat)
+def cli(ctx, show_signal):
+   obj = ctx.obj
 
-# TODO: use model to determine which bucket from query
-def get_info_func(query, model, vectorizer):
-   return calpass.getProfessorInfo # dummy return val
-
-@cli.command()
-@click.pass_obj
-def chat(obj):
    model = obj['model']
-   vectorizer = obj['vectorizer']
-   should_continue = True
+   vect = obj['vect']
 
-   while should_continue:
+   if show_signal:
+      click.echo('Displaying signals')
+
+   while True:
       query = click.prompt('Ask a question')
       query = calpass.normalizeQuery(query)
-      
-      click.echo(f'after normalization, {query}')
-      vector = vectorizer.fit_transform([query])
-      click.echo(f'after fit transform, {vector}')
-      vector = vector.todense()
-      click.echo(f'after todense {vector}')
-      # click.echo(f'result={model.predict(query[0])}')
 
-      info_func = get_info_func(query, model, vectorizer)
+      bucket = LABELS[model.predict(vectorize_query(vect, query=query))[0]]
 
-      click.echo(info_func(query))
+      # DEBUG:
+      click.echo(f'bucket={bucket}')
 
-      # TODO: change later to implement quitting ?
-      if True:
-         should_continue = False
+      if bucket == 'Professor':
+         signal = 'Normal'
+         response = calpass.getProfessorInfo(query)
+      elif bucket == 'Course':
+         signal = 'Normal'
+         response = calpass.getCourseInfo(query)
+      elif bucket == 'Building':
+         signal = 'Normal'
+         response = calpass.getBuildingInfo(query)
+      elif bucket == 'End':
+         signal = 'End'
+         click.echo('Goodbye!')
+         return
+
+      if response is None or bucket == 'Other':
+         signal = 'Unknown'
+         response = "I don't understand"
    
-# might not need
-# @cli.command()
-# def repl():
-#    click_repl.repl(click.get_current_context())
+      if show_signal:
+         click.echo(f'[{signal}]: {response}')
+      else:
+         click.echo(response)
+
 
 if __name__ == '__main__':
    with open('Queries/model.pkl', 'rb') as pkl:
       model = pickle.load(pkl)
    with open('Queries/data.pkl', 'rb') as pkl:
-      data = pickle.load(pkl)
-      vectorizer = data[2]
-   cli(obj={'model': model, 'vectorizer': vectorizer})
+      vect = pickle.load(pkl)
+   cli(obj={'model': model, 'vect': vect})
