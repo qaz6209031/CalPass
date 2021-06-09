@@ -3,14 +3,14 @@ from os import read
 import pickle
 import random
 import nltk
+from nltk.tag import pos_tag
 import numpy as np
 from nltk.corpus import stopwords
-from nltk.stem.porter import PorterStemmer
-from sklearn import tree
-from sklearn.gaussian_process import GaussianProcessClassifier
+from nltk.stem.snowball import EnglishStemmer
+from nltk.stem.lancaster import LancasterStemmer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
-
+from sklearn.gaussian_process import GaussianProcessClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -24,14 +24,53 @@ import matplotlib.pyplot as plt
 
 LABELS = ["Professor", "Course", "Building", "Other", "End"]
 
+""" 258 Testing points with POS tags
+PorterStemmer -
+    accuracy 0.4844961240310077 from GaussianProcessClassifier
+    accuracy 0.41472868217054265 from RandomForestClassifier
+    accuracy 0.3992248062015504 from KNeighborsClassifier
+LancasterStemmer - 
+    accuracy 0.4806201550387597 from GaussianProcessClassifier  
+    accuracy 0.44573643410852715 from RandomForestClassifier
+    accuracy 0.43410852713178294 from KNeighborsClassifier
+EnglishStemmer - 
+    accuracy 0.4806201550387597 from GaussianProcessClassifier
+    accuracy 0.5 from RandomForestClassifier
+    accuracy 0.4844961240310077 from KNeighborsClassifier
+WordNetLemmatizer - 
+    accuracy 0.4806201550387597 from GaussianProcessClassifier
+    accuracy 0.4689922480620155 from RandomForestClassifier
+    accuracy 0.4186046511627907 from KNeighborsClassifier
+    
+258 Testing points with no POS tags
+PorterStemmer -
+    accuracy 0.4806201550387597 from GaussianProcessClassifier
+    accuracy 0.41472868217054265 from RandomForestClassifier
+    accuracy 0.40310077519379844 from KNeighborsClassifier
+LancasterStemmer - 
+    accuracy 0.4806201550387597 from GaussianProcessClassifier
+    accuracy 0.45348837209302323 from RandomForestClassifier
+    accuracy 0.41472868217054265 from KNeighborsClassifier
+EnglishStemmer - 
+    accuracy 0.4806201550387597 from GaussianProcessClassifier
+    accuracy 0.46511627906976744 from RandomForestClassifier
+    accuracy 0.45348837209302323 from KNeighborsClassifier
+WordNetLemmatizer - 
+    accuracy 0.4806201550387597 from GaussianProcessClassifier
+    accuracy 0.44573643410852715 from RandomForestClassifier
+    accuracy 0.43410852713178294 from KNeighborsClassifier
+    
+Moving to EnglishStemmer with POS
+"""
+
 
 def get_features(inText):
     allowed_pos = ["N", "W", "V"]
-    ps = PorterStemmer()
+    stemmer = EnglishStemmer()
     tokenized = nltk.word_tokenize(inText)
-    tagged = [word[0] for word in nltk.pos_tag(tokenized) if word[1][0] in allowed_pos]
+    tagged = [word[0] for word in pos_tag(tokenized) if word[1][0] in allowed_pos]
     stemmed = [
-        ps.stem(word.lower())
+        stemmer.stem(word.lower())
         for word in tagged
         if len(word) > 2 and word not in stopwords.words("english")
     ]
@@ -71,7 +110,7 @@ def create_vectorizer(fn):
 
     questions, sample_labels = get_data(fn)
     tfidf = TfidfVectorizer(
-        ngram_range=(1, 2), max_features=1000, norm="l1", preprocessor=get_features
+        ngram_range=(1, 2), max_features=10000, norm="l1", preprocessor=get_features
     )
     X = tfidf.fit_transform(questions)
     X = X.todense()
@@ -132,7 +171,7 @@ def label_inputs(clf, vect: TfidfVectorizer):
 
 
 def create_clf(x_train, y_train):
-    """Creates a Gaussian Process CLF from sklearn and fits it
+    """Creates a Classifier from sklearn and fits it
     
     Parameters
     ----
@@ -145,9 +184,53 @@ def create_clf(x_train, y_train):
     ----
     clf: sklearn.gaussian_process.GaussianProcessClassifier
     """
+    # TODO: retry other clf
     clf = GaussianProcessClassifier()
     clf.fit(x_train, y_train)
     return clf
+
+
+"""
+Training Acc
+0.75 when max_depth None, 0.635 when 22
+doesn't change for estimators
+min_samples_split - higher when this is less, 0.65 when 2. 0.6 when 20
+min_samples_leaf - 
+
+Testing Acc maxes when (each change is compounded on in order)
+n_estimators ~1000, spiked around 1600 also, 0.45
+max_depth = 22, 0.49
+min_samples_split  - higher when this is greater, 0.496 20
+min_samples_leaf - 
+"""
+
+
+def test_forest():
+    fn = "Queries/normalized_with_intents.txt"
+    X, labels, vect = create_vectorizer(fn)
+    random.shuffle(X)
+    print(len(vect.get_feature_names()))
+    x_train, x_test, y_train, y_test = train_test_split(
+        X, labels, random_state=3, test_size=0.3
+    )
+    est = np.arange(1, 11, 1)
+    train_acc = []
+    test_acc = []
+    for val in est:
+        forest = RandomForestClassifier(
+            n_estimators=1000,
+            max_depth=22,
+            min_samples_split=20,
+            min_samples_leaf=val,
+            random_state=10,
+        ).fit(x_train, y_train)
+        train_acc.append(forest.score(x_train, y_train))
+        test_acc.append(accuracy_score(y_test, forest.predict(x_test)))
+
+    plt.plot(est, train_acc, c="b", marker="*", label="Training")
+    plt.plot(est, test_acc, c="r", marker="o", label="Testing")
+    plt.legend()
+    plt.show()
 
 
 def main():
@@ -158,20 +241,19 @@ def main():
     random.shuffle(X)
     print(len(vect.get_feature_names()))
     x_train, x_test, y_train, y_test = train_test_split(
-        X, labels, random_state=3, test_size=0.5
+        X, labels, random_state=3, test_size=0.3
     )
-    # clf = tree.DecisionTreeClassifier()
-    # clf.fit(x_train, y_train)
-    # clf2 = GaussianProcessClassifier()
-    # clf2.fit(x_train, y_train)
-    # print(f"{type(clf2).__name__} training acc: {clf2.score(x_train, y_train)}")
-    # clf3 = RandomForestClassifier()
-    # clf3.fit(x_train, y_train)
-    # print(f"{type(clf3).__name__} training acc: {clf3.score(x_train, y_train)}")
-    # clf4 = KNeighborsClassifier(n_neighbors=3, weights="distance").fit(x_train, y_train)
-    # print(f"{type(clf4).__name__} training acc: {clf4.score(x_train, y_train)}")
-    gaus_clf = create_clf(x_train=x_train, y_train=y_train)
-    classes = [gaus_clf]
+
+    clf2 = GaussianProcessClassifier()
+    clf2.fit(x_train, y_train)
+    print(f"{type(clf2).__name__} training acc: {clf2.score(x_train, y_train)}")
+    clf3 = RandomForestClassifier(n_estimators=200)
+    clf3.fit(x_train, y_train)
+    print(f"{type(clf3).__name__} training acc: {clf3.score(x_train, y_train)}")
+    clf4 = KNeighborsClassifier(n_neighbors=2, weights="distance").fit(x_train, y_train)
+    print(f"{type(clf4).__name__} training acc: {clf4.score(x_train, y_train)}")
+    classes = [clf2, clf3, clf4]
+    print()
     for t in list(set(labels)):
         print(list(y_train).count(t), "training data points for class", t, end=" | ")
         print(list(y_test).count(t), "testing data points for class", t)
@@ -182,6 +264,7 @@ def main():
         print(
             f"accuracy {accuracy_score(y_test, c.predict(x_test))} from {type(c).__name__}"
         )
+
     # testing = clf2.predict_proba(x_test[0])
     # print(f"Predicting on {LABELS[y_test[0]]} = {testing}")
     # show_stats(classes, x_test, y_test)
@@ -199,11 +282,12 @@ def main():
 
 if __name__ == "__main__":
     # main()
-    fn = "Queries/normalized_with_intents.txt"
-    x, y, vect = create_vectorizer(fn)
-    clf = create_clf(x, y)
-    query = "What are Professor Khosmood's office hours?"
-    print(
-        f"For query '{query}' predicting these probabilities {clf.predict_proba(vectorize_query(vect, query=query))}"
-    )
+    test_forest()
+    # fn = "Queries/normalized_with_intents.txt"
+    # x, y, vect = create_vectorizer(fn)
+    # clf = create_clf(x, y)
+    # query = "What are Professor Khosmood's office hours?"
+    # print(
+    #     f"For query '{query}' predicting these probabilities {clf.predict_proba(vectorize_query(vect, query=query))}"
+    # )
 
