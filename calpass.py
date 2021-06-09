@@ -147,7 +147,7 @@ def getCourseInfo(query):
 	return response
 
 # Logic related to building info
-def getBuildingInfo():
+def getBuildingInfo(query):
 	query = normalizeQuery(query)
 	SIMILARITY = 0.8
 
