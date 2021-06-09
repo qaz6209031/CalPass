@@ -1,0 +1,974 @@
+When is smith hugh teaching csc 400?|List of [day]|0
+What times is the course cpe 203 being offered on [day]?|[start-time] for [class-number]|1
+What is walker john [phonen]?|[phonen]|0
+Where is csc 497 being taught?|List of [location]|1
+What day(s) of the week is cheng nianpin not teaching on?|List of [day]|0
+In what building is csc 596 being offered?|[location]|1
+When is chance beth done teaching on [day]?|[end-time]|0
+Tell me planck john office location?|[location]|0
+Do you know beard stephen office location?|[location]|0
+Where can I find eisty nasir in between classes?|[location]|0
+Can you tell me the location of wang yi-huis office?|[location]|0
+What is bodwin kelly earliest lecture?|[start-time]|0
+Do you know wang yi-hui first lecture?|[start-time]|0
+What is hatalsky paul latest lecture?|[end-time]|0
+Do you know ross kevin last lecture on [day]?|[end-time]|0
+How many sections of laes 495 are being taught this quarter?|Number of Classes|1
+How many sections of stat 542 (1) are being taught this quarter by dekhtyar olga?|Number of Classes|1
+How many sections of cpe 203 are being taught this quarter on [day]?|Number of Classes|1
+How many sections of csc 498 are being taught this quarter in 010-0126?|Number of Classes|1
+How long is the average class in the Statistics department?|AVG([start_time] - [end-time])|1
+How long is the average class in the CSSE department?|AVG([start_time] - [end-time])|1
+What stat 414 has the least amount of hours per week in the CSSE department?|MIN([start_time] - [end-time])|1
+What csc 365 has the most amount of hours per week in the CSSE department?|MAX([start_time] - [end-time])|1
+What is the title of schuster sonja in the CSSE department?|[title]|0
+What is the title of peterson zachary in the Statistics department?|[title]|0
+How many upper division classes is haungs michael teaching?|Number of classes|0
+How many lower division classes is carlton matt teaching?|Number of classes|0
+What is the number of professors teaching csc 400 ?|Number of professors|1
+What is the number of professors teaching in the CSSE department?|Number of professors|0
+What is the number of professors teaching in the Statistics department?|Number of professors|0
+Does the 003-0201 have a class in session?|[yes]|2
+What time is van de vanter michael teaching csc 497?|[start-time]|0
+Tell me when workman julie is teaching csc 400|List of [day]|0
+When is the course csc 492 being offered on [day]?|[start-time]|1
+What time is csc 599 being offered on [day]?|[start-time]|1
+Can you tell me kahn jaspers [phonen]?|[phonen]|0
+Do you know lupo christophers [phonen]?|[phonen]|0
+In what room is csc 400 being taught?|[location]|1
+Where on campus is cpe 203 being taught?|[location]|1
+For what days is debruhl bruce not teaching?|[day]|0
+Can you tell me the days that da silva bruno is not teaching?|[day]|0
+What building is csc 498 in?|[location]|1
+What is the building of csc 500?|[location]|1
+What time is planck john done teaching on [day]?|[end-time]|0
+On [day] what time is wilson diana done teaching?|[end-time]|0
+Where is the office of vakalis ignatios?|[location]|0
+Where is beard stephens office?|[location]|0
+What is the room number of fang dongfengs office?|[location]|0
+What time does mukherjee joydeep start teaching?|[start-time]|0
+What time does fiorentino leanne finish teaching?|[end-time]|0
+How many sections of cpe 357 are there this quarter?|Number of sections|1
+What is the number of sections of cpe 123 this quarter?|Number of sections|1
+Tell me the number of sections of stat 511 this quarter|Number of sections|1
+What is the number of sections of csc 400 being taught this quarter by korengel felicia?|Number of sections|1
+Tell me the number of sections of csc 484 being taught this quarter on [day]|Number of sections|1
+What is the number of sections of stat 301 being taught this quarter in 014-0254?|Number of sections|2
+Can I take csc 593 and csc 593 together?|Yes or No|1
+What days of the week is csc 500 scheduled for?|List of [dayofweek]|1
+How many sections of stat 462 have openings?|Number|1
+Is csc 597 being taught in [year-term]?|Yes or No|1
+Is csc 492 usually taught in the fall 2021 quarter?|Yes or No|1
+What terms is csc 225 scheduled for?|List of [year-term]|1
+Who is teaching ime 599 this quarter?|List of [professor]|1
+Will kearns timothy be teaching csc 599 this quarter?|Yes or No|0
+Where will roy soma be at [time] on [day]?|[location]|0
+Will wang yi-hui be available for [duration] on [day]?|Yes or No|0
+Will dekhtyar alexander be available at [time] on [day]?|Yes or No|0
+How many classes are being offered in [year-term]?|Number|1
+How many faculty are teaching csc 498?|Number|1
+How many sections of stat 462 have class on [day]?|Number|1
+How many available seats are there in csc 402?|Number|1
+What type of class is csc 498?|[class-level]|1
+Is doi jimmy teaching in [year-term]?|Yes or No|0
+What are the prerequisites for csc 599?|List of [course]|1
+What are the corequisites for laes 301 (1) /2?|List of [course]|1
+Does csc 597 have any prerequisites?|Yes or No|1
+Does csc 400 have any corequisites?|Yes or No|1
+Is csc 491 offered in the [timeofday]?|Yes or No|1
+What classes are offered in the [timeofday]?|List of [course]|1
+What [timeofday] classes are there?|List of [class-number]|1
+Does cpe 350 have a lab section?|Yes or No|1
+What time is the lab section for data 402?|[timeofday]|1
+How many units is csc 500?|Number|1
+How long is cpe 357 including its lab?|[duration]|1
+How many classes is migler andrew teaching in [year-term]?|Number|0
+Give me the day(s) of the week laes 495 is offered?|List of [day]|1
+Do you know what day(s) of the week laes 485 is offered?|List of [day]|1
+Do you know which day(s) of the week csc 596 is offered?|List of [day]|1
+What day(s) of the week is ime 596 offered?|List of [day]|1
+Tell me the day(s) of the week stat 252 is offered?|List of [day]|1
+Which day(s) of the week is stat 251 offered?|List of [day]|1
+What day(s) of the week is bellardo john free?|List of [day]|0
+What day(s) of the week is wang yi-hui free?|List of [day]|0
+What classes are taught in 020-0140|List of [class-number]|2
+Tell me the classes that are taught in 186-C200|List of [class-number]|2
+Can you give me the classes that are taught in 025-0105|List of [class-number]|2
+Which classes are taught in 014-0250|List of [class-number]|2
+How many classes are taught in 014-0301|Number of classes|2
+Is smith heather available in the [timeofday]|Yes or No|0
+Is planck john free in the [timeofday]|Yes or No|0
+Is wood zoe busy in the [timeofday]|Yes or No|0
+Is gopalan giri unavailable in the [timeofday]|Yes or No|0
+Is there a [timeofday] section for cpe 315|Yes or No|1
+Tell me if there is a [timeofday] section for csc 400|Yes or No|1
+Do you know if there is a [timeofday] section for csc 599|Yes or No|1
+How many units is stat 312 worth?|Number|1
+How many classes does sheets erin teach on [dayofweek]?|Number|0
+Which classes does doi jimmy teach on [dayofweek]?|List of [class-number]|0
+What time does khosmood foaad office hours end?|End-Time|0
+What time does schuster sonja office hours start?|Start-Time|0
+Are there any sections of csc 498?|There are [num_sections] sections of [course].|1
+Is stat 350 being taught this quarter?|There are [num_sections] sections of [course].|1
+Is stat 301 offered this quarter?|There are [num_sections] sections of [course].|1
+Can I take csc 497 this quarter?|There are [num_sections] sections of [course].|1
+Is csc 492 available?|There are [num_sections] sections of [course].|1
+How many sections of csc 430 are there?|There are [num_sections] sections of [course].|1
+Who is csc 402 being taught by?|[course] is being taught by [teachers].|1
+Who is teaching csc 497 this quarter?|[course] is being taught by [teachers].|1
+What professors are teaching stat 218 this quarter?|[course] is being taught by [teachers].|1
+Who can I take csc 597 with?|[course] is being taught by [teachers].|1
+What days is csc 596-csc 596 being taught?|[course]-[course] is taught on [days].|1
+What days of the week is csc 491-csc 491?|[course]-[course] is taught on [days].|1
+When is csc 500-csc 500 being taught?|[course]-[course] is taught on [days].|1
+What time is csc 599-csc 599 being taught?|[course]-[course] is taught at [time].|1
+What time of day is stat 312 (1)-stat 312 (1) being taught?|[course]-[course] is taught at [time].|1
+Who is csc 500-csc 500 taught by?|[course]-[course] is taught by [professor].|1
+How many sections does schaffner andrew teach?|[professor] teaches [integer] sections.|0
+What classes does khosmood foaad teach?|[professor] teaches [classes].|0
+Does fiorentino leanne teach cpe 133?|[professor] teaches [classes].|0
+What sections does reynosa michael teach?|[professor] teaches [class_sections].|0
+Does siu christopher teach stat 313-stat 313?|[professor] teaches [class_sections].|0
+Where is smith heather's office?|[professor]'s office is at building [Building], location [Room].|0
+What is fang dongfeng's phone number?|[professor]'s phone number is [phone].|0
+What type of class is csc 491-csc 491?|[course]-[course] is a [type].|1
+What is tenore roger's alias?|[professor]'s alias is [professor].|0
+What time is clements john office hours?|They are at [time] [day].|0
+When are roy soma office hours?|They are at [time] [day].|0
+Does voelker kurt have afternoon office hours?|Yes|0
+Does dekhtyar olga have morning office hours?|No|0
+Where and when are sheets erin office hours?|They are at [time][day] in [building][location]|0
+What [building] are walker john office hours?|building [Building], location [Room]|0
+What [building] is csc 371csc 371 in?|building [Building], location [Room]|1
+When is csc 248 in 014-0212?|[time] [day]|1
+Is laes 302 (1) /2 MWF?|Yes|1
+Is csc 596 TR?|No, it is [day]|1
+Is stat 312 MTRF?|No, it is [day]|1
+Is csc 400 MTWR?|No, it is [day]|1
+Does rossman allan have office hours [day]?|Yes, they are at [time] [day]|0
+Does johnson joseph have office hours today?|No|0
+Does sklar jeffrey have office hours tomorrow?|Yes, they are at [time] [day]|0
+What time is csc 500csc 500?|[time] [day]|1
+Who teaches csc 597csc 597?|[professor]|1
+Who is theobold allison?|[professor]|0
+What is the capacity for csc 492csc 492?|The capacity is [capacity] students.|1
+What is the capacity for csc 498?|The max capacity for course [Section] is [Capacity[ students|1
+What college is fiorentino leanne affiliated with?|[college]|0
+What college is professor wang yi-hui affiliated with?|[college]|0
+What college is Dr. fang dongfeng affiliated with?|[college]|0
+What day is csc 500 offered on?|[course] [course] is [day]|1
+Is stat 542 (1)stat 542 (1) offered on [day]?|Yes, [course] [course] is offered on [day]|1
+Does cpe 350 have a lab?|Yes/No|1
+How long has holladay bret taught?|[integer] Years|0
+Are there any teachers with first name frame samuel?|Yes [professor], [professor], ...|0
+Are there any teachers with last name bellardo john?|Yes [professor], [professor], ...|0
+Are there are csc 430 being taught on [day]?|Yes the classes are [course], [course], ...|1
+What day does fall 2021 start?|[month] [day]|3
+What day does fall 2021 end?|[month] [day]|3
+Is medrano teresa a Professor?|Yes/No|0
+What csc 497 has the highest enrollment for csc 497?|[course]|1
+What cpe 133 has the lowest enrollment for cpe 133?|[course]|1
+What is the average class size for ross kevin?|[integer]|0
+Which teacher teaches the most sections for csc 498?|[professor]|1
+Which teacher teaches the least sections for stat 251?|[professor]|1
+What is the latest start time for cpe 123|[time]|1
+What is the earliest start time for csc 580|[time]|1
+Which teacher has +1.805.756.2824?|[professor]|0
+Which teacher has smith hugh?|[professor]|0
+What is the first name of [last name]?|[first name]|0
+Which teacher teaches the most classes in [department]|[professor]|0
+Which teacher teaches the least classes in [department]|[professor]|0
+Which teacher is at [office]?|[professor]|0
+Which fall 2021 in [year] had the most sections for stat 461?|[quarter]|3
+Which fall 2021 in [year] had the least sections for csc 594?|[quarter]|3
+Is 008-0123 Available after [time]?|Yes|2
+Is 014-0208 Available before [time]?|No|2
+Who is using 180-0113 [time]?|[professor] is using [location] [time]|2
+What's the capacity of 025-0104?|The capacity of [location] is [int]|2
+What's the enrollment capacity of 020-0139?|The enrollment capacity of [location] is [int]|2
+Which classes are being taight in 021-0235?|[course] is being taught in [location]|2
+Is gopalan giri teaching any in person classes?|Yes|0
+When is eckhardt christian available?|[professor] is available [time]|0
+Can I visit peterson zachary [time]?|No|0
+Who is teaching csc 498?|[professor] is teaching [course]|1
+Can I still enroll csc 498?|Yes|1
+What's the enrollment capacity of csc 500?|The enrollment capacity of [course] is 40|1
+What haungs michael's email address?|[professor]'s email address is [email]|0
+What 's the [phone number'] of grant billie-jo?|It is [phone number]|0
+When is the [office hour] of bodwin kelly?|It is  [time]|0
+Where is mcgaughey karen's stat 461?|It's at [location]|1
+What's this [phone number] belongs to?|It belongs to [professor]|0
+Which medrano teresa doesn't teach this quarter?|[professor] doesn't teach this quarter,|0
+Is csc 497 virtual or in person?|It's virtual|1
+Is csc 225 gonna be virtual?|No|1
+Which in person class is available [time]?|[course] are available [time]|1
+Which virtual class is available [time]?|[course] are available [time]|1
+How to contact doi jimmy?|[professor] email is [email]|0
+Is gharibyan hasmik teaching csc 597?|No|0
+Does mork kirsten teach 500 level class?|No|0
+Does grimes joe teach 300 level class?|No|0
+What is doi jimmys professor?|[professor]s Alias is [Alias].|0
+Whats akdag tedds username?|[professor]s username is [professor]|0
+What is theobold allisons email?|[professor]s email is [professor]@calpoly.edu|0
+How can I contact gharibyan hasmik?|[professor]s email is [professor]@calpoly.edu|0
+What is holladay brets title?|[professor]s title is [teachertitle]|0
+Whats frame samuels phone number?|[professor]s phone number is [phonenumber]|0
+Do you have the phone number for chance beth?|Yes, you can reach [professor] at [phonenumber].|0
+How can I contact planck john?|Here is the contact information for [professor], phone: [phonenumber], email: [professor]@calpoly.edu office: [location].|0
+Whats mcgaughey karen's title?|[professor]'s title is [teachertitle].|0
+Where is gharibyan hasmiks office?|[professor]s office is [location]|0
+What is the room number of van de vanter michaels office?|[professor]s office is [location]|0
+Where can I find eisty nasir?|[professor] has office hours at [location] on [dayofweek] - [timerange].|0
+When does sun dennis hold office hours today?|[professor] holds office hours at [timerange]|0
+When does kazerouni ayaan hold office hours?|[professor] holds office hours at [dayandtime]|0
+What days does oksanish james hold office hours?|[professor] holds office hours at [dayofweek]|0
+When are ventura jonathans office hours today?|[professor] holds office hours at [timerange]|0
+When can I go to keen aarons office hours today?|[professor] holds office hours at [timerange]|0
+Does anderson paul have hours today?|[bool]|0
+When are sabbag anelises office hours today?|[professor] holds office hours at [timeofday]|0
+When are akdag tedds office hours?|[professor] holds office hours at [dayandtime]|0
+What classes does mork kirsten teach?|[professor] teaches these classes: [course]|0
+What courses does schaffner andrew teach?|[professor] teaches these classes: [course]|0
+Which classes are taught by dekhtyar alexander?|[professor] teaches these classes: [course]|0
+What course does siu christopher teach?|[professor] teaches these classes: [course]|0
+What does siu christopher teach?|[professor] teaches these classes: [course]|0
+Does oksanish james teach csc 480?|Yes, [professor] teaches [course] section [coursesection].|0
+Where does doi jimmy teach cpe 203?|[professor] teaches [course] at [location].|0
+When does sheets erin teach stat 130?|[professor] teaches [course] at [timerange] on [dayofweek].|0
+How many people can take wilson diana's section of csc 300?|[professor]'s section of [course] has an enrollment capacity of [enrollmentcap].|0
+What is the location capacity of reynosa michael's section of csc 480?|[professor]'s section of [course] has a location capacity of [locationcap].|0
+What are the professors for csc 498?|The professors for [course] are: [teachernamelist].|1
+Who teaches ime 596?|[course] is taught by: [professor]|1
+Who is csc 371 taught by?|[course] is taught by: [professor]|1
+What is the schedule for stat 511 [coursesection]?|[course] [coursesection] is offered [dayofweek] at [timerange]|1
+What time is ime 599 [coursesection]?|[course] [coursesection] is offered [dayofweek] at [timerange]|1
+What day is csc 596 [coursesection]?|[course] [coursesection] is offered [dayofweek] at [timerange]|1
+When is csc 498 [coursesection]?|[course] [coursesection] is offered [dayofweek] at [timerange]|1
+What days is csc 400 [coursesection] taught?|[course] [coursesection] is offered [dayofweek] at [timerange]|1
+What times is csc 491 [coursesection] taught?|[course] [coursesection] is offered [dayofweek] at [timerange]|1
+What is the name of csc 492?|[course]: [coursename]|1
+What is stat 217 called?|[course]: [coursename]|1
+What is stat 462?|[course]: [coursename]|1
+What class is csc 497?|[course]: [coursename]|1
+What is the course number of [coursename]?|[course]: [coursename]|1
+What class is [coursename]?|[course]: [coursename]|2
+What is the course code of [coursename]?|[course]: [coursename]|1
+How many sections of cpe 453 are there?|[numberofsections]|1
+When does stat 251 start today?|[course] is offered at [timerange]|1
+How many sections of cpe 321?|There are [numberofsections] sections of [course].|1
+What is csc 497 called?|[course] is known as [coursename].|1
+Are there prerequisites for csc 596?|The prerequisites for [course] are: [courserequisites].|1
+Tell me the course number for [coursename]?|The course number for [course] [coursesection] is [course].|1
+When is csc 497 [coursesection] taught?|[course] is taught at [timerange] on [dayofweek].|1
+How many students can take csc 491?|The enrollment capacity for [course] section [coursesection] is [enrollmentcap].|1
+When would I get out of csc 500[coursesection]?|[course] section [coursesection] ends at [dayandtime].|1
+Does csc 498[coursesection] conflict with csc 498[coursesection]?|[bool].|1
+How many courses does [dept] offer?|[dept] offers [numberofcourses]|1
+How many classes does [dept] offer?|[dept] offers [numberofcourses]|1
+What courses does [dept] offer?|[dept] offers [course]:[coursename]|1
+What [dept] courses are offered?|[dept] offers [course]:[coursename]|1
+What [dept] classes are offered in the Fall?|[dept] offers [course]:[coursename]|1
+What [dept] classes are there?|[dept] offers [course]:[coursename]|1
+What sections of csc 349 are offered?||1
+What is the enrollment cap of csc 492?|[enrollmentcap] total seats in [course]|1
+How many spots are there in csc 596?|[enrollmentcap] total seats in [course]|1
+How many seats are there in csc 491?|[enrollmentcap] total seats in [course]|1
+How many available seats are there in csc 400?|[enr]/[enrollmentcap] seats available in [course]|1
+How many open spots does csc 498 have?|[enr]/[enrollmentcap] seats available in [course]|1
+Can I enroll in csc 307?|[enr]/[enrollmentcap] seats available in [course]|1
+Does stat 312 have open seats?|[enr]/[enrollmentcap] seats available in [course]|1
+How long is the waitlist for csc 599?|[waitlist] people on the waitlist for [course]|1
+How many people are waiting in stat 530?|[waitlist] people on the waitlist for [course]|1
+Is there a waitlist for cpe 350?|[waitlist] people on the waitlist for [course]|1
+What classes use 005-0226?|[courselist] are taught in [location].|2
+Who teaches in 014-0254B?|[teachernamelist] uses [location].|2
+When is 025-0222 in use on [dayofweek]?|[location] is used during [timerange] on day.|2
+Is 008-0123 available at [timerange] on [dayofweek]?|[bool].|2
+How many people can fit in 010-0126?|[locationcap] people can fit in [location].|2
+What is 033-0287 called?|[location] is known as [course].|2
+Is csc 400 taught in 025-0102?|[bool].|1
+Does kahn jasper use 025-0208D?|[bool].|0
+Are there any [gearea] courses in 020-0132?|[bool].|2
+Can I find ottesen rebecca in 025-0111?|[bool].|0
+What GE areas does csc 497 satisfy?|[course] satisfies [gearea]|1
+Which GE area does cpe 202 satisfy?|[course] satisfies [gearea]|1
+What are the GE areas for csc 497?|[course] satisfies [gearea]|1
+How many csc 466 sections are there?|There are [numberofsections] sections of [course].|1
+What GE requirement is fulfilled by taking stat 330?|[course] fulfulls GE Requirement [gereq].|1
+What is the description for stat 251?|[course]'s description is [coursename].|1
+Which course is [coursename]?|[coursename]'s course number is [course].|1
+What is the enrollment cap for csc 500?|There can be a maximum of [enrollmentcap] students in a section of [course].|1
+What courses are taught by klingenberg bj?|[professor] teaches [courselist].|0
+What is voelker kurt's weekly schedule?|[professor] is busy [dayandtime].|0
+What times is korengel felicia available on [dayofweek]?|[professor] is busy [timerange].|0
+Where can I find frame samuel's office?|[professor]'s office is [location].|0
+Which professor works in office 998?|[professor] works in [location].|0
+Which sections of [coursename] are taught by rossman allan?|[professor] teaches sections [sectionlist].|0
+What is reynosa michael's phone number?|You can reach [professor] at [phonenumber].|0
+Is kurfess franz a lecturer?|[bool], [professor] [isisnt] as lecturer.|0
+What is smith hugh's job title?|[professor] is a [teachertitle].|0
+How many sections of independent study are advised by planck john?|[professor] advises [numberofsections] sections.|0
+In which classroom is secion [coursesection] of course cpe 357 taught?|[coursename] section [coursesection] [location]|1
+What courses are being taught in 186-C203?|[courselist] are all taught in [location].|2
+What is the weekly schedule for csc 492 section [coursesection]?|Section [coursesection] of [course] is taught [dayandtime].|1
+What is mammen kurt's Cal Poly username?|[professor]'s username is [professor].|0
+How can I contact johnson joseph?|[professor]'s phone number is [phonenumber], and [professor]'s office is [location].|0
+How many sections of independent study does gopalan giri advise?|[professor] is the advisor for [numberofsections] sections of independent study.|0
+How can I fulfill GE requirement [gereq]?|[courselist] fulfills GE requirement [gereq].|1
+How busy is clements john?|[professor] is busy [dayandtime].|0
+What is ross kevin's email address?|You can reach [professor] at [professor]@calpoly.edu.|0
+Which professors teach [coursename]?|[coursename] is taught by [teachernamelist]|0
+Who teaches section [coursesection] of csc 599?|[professor] teaches [coursesection] of [course].|1
+Who are the [dept] professors?|The [dept] professors are [teachernamelist].|0
+What are the courses offered by [dept]?|[dept] offers [courselist].|1
+Is csc 498 being offered?|[yesno]|1
+Will stat 462 be offered?|[yesno]|1
+How many courses is bodwin kelly teaching?|[professor] is teaching [num-courses] in Fall 2021|0
+How many classes is anderson paul teaching?|[professor] is teaching [num-courses] in Fall 2021|0
+Which professors are teaching csc 484?|[faculty-list] will be teaching [course]|0
+Who is teaching csc 400?|[faculty-list] will be teaching [course]|1
+Who will be teaching csc 400?|[faculty-list] will be teaching [course]|1
+Which professors are teaching csc 597?|[professor] will be teaching [course]|0
+Who is teaching csc 492?|[professor] will be teaching [course]|1
+Who will be teaching csc 225?|[professor] will be teaching [course]|1
+Which csc 491 classes are being offered?|[class-list]|1
+What csc 497 classes are being offered?|[class-list]|1
+Which classes will nico phillip be teaching?|[professor] will be teaching [course-list]|0
+When will csc 349 be offered?|[course] will be offered during [time-list]|1
+When will csc 400 be offered?|[course] will be offered during [time]|1
+What days is csc 225 on?|[course] will be taught on [days]|1
+Where will csc 497 be located?|[course] will be taught at [location]|1
+Where is csc 500 going to be?|[course] will be taught at [location]|1
+Where will stat 331 (1) be?|[course] will be taught at [location]|1
+Where will csc 497 be taught?|[course] will be taught at [location]|1
+What days will cpe 357 be taught?|[course] will be taught on [days]|1
+Which days will csc 400 be taught?|[course] will be taught on [days]|1
+How many professors are teaching csc 596?|[course] will be taught by [num-faculty]|1
+Where is kauffman daniels office?|[professor] is located in [location]|0
+Where is frame samuel located?|[professor] is located in [location]|0
+Where is smith hughs office hours|[professor] is located in [location]|0
+What is lund ulrics contact?|[professor] can be reached at [phone] or [cp-email]|0
+What is eisty nasirs phone number?|[professor] can be reached at [phone]|0
+How do I contact doi jimmy?|[professor] can be reached at [phone] or [cp-email]|0
+What is the name for class csc 492?|The name for [course] is [class-name]|1
+What is csc 596?|The name for [course] is [class-name]|1
+Which classes fall under GE [ge-req]?|Classes [class-list] fall under [ge-req]|1
+Which classes count for GE [ge-req]?|Classes [class-list] fall under [ge-req]|1
+How many sections of csc 580 will be offered?|[num-sections] of [course] will be offered|1
+Which sections of csc 596 will be offered?|[course-list] are offered for [course]|1
+What is the enrollment capacity for csc 231?|The enrollment capacity for [course] is [ecap]|1
+How many people have enrolled in stat 312?|[enrolled] have enrolled in [course]|1
+How many people are there in csc 500?|[enrolled] have enrolled in [course]|1
+How many people have waitlisted in stat 462?|[waitlisted] have waitlisted for [course]|1
+How many people are on the waitlist for csc 596?|[waitlisted] have waitlisted for [course]|1
+Which ime 599 [class-level] level classes are being offered?|[class-list] are being offered|1
+What [class-level] level csc 491 classes are being offered?|[class-list] are being offered|1
+Which [class-level] level classes are being offered by hatalsky paul?|[professor] is offering [class-list]|0
+Can you search for class csc 491?|The results are [class-list]|1
+Is there a lab for csc 497?|[yesno]|1
+Does stat 462 have a lab?|[yesno]|1
+Is there a lab for stat 462?|[yesno]|1
+Does cpe 133 have a lab?|[yesno]|1
+What pre-reqs does csc 599 have?|The prerequisites for [course] are [prereqs]|1
+How many pre-reqs does cpe 203 have?|The prerequisites for [course] are [prereqs]|1
+Does cpe 123 have any pre-reqs?|The prerequisites for [course] are [prereqs]|1
+What do I need to take before cpe 357?|The prerequisites for [course] are [prereqs]|1
+What is the class number for csc 493?|The class number for [course] is [class-num]|1
+What is the class code for csc 486?|The class number for [course] is [class-num]|1
+What is stat 350s class number?|The class number for [course] is [class-num]|1
+What is stat 462s class code?|The class number for [course] is [class-num]|1
+Which class has the most sections?|[course] has the most number of sections|1
+Which cpe 321 class has the most sections?|[course] has the most number of sections for [course]|1
+Which classes are offered on [days]?|[class-list] are offered on [days]|1
+Which csc 402 classes are offered on [days]?|[class-list] are offered on [days] for [course]|1
+Which classes are offered between [time] and [time]?|[class-list] are offered between [time] and [time]|1
+Which cpe 315 classes are offered between [time] and [time]?|[class-list] are offered between [time] and [time] for [course]|1
+Which sections for csc 599 are offered between [time] and [time]?|[course-list] are offered between [time] and [time] for [course]|1
+What is wang yi-huis alias?|[professor]s Cal Poly username is [cp-username]|0
+What is clements johns Cal Poly username?|[professor]s Cal Poly username is [cp-username]|0
+What is rossman allans email?|[professor]s Cal Poly email is [cp-email]|0
+What is the email for eckhardt christian?|[professor]s Cal Poly email is [cp-email]|0
+Can I take csc 402 with csc 402?|[yesno]|1
+Can I take both csc 402 and csc 402 at the same time?|[yesno]|1
+Can I attend frame samuels office hours and frame samuels office hours?|[yesno]|0
+Can I take [class-list] without having classes on [day]|[yesno]|1
+Can I take [class-list] without any classes on [day]?|[yesno]|1
+Can I take [class-list] with only classes on [days]|[yesno]|1
+What is the total number of seats available for csc 492?|[num-sections] * [ecap]|1
+What is the total number of seats available for theobold allisons cpe 202?|[num-sections-professor] * [ecap]|1
+How many seats does csc 498 have?|[num-sections] * [ecap]|1
+How many seats of csc 491 are taught by planck john?|[num-sections-professor] * [ecap]|1
+How many students is bellardo john teaching?|[num-courses]* [ecap]|0
+How many seats does anderson paul have available?|[num-courses]* [ecap]|0
+Will carlton matt have office hours at [time]?|[yesno]|0
+Will nico phillip have class at [time]?|[yesno]|0
+Does cheng nianpin have office hours on [day]?|[yesno]|0
+Does pantoja maria have class on [day]?|[yesno]|0
+Can I take a class with doi jimmy with less than [ecap] people?|[yesno]|0
+Can I take stat 321 with less than [ecap] people?|[yesno]|1
+Is there a class taught by rein steven that has less than [ecap] students|[yesno]|0
+Is there a section of csc 495 that has less than [ecap] students?|[yesno]|1
+Does carlton matt teach csc 500 classes?|[yesno]|0
+Does grimes joe teach any non-csc 491 classes?|[yesno]|0
+How many csc 599 classes does sheets erin teach?|[num-courses-major]|0
+How many non-csc 497 classes does smidt robert teach?|[num-courses-major]|0
+Is glanz hunter teaching csc 484?|[yesno]|0
+Can I take cpe 133 and attend klingenberg bjs office hours|[yesno]|3
+Can I take a class taught by debruhl bruce and debruhl bruce|[yesno]|0
+Can I take a csc 597 class taught by smith hugh and a csc 597 class taught by smith hugh?|[yesno]|3
+What [class-level] classes is dekhtyar alexander teaching?|[class-list]|0
+What [class-level] classes are offered [days]|[class-list]|1
+How many [class-level] classes are being offered?|[num-classes]|1
+How many ime 599 [class-level] courses are offered?|[num-classes]|1
+How many [ecap] classe are being offered?|[num-classes]|1
+How many instructors are in the [department_name]?|There are [number_of_instructors] in [department_name]|0
+How many lecturers are in the [department_name]?|There are [number of lecturers] in [department_name]|0
+What is alizadeh vahid's email?|[professor]'s email is [email]|0
+How many sections does janzen david teach?|[professor] teaches [number of classes] sections.|0
+How many different classes are offered this term?|There are [number of courses] offered this term.|1
+Which professors teach stat 461?|[professors...] teach [course]|1
+What location is ime 599-ime 599 taught in?|[class]-[class_section] is taught in [room]|1
+How many students can enroll in cpe 203?|[total_number_of_students] can enroll in [course]|1
+Who teaches class number [class number]?|[professor] teaches class number [class number]|1
+What days is [class number] scheduled for?|[course] is scheduled for [days of week]|1
+What time does [class number] start?|[class number] starts at [time]|1
+What section of csc 369 starts the latest?|[class_section] starts the latest, at [time]|1
+What section of csc 445 starts the earliest?|[class_section] starts the earliest, at [time]|1
+Do all classes have a lab section|yesno|1
+What is the most popular building for [department_name] classes?|The most popular building for [department_name] classes is [building_number]|1
+What is the most popular classroom for [department_name] classes?|The most popular classroom for [department_name] classes is [building_number]|1
+Where am I most likely to spend time as a [department_name] major?|The most popular building for [department_name] classes is [building_number]|3
+Where is the lab for csc 497 located?|The lab for [course] is in [location]|1
+When is anderson paul free at the end of the day?|[professor] is scheduled for classes until [time]|0
+How many sections of stat 330 (1) are offered next quarter?|There are [number_sections] for [course] next quarter|1
+What is the most popular course in [department_name]?|[class]-[class_section] has the most students enrolled and waiting.|1
+What course is csc 498?|[course] is [class]|1
+Can I take both csc 492-csc 492 and csc 492-csc 492?|There [is not|3
+Which sections of stat 542 are still open?|Sections [section_number...] are still open|1
+How long is the waitlist for stat 251-stat 251?|The waitlist for [class]-[class_section] is [waitlist_length]|1
+Is there a waitlist for csc 369-csc 369?|The waitlist for [course]-[course] is [waitlist_length]|1
+How many people are on the waitlist for csc 599-csc 599?|The waitlist for [class]-[class_section] is [waitlist_length]|1
+What csc 491 classes are still open?|[class..] are still open.|1
+How many professors teach csc 225?|[number_of_professors] teach [course].|1
+Which professors still have open sections of stat 301?|[professor...] are teaching open sections of [course]|1
+Is ime 596 offered next quarter?|[course] [is|1
+Is oksanish james a lecturer?|[professor] [is|0
+What type of teacher is bodwin kelly?|[professor] is a [teacher_type].|0
+Who is teaching the most [department_name] classes next quarter?|[professor] is teaching the most classes next quarter.|1
+What is the least popular course in [department_name]?|[class]-[class_section] has the fewest students enrolled and waiting.|1
+Which professor is  teaching the fewest hours of class?|[professor] is teaching the fewest hours of class.|0
+What csc 497 classes can I take to have no class on Mondays?|[class...] have sections without class on Mondays.|1
+How many hours of class does alizadeh vahid teach?|[professor] teaches [hours] total.|0
+Are there any sections of csc 597 open?|[class_section...] have open seats|1
+Which professor teaches stat 462-[course_course]?|professor] teaches [class]-[section]|1
+Will grant billie-jo teach csc 599 next quarter?|[professor] [will|3
+Which section of csc 597 is the most popular?|[class_section] is the most popular.|1
+What times can I take csc 400 next quarter?|[course] is offered at [time...]|1
+How many 500 level classes does alizadeh vahid teach?|[professor] teaches [number_500_level_classes].|0
+What days can I take csc 500 on?|[course] is offered [class_days...]|1
+What csc 595 classes can I take to have no class on Fridays?|[class...] have sections without class on Fridays.|1
+Where are most [department_name] classes held?|[building] has the most [department_name] classess.|1
+How many students are enrolled so far in [department_name] classes?|[total_number_of_students_enrolled] are currently enrolled in classes.|1
+Is statistics or computer science a more popular department?|Computer science has more students enrolled in classes.|3
+What is the name of course number csc 597|[course] is named [class].|1
+Is course laes 302 (1) /2 a GE|Class [class] [ge_status] a GE.|1
+Is course csc 497-[class_section] a lecture or lab|Class [class]-[class_section] a [lab_lecture_status].|1
+Is csc 596 a lecture or lab|Class [course] a [lab_lecture_status].|1
+How many students have dropped csc 400-csc 400?|[total_number_of_students_dropped] have dropped [class]-[class_section].|1
+How many students have dropped stat 312?|[total_number_of_students_dropped] have dropped [course].|1
+How many students have withdrawn from stat 313-stat 313?|[total_number_of_students_withdrawn] have withdrawn from [class]-[class_section].|1
+How many students have withdrawn from csc 492?|[total_number_of_students_withdrawn] have withdrawn from [course].|1
+How many classes does lupo christopher teach?|[professor] teaches [number_classes_taught].|0
+How many sections of stat 462 does gopalan giri teach?|[professor] teaches [number_sections_taught].|1
+Where is csc 492-csc 492 located?|[class]-[class_section] is in [location].|1
+Where is csc 491 located?|[course] is in [location].|1
+What type of course is csc 491-[class_section]?|[class]-[class_section] is [class_type].|1
+What type of class is csc 599?|[course] is [class_type].|1
+How many labs are in [department_name]?|[department_name] has [number_labs].|1
+How many lectures are in [department_name]?|[department_name] has [number_lectures].|1
+How many stat 252 classes are in [department_name]?|[department_name] has [number_400_level_classes].|1
+How many csc 400 classes does turner clark teach?|[professor] teaches [number_400_level_classes].|0
+How many open seats does csc 597 have?|[course] has [num_open_seats] open seats.|1
+How many open seats does csc 597-csc 597 have?|[class]-[class_section] has [num_open_seats] open seats.|1
+How many open seats does csc 492 have?|[course] has [num_open_seats] open seats.|1
+How many GEs are in [department_name]?|[num_ges] are in [department_name].|1
+Is there a class that satisfies [ge_code] GE in [department_name]?|There [ge_status] a class for [ge_code].|1
+What classes satisfy GE [ge_code] in [department_name]?|[class ...] satisfy [ge_code].|1
+Does course satisfy GE [ge_code]?|[class] [ge_status] an option for [ge_code].|1
+Is stat 251 offered in [term_name]?|[course] [class_status] offered in [term_name].|1
+How many sections of csc 497 is offered in [term_name]?|[course] has [class_section] sections offered in [term_name].|1
+Is professor kearns timothy teaching in [term_name]?|[professor] [professor_status] teaching in [term_name].|0
+What is the date range for fall 2021?|Term starts on [start_date] and ends on [end_date].|3
+When does fall 2021 start and end?|Term starts on [start_date] and ends on [end_date].|3
+What dates does cpe 203-cpe 203 start and end?|[class]-[class_section] starts on [start_date] and ends on [end_date].|1
+What dates does csc 498 start and end?|[course] starts on [start_date] and ends on [end_date].|1
+How long is csc 400-csc 400?|[class]-[class_section] is [class_duration] hours long.|1
+How long is csc 486?|[course] is [class_duration] hours long.|1
+How many classes are offered in fall 2021?|[number_lectures_in_term] are taught in [term].|1
+How many lecturers are offered in fall 2021?|[number_labs_in_term] are taught in [term].|3
+What are the prereqs for csc 599?|[prereqs] are the prereqs for [course].|1
+What are the prereqs for csc 497?|[prereqs] are the prereqs for [course].|1
+How many classes does rossman allan teach?|[professor] teaches [number_lectures_taught_by_professor].|0
+How many labs does khosmood foaad teach?|[professor] teaches [number_lab_taught_by_professor].|0
+Which professor teaches the most classes?|[professor] teaches the most classes.|0
+Which professor teaches the most sections of stat 330 (1)?|[professor] teaches the most sections of [course].|0
+Which professor has the most open seats in cpe 321?|[professor] has the most open seats in [course].|0
+Which professor has the most drops?|[professor] has the most drops.|0
+Which professor has the longest waitlist?|[professor] has the longest waitlist.|0
+What is ottesen rebeccas Cal Poly alias?|[professor]s Cal Poly alias is [professor]|0
+What is walker johns job title?|[professor]s job title is [job title]|0
+What is rossman allans phone number?|[professor]s phone number is [phone num]|0
+Where is lupo christophers office?|[professor]s office is in [location]|0
+When are walker johns office hours?|[professor]s office hours are [time slot]|0
+Does sklar jeffrey teach csc 445 in fall 2021?|[yes/no]|0
+What is kohler iriss full name?|[professor]s full name is [professor]|0
+Where is ventura jonathans office?|[professor]s office is in room [location]|0
+Who is the department chair of stat 462?|[professor] is the chair of the [course] department|3
+How many sections of csc 597 are being offered in [school term]?|There are [integer] sections available of [course code] in [school term]|1
+Is stat 200 being offered in [school term]?|[yes/no]|1
+How many sections of csc 430 are being taught by siu christopher in [school term]?|[integer] sections of [course code] are being taught by [professor] in [school term]|1
+When is csc 596 [section num]?|[course code] [section num] is [day slot] [time slot]|1
+Does csc 500 have a lab section?|[yes/no]|1
+Where is csc 486 [section num]?|[course code] [section num] is in room [location]|1
+What class is stat 218?|[course code] is [course description]|1
+What class type is csc 498?|[course code] is a [course type] class|1
+Are there any prerequisites for cpe 133?|[yes/no]|1
+What are the prerequisites for csc 595?|[course code] requires [requisite]|1
+Whats the enrollment limit of csc 596?|The enrollment capacity of [course code] is [enroll cap]|1
+How many students are enrolled in csc 491?|[enroll count] students are enrolled in [course code]|1
+How many students are waitlisted for csc 498?|[waitlist total] students are waitlisted for [course code]|1
+How many distinct students are waitlisted for csc 497?|[waitlist distinct] students are distinctly waitlisted for [course code]|1
+How many waitlisted students are unaccommodated for stat 252?|[waitlist unaccom] waitlisted students are unaccomodated for [course code]|1
+How many students have dropped csc 492?|[drop count] students have dropped [course code]|1
+How many students have withdrawn from ime 596?|[withdraw count] students have withdrawn from [course code]|1
+What class number is [course description]?|[course description] is [course code]|1
+What class type is [course description]?|[course description] is a [course type] class|1
+Are there any prerequisites for [course description]?|[yes/no]|1
+What are the prerequisites for [course description]?|[course description] requires [requisite]|1
+Whats the enrollment limit of [course description]?|The enrollment capacity of [course description] is [enroll cap]|1
+How many students are enrolled in [course description]?|[enroll count] students are enrolled in [course description]|1
+How many students are waitlisted for [course description]?|[waitlist total] students are waitlisted for [course description]|1
+How many distinct students are waitlisted for [course description]?|[waitlist distinct] students are distinctly waitlisted for [course description]|1
+How many waitlisted students are unaccommodated for [course description]?|[waitlist unaccom] waitlisted students are unaccomodated for [course description]|1
+How many students have dropped [course description]?|[drop count] students have dropped [course description]|1
+How many students have withdrawn from [course description]?|[withdraw count] students have withdrawn from [course description]|1
+Where are debruhl bruce office hours?|[professor] office hours are located in [location] on [days and times].|0
+Where is smidt robert office?|[location]|0
+Where is kohler iris at [time]?|[professor] is in [location] on [days and times].|0
+When are wilson diana office hours?|[professor] office hours are located in [location] on [days and times].|0
+What class is alizadeh vahid teaching at [time]?|[course code]|0
+What is chance beth schedule?|[list_of(course code)] at [days and times]|0
+When is mukherjee joydeep instructing csc 371?|[days and times]|0
+Does reynosa michael have office hours on [day slot]?|[yes/no]. [professor] has office hours in [location] on [days and times].|0
+Does voelker kurt teach stat 461?|[professor] instructs [list_of(course code)]|0
+Does cheng nianpin instruct cpe 133?|[professor] instructs [list_of(course code)]|0
+Does stat 461 interfere with stat 461?|[yes/no], [days and times]|1
+Does stat 218 have a scheduling conflict with stat 218?|[yes/no], [days and times]|1
+Does cpe 357 interfere with cpe 357 or cpe 357?|[yes/no], [days and times]|1
+Are there office hours for csc 492?|[yes/no]. [professor] has office hours for [course code] in [location] on [days and times].|3
+Who has office hours in 180-0113?|[list_of(prof name)].|2
+Who has office hours in 025-0112 at [time]?|[list_of(prof name)].|2
+Who has office hours in 035-0111B on [day slot] at [time]?|[list_of(prof name)].|2
+Which office hours are in 025-0208D?|[list_of(course code)]|2
+What is the alias for medrano teresa?|[professor]|0
+What is the username for bellardo john?|[professor]|0
+What is the email for kauffman daniel?|[professor]@calpoly.edu|0
+What is debruhl bruce email?|[professor]@calpoly.edu|0
+Which professor has email walker john?|[professor]|0
+Give me stanchev lubomir email.|[professor]@calpoly.edu|0
+Give me glanz hunter phone number.|[phone_number]|0
+Which classes are in 025-0226?|[list_of(course code)]|2
+Which classes are located in 025-0111?|[list_of(course code)]|2
+Which classes are in 014-0217 at [time] on [day slot]?|[list_of(course code)]|2
+Which classes are in 014-0252 at [time]?|[list_of(course code)]|2
+Where are the office hours for csc 498?|[professor] has office hours in [location] on [days and times].|3
+Where are the office hours for beard stephen?|[professor] has office hours in [location] on [days and times].|0
+Where is cpe 123 located?|[course code] is located in [location] on [days and times].|1
+Where is stat 462 located on [day slot]?|[course code] is located in [location] on [days and times].|1
+When are the office hours for csc 400?|[professor] has office hours in [location] on [days and times].|3
+When does stat 461 start?|[days and times]|1
+When does csc 500 end?|[days and times]|1
+Is cpe 133 lecture or lab?|[course code] is a [course type] section.|1
+Is stat 130 a lecture?|[yes/no]|1
+Is csc 486 a lab?|[yes/no]|1
+What is the lab section for csc 497?|[course code]|1
+What is the lab for stat 511?|[course code]|1
+What is the activity section for cpe 428 (1)?|[course code]|1
+What is the lecture section for csc 491?|[course code]|1
+What is the lecture for cpe 464?|[course code]|1
+What type is csc 524?|[course type]|1
+What term is csc 491 offered?|[list_of(school term)]|3
+What quarter is stat 425 offered?|[list_of(school term)]|3
+Is cpe 133 offered [school term]?|[yes/no]|3
+How many classes is wood zoe teaching [school term] quarter?|[number_of(course code)].|3
+Which classes are migler theresa instructing this quarter?|[list_of(course code)].|0
+Which professors are teaching csc 307?|[list_of(prof name)]|1
+Who is teaching ime 599?|[list_of(prof name)]|1
+Which professor is instructing stat 217?|[list_of(prof name)]|1
+What are the sections of csc 599?|[list_of(course code)]|1
+Which sections of csc 400 are on [day slot]?|[list_of(course code)]|1
+Which sections of stat 461 are on [day slot] at [time]?|[list_of(classes)]|1
+Which sections of stat 321 are between [time] and [time]?|[list_of(course code)]|1
+Which sections of cpe 123 are between [time] and [time] on [day slot]?|[list_of(course code)]|1
+How many people are in cpe 464?|[students]|1
+How many people are enrolled in csc 492?|[students]|1
+How many students are enrolled in csc 500?|[students]|1
+How many students have dropped stat 421?|[students]|1
+How many students dropped csc 498?|[students]|1
+How many seats are left in csc 498?|[students]|1
+How many seats are remaining in cpe 123?|[students]|1
+How many open seats are there in csc 225?|[students]|1
+What is the remaining capacity of cpe 133?|[students]|1
+What is the capacity of stat 217?|[students]|1
+What is the enrollment cap of csc 497?|[students]|1
+What is the location cap of csc 491?|[students]|1
+What is the class number for csc 491?|[course]|1
+What is the class number of cpe 203?|[course]|1
+Which class has number stat 511?|[course code]|1
+Which class is stat 542 (1)?|[course code]|1
+Which class is stat 321?|[course]|1
+Which classes have fewer than [students] students?|[list_of(course code)]|1
+Which classes have fewer than [students] [enrollment_status]?|[list_of(course code)]|1
+Which classes have no students [enrollment_status]|[list_of(course code)]|1
+Which classes satisfy [ge]?|[list_of(course code)]|1
+Which classes taught by khosmood foaad satisfy [ge]?|[list_of(course code)]|0
+Which classes start before [time] and satisfy[ge]?|[list_of(course code)]|1
+Which professors instruct classes that satisfy [ge]?|[list_of(course code)]|1
+Which classes on [day slot] start before [time]?|[list_of(course code)]|1
+Which classes satisfy [ge] and end before [time]?|[list_of(course code)]|1
+Which classes in 038-0227 start before [time] on [day slot]?|[list_of(course code)]|2
+Which rooms have a class that starts after [time]?|[list_of(room code)]|1
+Does csc 599 satisfy [ge]?|[yes/no], [course code] satisfies [ge]|1
+What are the requirements for csc 599?|[requisite]|1
+What is wang yi-huis number?|[phone]|0
+What is the number of sklar jeffrey?|[phone]|0
+How can I call keen aaron?|[phone]|0
+How can I talk to schroth-glanz maddie?|[phone]|0
+What is smidt roberts email?|[email]|0
+What is the email of wilson diana?|[email]|0
+How can I email somal harsimran?|You can email [professor] at [email]|0
+How can I message schuster sonja?|You can email [professor] at [email]|0
+How do I contact sun dennis?|You can call [professor] at [phone] or email them at [email]|0
+How can I reach einakian sussan?|You can call [professor] at [phone] or email them at [email]|0
+How can I get in touch somal harsimran?|You can call [professor] at [phone] or email them at [email]|0
+What is the best way to reach stanchev lubomir?|You can call [professor] at [phone] or email them at [email]|0
+What is the alias of kazerouni ayaan?|[professor]|0
+What is mcgaughey karens alias?|[professor]|0
+Is cheng nianpin cheng nianpin?|Yes or No|0
+What courses does eckhardt christian teach?|[professor] is teaching [courses]|0
+What is mcgaughey karen teaching this fall 2021?|[professor] is teaching [courses]|0
+What courses are roy soma teaching in fall 2021?|[professor] is teaching [courses] in [term]|0
+Did fang dongfeng teach cpe 315 in fall 2021?|Yes or No|0
+Is doi jimmy teaching csc 400 in fall 2021?|Yes or No|0
+Is da silva bruno teaching in the fall 2021?|Yes or No|0
+Is mammen kurt teaching this fall 2021?|Yes or No|0
+Would gopalan giri be teaching csc 599 in fall 2021?|Yes or No|3
+Who is the instructor for cpe 357?|[professor] teaches [course]|1
+Who is the professor for csc 497?|[professor] teaches [course]|1
+Who is the teacher for csc 484?|[professor] teaches [course]|1
+Who is teaching csc 599?|[professor] teaches [course]|1
+Who teaches csc 491?|[professor] teaches [course]|1
+Who might teach csc 500?|Professor [professor] teaches [course]|1
+Which professor teaches cpe 133?|[professor] teaches [course]|1
+Which person teaches ime 596?|[professor] teaches [course]|1
+When is ime 596 offered?|[course] are offered during the [term]|1
+When can I take csc 371?|[course] are offered during the [term]|1
+What quarters can I take csc 225?|[course] are offered during the [term]|3
+What courses are offered in fall 2021?|[courses] are offered during the [term]|3
+Is stat 324 (1) offered in fall 2021?|Yes or No|3
+Can I take csc 349 in fall 2021?|Yes or No|3
+Is csc 500 available in fall 2021?|Yes or No|3
+What are the section numbers of csc 400 in fall 2021?|The section numbers of [course] are [sections]|3
+How many sections of csc 400 are available in fall 2021?|NUM([sections]) of [course] are available in [term]|3
+What part of the day are the lectures offered for csc 491 in fall 2021 by frame samuel?|The lecture times for [course] in [term] by [professor] are [times]|3
+What time are the lectures for cpe 203 in fall 2021 by workman julie?|The lecture times for [course] in [term] by [professor] are [times]|3
+What are the lecture times for stat 217 in fall 2021 by dekhtyar olga?|The lecture times for [course] in [term] by [professor] are [times]|3
+What part of the day are the labs offered for cpe 357 in fall 2021 by anderson paul?|The lab times for [course] in [term] by [professor] are [times]|3
+What time are the labs for csc 492 in fall 2021 by eisty nasir?|The lab times for [course] in [term] by [professor] are [times]|3
+What are the lab times for stat 531 (1) in fall 2021 by ventura jonathan?|The lab times for [course] in [term] by [professor] are [times]|3
+Where is csc 596 csc 596located?|[location]|1
+Where can I find cpe 203 cpe 203?|[location]|1
+Where is csc 597 csc 597 classroom?|[location]|1
+What building is csc 307 in?|[location]|1
+Is [num] the largest enrollment cap for cpe 357?|Yes or No|1
+Where can I see humer irene?|[location]|0
+Where is oksanish jamess office?|[location]|0
+Where is rein stevens office located?|[location]|0
+Where are lund ulrics office hours?|[location]|0
+Where can I find nico phillip on campus for office hours?|[location]|0
+Is 020-0127 sun denniss office?|Yes or No|0
+Is 014-0214 migler andrews office hours?|Yes or No|0
+Will I find smith hugh at 014-0254?|Yes or No|0
+How many sections are there for stat 461?|[sectioncount]|1
+What is the capacity for 014-0250?|[lcap]|2
+What is the size of 014-0302?|[lcap]|2
+What is the class number for csc 491 csc 491?|[course]|1
+Who is the department chair of [dept]?|[professor]|0
+On what days is smith hugh in office?|[days]|0
+On what days is nico phillip out of the office?|[days]|0
+When are mork kirsten office hours?|[days] [times]|0
+When can I meet with mcgaughey karen?|[days] [times]|0
+When is the best time to meet with peterson zachary?|[days] [times]|0
+How can I see sheets erin?|[days] [times]|0
+Does workman julie have office hours on [day]?|Yes or No|0
+Is johnson joseph available on [day]?|Yes or No|0
+Is sklar jeffrey in the office on [day]?|Yes or No|0
+Is ross kevin out of the office on [day]?|Yes or No|0
+Is clements john out on [day]?|Yes or No|0
+What is the largest enrollment cap for csc 596?|[ecap]|1
+What is the maximum amount of students allowed for stat 312 (1)?|[ecap]|1
+How many students can be enrolled in csc 491?|[ecap]|1
+What is the enrollment cap for csc 498 that walker john teaches?|[ecap]|1
+What is the enrollment cap for cpe 357?|[ecap]|1
+What is the cap for stat 400 that migler andrew teaches?|[ecap]|1
+What is the max enrollment for csc 597 that kahn jasper teaches?|[ecap]|1
+What is the enrollment cap for stat 462 stat 462?|[ecap]|1
+How many students can be enrolled in csc 597 csc 597?|[ecap]|1
+What is da silva brunos department?|[dept]|0
+Which department does medrano teresa work under?|[dept]|0
+Is anderson paul in [dept]?|Yes or No|0
+Tell me the professors from [dept]|[professor]|0
+Does cpe 428 (1) have labs?|Yes or No|1
+Are there labs for csc 497?|Yes or No|1
+Do I need to take a lab for cpe 101?|Yes or No|1
+What days is stat 251 stat 251 on?|[days]|1
+What type of class is cpe 203 cpe 203?|[type]|1
+Is laes 400 a [type]?|Yes or No|1
+What is the title of doi jimmy?|[title]|0
+Who is parkinson dave?|[title]|0
+What does mork kirsten do?|[title]|0
+Who is using 025-0208D in fall 2021?|[professor]|3
+Is 186-C102 used in fall 2021?|Yes or No|3
+Who is the current Computer Science department chair?|[csc-department-chair]|0
+Who is the current Administrative Support Coordinator for the Computer Science department?|[csc- administrative-support-coordinator]|0
+Does Cal Poly offer a Blended Bachelors and Masters program in Computer Science?|yes|3
+Are there prerequisites for cpe 203|no|1
+What is the total number of units required for a Bachelors in Computer Science?|180 units|3
+What is the total number of units required for a Masters in Computer Science?|45 units|3
+What are the prerequisites for [csc-course]?|[course]|1
+How many concentrations does the Computer Science department offer?|1|3
+What concentrations does the Computer Science department offer?|Concentration in Interactive Entertainment|3
+Does Cal Poly offer a Cross Disciplinary Studies Minor in Data Science?|yes|3
+What minors does the Computer Science department offer?|[csse-minors]|3
+What requirements does a student need to meet to be qualified for the Computer Science Blended Program?|Complete 20 units of CSC courses past CPE 203 and have a minimum  GPA of 3.0|3
+How many total students are currently in the Computer Science program?|550 students|3
+Approximately how many undergrad students are in the Computer Science program?|450 undergrad students|3
+Approximately how many graduate students are in the Computer Science program?|More than 75 graduate students|3
+What is the Computer Science departments email?|computer-science@calpoly.edu|3
+What is the Computer Science departments phone number?|(805)756-282|3
+How many faculty members are in the Computer Science department?|49|0
+How many affiliate faculty members are in the Computer Science department?|2|3
+How many active emeriti members are in the Computer Science department?|2|3
+How many staff members are in the Computer Science department?|4|3
+Is ottesen rebecca teaching csc 349 this quarter?|yes or no|0
+What classes is turner clark teaching fall 2021?|[faculty-csse-courses]|3
+What is the building number for the Computer Science building?|14|2
+What are the two series options to complete the Physical Science Support Electives?|Physics and Chemistry|3
+How many units of  free electives are allowed in the Computer Science curriculum?|0 units|3
+What is the Computer Science departments Instagram page?|@cpcscandse|3
+What are the hours for the Computer Science Department?|9:00am-12:00pm and 1:00pm-4:00pm, Monday to Friday|3
+Is csc 494 being offered in fall 2021?|yes or no|3
+What courses in the Computer Science curriculum dont require any prerequisites|[course]|1
+Is the Computer Science office currently open?|no|3
+Is stat 217 an approved technical elective?|yes or no|3
+Is double-counting allowed between Science Support Electives?|no|3
+How do I contact workman julie ?|[csse-faculty-phonenumber]|0
+What is schroth-glanz maddie s phone number?|[csse-faculty-phonenumber]|0
+Where is rein stevens office?|[location]|0
+Who is teaching csc 225 this quarter?|[professor]|1
+Do you offer the csc 400 on Tuesday and Thursday this quarter?|Yes or no|1
+How many sections do you offer the cpe 203 this quarter?|3|1
+What is cheng nianpin s title?|[csse-faculty-title]|0
+Does ime 596 have a lab?|yes or no|1
+What classes are smith hugh teaching this quarter?|[course] [course]|0
+Who is in 025-0104?|[professor]|2
+Who is the current Statistics department chair?|[stats-department-chair]|0
+What are the prerequisites for data 401 (1)?|[course]|1
+What is the building number for the Math and Statistics building ?|25|2
+Where do I look for fall 2021 schedule?|https://schedules.calpoly.edu/|3
+How many units is stat 312 ?|[stats-course-unit]|1
+Is csc 596 4 units?|Yes or no|1
+Is kurfess franz the current Computer Science department chair?|Yes or no|0
+Where can I find eisty nasirs office?|[location]|0
+What time does cpe 123cpe 123 start on Monday?|[csse-course-time-start] or There is no class on Monday|1
+I am looking for csc 497 on [csse-course-days]|[course][course] or There is no class that is offered on  [csse-course-days]|1
+I am looking for cpe 133 on [csse-course-days] after [time]?|[course][course] or There is no class that is offered on  [csse-course-days] after [time]|1
+Where can I find the Computer Science building? Cal Poly campus building|14|3
+Where can I find the Math and Statistics building? Cal Poly campus building|25|3
+How many people drop csc 349csc 349 in fall 2021?|[stats-course-drops]|3
+Are there a lot of people dropping csc 492csc 492 in fall 2021?|There are [stats-course-drops] people dropping this class in [term]|1
+Do you offer data 301 this quarter?|Yes or no|1
+Where do I look for the Statistic class schedule this quarter?|https://schedules.calpoly.edu/depts_76-CSM_curr.htm|3
+Where do I look for the CSSE class schedule this quarter?|https://schedules.calpoly.edu/depts_52-CENG_curr.htm|3
+Does the Computer Science department offer classes on the weekend?|No|1
+Is schroth-glanz maddie teaching csc 498 this quarter?|Yes or No|0
+How do I contact rossman allan?|Call [stats-faculty-phonenumber] or visit [location]|0
+Is cheng nianpins office 014-0222?|Yes or No|0
+Is cpe 133 offered in Fall 2021?|Yes or no|1
+Can I take csc 597 this quarter?|Yes or no|1
+Do I need to take csc 596 after csc 596?|Yes or no|3
+Can I take csc 599 as a tech elective?|Yes or no|1
+Does csc 596 count as a technical elective for Computer Science major?|Yes or no|3
+Does cpe 133 have a lab?|Yes or no|1
+Whose office is in 186-C201?|[professor]|2
+Does 180-0113 have someone's office hours?|[professor]|2
+What stats classes are offered in fall 2021?|[stats-courses]|3
+Can you tell me all stats classes offered in fall 2021?|[stats-courses]|3
+Is csc 492 waitlisted?|Yes/ no|1
+is rein steven teaching  csc 498?|Yes / no|0
+Who is teaching csc 492?|[professor]|1
+What do I need to get into Computer Science blended program?|Complete 20 units of CSC courses past CPE 203 and have a minimum  GPA of 3.0|3
+How many units do I need to take to get my Bachelors degree in CS?|180 units|3
+Does the computer science department have an instagram page?|Yes, its @cpcscandse|3
+Can I take any free electives as a computer science major?|No|3
+Can a computer science major have any free electives?|No|3
+How many units do I need to get a Master degree in computer science?|45 units|3
+Can I take cpe 203 as a pre-req to cpe 203?|Yes or no|1
+Is csc 497 a pre-req to csc 497?|[bool]|1
+Is stat 542 required for stat 542?|[bool]|1
+Is the computer science department open during the weekend?|No, they are available 9:00am-12:00pm and 1:00pm-4:00pm, Monday to Friday|3
+Is [csc-department-chair] still the department chair of Computer Science?|Yes|0
+What time does [stat-course] section  data 403 /2 starts?|[stat-course-time-start]|1
+Whats the earliest section for csc 400?|The earliest section is [course] taught by CSSE-Faculty] that starts at [csse-course-time-start]|1
+Whats the latest section for csc 400?|The latest section is [course] taught by CSSE-Faculty] that starts at [csse-course-time-start]|1
+Are there any CSC courses offered before [time]?|[course]|1
+Are there any CSC courses offered  after [time]?|[course]|1
+Are there any CSC courses offered  after [time] but before [time]?|[course]|1
+What time does csc 597 section  csc 597 starts?|[csse-course-time-start]|1
+What time does csc 400 section  csc 400 ends?|[csse-course-time-end]|1
+Where is the computer science building?|Building 14|2
+Where is the statistics building?|Building 25|2
+Goodbye||4
+bye||4
+See you next time||4
+Thank you||4
+Talk to you next time||4
+I have really enjoyed our conversation||4
+Take care||4
+Thank you very much for your time||4
+Excuse me, but I have to leave||4
+Have a nice day||4
+See you around||4
+See ya!||4
+I am off||4
+Take it easy||4
+Have a nice weekend||4
+Later||4
+Peace out||4
+I am out of here||4
+I gotta take off||4
+Goodbye||4
+bye||4
+See you next time||4
+Thank you||4
+Talk to you next time||4
+I have really enjoyed our conversation||4
+Take care||4
+Thank you very much for your time||4
+Excuse me, but I have to leave||4
+Have a nice day||4
+See you around||4
+See ya!||4
+I am off||4
+Take it easy||4
+Have a nice weekend||4
+Later||4
+Peace out||4
+I am out of here||4
+I gotta take off||4
+Goodbye||4
+bye||4
+See you next time||4
+Thank you||4
+Talk to you next time||4
+I have really enjoyed our conversation||4
+Take care||4
+Thank you very much for your time||4
+Excuse me, but I have to leave||4
+Have a nice day||4
+See you around||4
+See ya!||4
+I am off||4
+Take it easy||4
+Have a nice weekend||4
+Later||4
+Peace out||4
+I am out of here||4
+I gotta take off||4
+Goodbye||4
+bye||4
+See you next time||4
+Thank you||4
+Talk to you next time||4
+I have really enjoyed our conversation||4
+Take care||4
+Thank you very much for your time||4
+Excuse me, but I have to leave||4
+Have a nice day||4
+See you around||4
+See ya!||4
+I am off||4
+Take it easy||4
+Have a nice weekend||4
+Later||4
+Peace out||4
+I am out of here||4
+I gotta take off||4
+Goodbye||4
+bye||4
+See you next time||4
+Thank you||4
+Talk to you next time||4
+I have really enjoyed our conversation||4
+Take care||4
+Thank you very much for your time||4
+Excuse me, but I have to leave||4
+Have a nice day||4
+See you around||4
+See ya!||4
+I am off||4
+Take it easy||4
+Have a nice weekend||4
+Later||4
+Peace out||4
+I am out of here||4
+I gotta take off||4
+Does the 003-0201 have a class in session?|[yes]|2
+What classes are taught in 052-0E03|List of [class-number]|2
+Tell me the classes that are taught in 025-0111|List of [class-number]|2
+Can you give me the classes that are taught in 025-0110|List of [class-number]|2
+Which classes are taught in 020-0124|List of [class-number]|2
+How many classes are taught in 014-0255|Number of classes|2
+What is the number of sections of stat 462 being taught this quarter in 014-0245?|Number of sections|2
+Is 020-0129 Available after [time]?|Yes|2
+Is 034-0228 Available before [time]?|No|2
+Who is using 014-0215 [time]?|[professor] is using [location] [time]|2
+What's the capacity of 014-0245?|The capacity of [location] is [int]|2
+What's the enrollment capacity of 014-0205?|The enrollment capacity of [location] is [int]|2
+Which classes are being taight in 020-0129?|[course] is being taught in [location]|2
+Does the 186-C300 have a class in session?|[yes]|2
+What classes are taught in 035-0319|List of [class-number]|2
+Tell me the classes that are taught in 025-0107D|List of [class-number]|2
+Can you give me the classes that are taught in 022-0212|List of [class-number]|2
+Which classes are taught in 014-0219|List of [class-number]|2
+How many classes are taught in 192-0242|Number of classes|2
+What is the number of sections of csc 494 being taught this quarter in 014-0216?|Number of sections|2
+Is 005-0225 Available after [time]?|Yes|2
+Is 192-0333 Available before [time]?|No|2
+Who is using 010-0126 [time]?|[professor] is using [location] [time]|2
+What's the capacity of 025-0102?|The capacity of [location] is [int]|2
+What's the enrollment capacity of 002-0204?|The enrollment capacity of [location] is [int]|2
+Which classes are being taight in 038-0121?|[course] is being taught in [location]|2
+Does the 025-0225 have a class in session?|[yes]|2
+What classes are taught in 020-0145|List of [class-number]|2
+Tell me the classes that are taught in 025-0235|List of [class-number]|2
+Can you give me the classes that are taught in 014-0209|List of [class-number]|2
+Which classes are taught in 020-0132|List of [class-number]|2
+How many classes are taught in 014-0203|Number of classes|2
+What is the number of sections of csc 599 being taught this quarter in 014-0227?|Number of sections|2
+Is 186-C200 Available after [time]?|Yes|2
+Is 020-0129 Available before [time]?|No|2
+Who is using 020-0132 [time]?|[professor] is using [location] [time]|2
+What's the capacity of 038-0219?|The capacity of [location] is [int]|2
+What's the enrollment capacity of 025-0104?|The enrollment capacity of [location] is [int]|2
+Which classes are being taight in 014-0232B?|[course] is being taught in [location]|2
