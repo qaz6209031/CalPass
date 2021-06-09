@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 
 
 LABELS = ["Professor", "Course", "Building", "Other", "End"]
-
+TRAINED_FILE = "Queries/train_data.txt"
 
 def get_features(inText):
     allowed_pos = ["N", "W", "V"]
@@ -153,7 +153,7 @@ def create_clf(x_train, y_train):
 
 def main():
     # https://scikit-learn.org/stable/auto_examples/semi_supervised/plot_self_training_varying_threshold.html#sphx-glr-auto-examples-semi-supervised-plot-self-training-varying-threshold-py
-    fn = "Queries/normalized_with_intents.txt"
+    fn = TRAINED_FILE
 
     X, labels, vect = create_vectorizer(fn)
     random.shuffle(X)
@@ -200,7 +200,7 @@ def main():
 def load_model():
     #If the model doesn't exist, train the model
     if not path.isfile('Queries/model.pkl') or not path.isfile('Queries/data.pkl'):
-        fn = "Queries/normalized_with_intents.txt"
+        fn = TRAINED_FILE
         x, y, vect = create_vectorizer(fn)
         clf = create_clf(x, y)
         with open('Queries/model.pkl', 'wb') as pkl:
@@ -210,11 +210,11 @@ def load_model():
 
 
 if __name__ == "__main__":
-    # main()
-    fn = "Queries/normalized_with_intents.txt"
-    x, y, vect = create_vectorizer(fn)
-    clf = create_clf(x, y)
-    query = "what's the enrollment capacity of 014-0257?"
-    print(
-        f"For query '{query}' predicting these probabilities {clf.predict_proba(vectorize_query(vect, query=query))}"
-    )
+    main()
+    # fn = TRAINED_FILE
+    # x, y, vect = create_vectorizer(fn)
+    # clf = create_clf(x, y)
+    # query = "what's the enrollment capacity of 014-0257?"
+    # print(
+    #     f"For query '{query}' predicting these probabilities {clf.predict_proba(vectorize_query(vect, query=query))}"
+    # )
