@@ -1,15 +1,21 @@
+from math import ceil, e
+from os import read
 import pickle
 import random
 import nltk
 import numpy as np
-from sklearn import tree
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
-from nltk.stem.wordnet import WordNetLemmatizer
+from sklearn import tree
+from sklearn.gaussian_process import GaussianProcessClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neural_network import MLPClassifier
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import plot_confusion_matrix
 import matplotlib.pyplot as plt
 # nltk.download('punkt')
 # nltk.download('stopwords')
@@ -31,11 +37,9 @@ def get_data(filename):
     with open(filename, 'r', encoding='utf-8') as f:
         data = f.readlines()
     for line in data:
-        if line.strip()[-1] == '3': #ignore this label
-            continue
-        
+       
         queries.append(line.split('|')[0].strip())
-        labels.append(line.split('|')[2].strip())
+        labels.append(int(line.split('|')[2].strip()))
         
     #queries = [list(get_features(query)) for query in queries]
     return queries, labels
@@ -73,65 +77,82 @@ def create_vectorizer(fn):
     X = X.todense()
     return X, sample_labels, tfidf
 
-def show_stats(clf, x, y):
-    preds = clf.predict(x)
-    print(type(preds), type(preds[0]))
-    print(f"{accuracy_score(y, preds)=}")
-    conf_matrix = confusion_matrix(y, preds)
-    plt.xticks(np.arange(len(clf.classes_)),clf.classes_)
-    plt.yticks(np.arange(len(clf.classes_)),clf.classes_)
-    plt.imshow(conf_matrix,cmap=plt.cm.Blues)
-    plt.colorbar()
+def show_stats(clf: list, x, y):
+    fig, ax = plt.subplots(2, ceil(len(clf) / 2), figsize=(12,5))
+    ax = ax.flatten()
+    for c, a in zip(clf, ax):
+        plot_confusion_matrix(c, x, y, ax=a, cmap='Blues')
+        a.title.set_text(type(c).__name__)
     plt.show()
+    
+def label_entropy(labels, base=None):
+  _,counts = np.unique(labels, return_counts=True)
+  norm_counts = counts / counts.sum()
+  base = e if base is None else base
+  return -(norm_counts * np.log(norm_counts)/np.log(base)).sum()
 
-def label_inputs(clf, vect):
+def label_inputs(clf, vect:TfidfVectorizer):
     correct = total = 0
-    fn_2 = "Queries/normalized_with_intents_2.txt"
+    fn_2 = "Queries/normalized_with_intents_2.txt" # use a temporary file
     with open("Queries/normalized_final.txt", "r", encoding="utf-8") as read_file:
         with open(fn_2, "w") as out_file:
-            while True:
-                chunk = [read_file.readline() for _ in range(5)]
-                if len(chunk[0]) == 0:
-                    break
-                ques = [c.split("|")[0] for c in chunk]
-                print(len(chunk), len(ques))
-                x_chunk = vect.transform(ques)
-                y_chunk = clf.predict(x_chunk)
-                for i, line in enumerate(ques):
-                    print(f"{i + 1}: {line}\tPREDICTED - {LABELS[int(y_chunk[i])]}")
-                user_check = input("Does this look good? (y/n) ").lower()
-                if user_check in ['y', 'yes']:
-                    for i,line in enumerate(chunk):
-                        out_file.write(line.strip() + " | " + y_chunk[i] + "\n")
-                    correct += 1
-                else:
+            for line in read_file:
+                ques = [line.split('|')[0]]
+                x_chunk = vect.transform(ques).todense()
+                y_chunk = clf.predict_proba(x_chunk)
+                if label_entropy(y_chunk) > 1.3:
+                    print(f"{line}\tPREDICTED - {LABELS[np.argmax(y_chunk)]}")
                     while True:
-                        user_list = input("Preferred answers, separate with spaces (0 - Professor, 1 - Course, 2 - Building): ").split()
-                        if len(user_list) == 5 or 'q' in user_list or 'quit' in user_list:
-                            break
-                        print("Only 5 responses please.")
-                    for i,line in enumerate(chunk):
-                        out_file.write(line.strip() + " | " + user_list[i] + "\n")
+                        user_check = input("What label should this be? (0 - Professor, 1 - Course, 2 - Building, 3 - Other): ")
+                        if int(user_check) in [0, 1, 2, 3]:
+                            out_file.write(line.strip() + " | " + user_check + "\n")
+                        else:
+                            print("Please input a valid number only")
+                            continue
+                        break
+                    if np.argmax(y_chunk) == int(user_check):
+                        correct += 1
+                else:
+                    out_file.write(line.strip() + " | " + str(np.argmax(y_chunk)) + "\n")
+                    correct += 1
                 total += 1
+    print(f"ratio correct: {correct} / {total} = {correct / total}")
 
 def main():
-    # As of 6/2/21, this file has 25 of each label. See LABELS
+    # https://scikit-learn.org/stable/auto_examples/semi_supervised/plot_self_training_varying_threshold.html#sphx-glr-auto-examples-semi-supervised-plot-self-training-varying-threshold-py
     fn = "Queries/normalized_with_intents.txt"
     
     X, labels, vect = create_vectorizer(fn)
     random.shuffle(X)
-    print(len(X), len(labels))
-    x_train, x_test, y_train, y_test = train_test_split(X, labels, random_state=4, test_size=0.2)
+    print(len(vect.get_feature_names()))
+    x_train, x_test, y_train, y_test = train_test_split(X, labels, random_state=3, test_size=0.5)
     clf = tree.DecisionTreeClassifier()
     clf.fit(x_train, y_train)
+    clf2 = GaussianProcessClassifier()
+    clf2.fit(x_train, y_train)
+    print(f"{type(clf2).__name__} training acc: {clf2.score(x_train, y_train)}")
+    clf3 = RandomForestClassifier()
+    clf3.fit(x_train, y_train)
+    print(f"{type(clf3).__name__} training acc: {clf3.score(x_train, y_train)}")
+    clf4 = KNeighborsClassifier(n_neighbors=3, weights='distance').fit(x_train, y_train)
+    print(f"{type(clf4).__name__} training acc: {clf4.score(x_train, y_train)}")
+    clf5 = MLPClassifier(max_iter=1000).fit(x_train, y_train)
+    print(f"{type(clf5).__name__} training acc: {clf5.score(x_train, y_train)}")
+    classes = [clf, clf2, clf3, clf4, clf5]
+    print()
     for t in list(set(labels)):
-        print(list(y_train).count(t),"training data points for class",t)
-    for i, datum in enumerate(y_test):
-        if i % 3 == 0:
-            print(f"{i=}: predicted {clf.predict(x_test[i])}, actual {datum}")
+        print(list(y_train).count(t),"training data points for class",t, end=' | ')
+        print(list(y_test).count(t),"testing data points for class",t)
+    
     print(f"{len(y_test)} testing points")
-    show_stats(clf, x_test, y_test)
-    # label_inputs(clf, vect)
+    
+    for c in classes:
+        print(f"accuracy {accuracy_score(y_test, c.predict(x_test))} from {type(c).__name__}")
+    testing = clf2.predict_proba(x_test[0])
+    print(f"Predicting on {LABELS[y_test[0]]} = {testing}")
+    show_stats(classes, x_test, y_test)
+    
+    #label_inputs(clf2, vect)
             
     """saving working data for faster loading next time
     pickle doesn't GUARANTEE working between different versions of sklearn
