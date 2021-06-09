@@ -10,7 +10,6 @@ PROFESSOR_TABLE, COURSE_TABLE = getData()
 
 def main():
 	pass
-
 '''
 Once the query get classified as professor, call this function and return proper response
 Answered 68% of all professor related quesiton now
@@ -19,7 +18,7 @@ Goal: 80%
 def getProfessorInfo(query):
 	ALL_COURSES = COURSE_TABLE.Course.tolist()
 	PHONE_KEYS = ['phone', 'contact', 'call', 'number', 'reach', 'talk', 'get in touch']
-	OFFICE_LOCATION_KEYS = ['location', 'where', 'see']
+	OFFICE_LOCATION_KEYS = ['location', 'where', 'see', 'office']
 	DEPARTMENT_KEYS = ['department']
 	EMAIL_KEYS = ['email', 'message']
 	TITLE_KEYS = ['title', 'type of teacher']
@@ -81,7 +80,7 @@ def getCourseInfo(query):
 	SIMILARITY = 0.8
 
 	WAIT_LIST_KEYS = ['waitlist', 'wait', 'waiting']
-	LOCATION_KEYS = ['location', 'where', 'building', 'room']
+	LOCATION_KEYS = ['location', 'where', 'building', 'room', 'virtual']
 	NAME_KEYS = ['name', 'called', 'description']
 	PROF_KEYS = ['who', 'professor', 'instructor', 'faculty']
 	DROP_KEYS = ['drop', 'dropped', 'withdraw']
@@ -172,8 +171,8 @@ def getBuildingInfo(query):
 	
 	response = ''
 	if courses:
-		buildingStr = ', '.join(list(set(filteredCoursesTable.Location.tolist())))
-		response = f'The following courses are taught in {buildingNum}, {buildingStr}.'
+		courseStr = ', '.join(list(set(filteredCoursesTable.Course.tolist())))
+		response = f'The following courses are taught in {buildingNum}, {courseStr}.'
 	elif sections:
 		courseSections = {f"{row['Course']}-{row['Section']}" for index, row in filteredCoursesTable.iterrows()}
 		buildingStr = ', '.join(courseSections)
@@ -244,7 +243,7 @@ def getBuildingNum(query):
 	LOCATIONS_RAW = set(PROFESSOR_TABLE.office) | set(COURSE_TABLE.Location)
 	# remove nan from locations
 	LOCATIONS = [loc for loc in LOCATIONS_RAW if str(loc) != 'nan'] 
-	SIMILARITY = 1
+	SIMILARITY = 0.9
 
 	buildingNum = extractEntity(query, LOCATIONS, SIMILARITY)
 	if buildingNum:
