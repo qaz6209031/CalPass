@@ -2,7 +2,7 @@ import click
 import pickle
 
 import calpass
-from keywords import get_features, vectorize_query, LABELS
+from keywords import load_model, vectorize_query, LABELS
 
 @click.group(invoke_without_command=True)
 @click.option('--show_signal', default=False, is_flag=True, help='Display signal for chat bot response')
@@ -48,10 +48,13 @@ def cli(ctx, show_signal):
       else:
          click.echo(response)
 
-
-if __name__ == '__main__':
+def main():
+   load_model()
    with open('Queries/model.pkl', 'rb') as pkl:
       model = pickle.load(pkl)
    with open('Queries/data.pkl', 'rb') as pkl:
       vect = pickle.load(pkl)
    cli(obj={'model': model, 'vect': vect})
+
+if __name__ == '__main__':
+   main()

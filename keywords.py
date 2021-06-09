@@ -1,5 +1,6 @@
 from math import ceil, e
 from os import read
+from os import path
 import pickle
 import random
 import nltk
@@ -196,14 +197,24 @@ def main():
     # with open('Queries/data.pkl', 'wb') as pkl:
     #     pickle.dump([X, labels, vect], pkl)
 
+def load_model():
+    #If the model doesn't exist, train the model
+    if not path.isfile('Queries/model.pkl') or not path.isfile('Queries/data.pkl'):
+        fn = "Queries/normalized_with_intents.txt"
+        x, y, vect = create_vectorizer(fn)
+        clf = create_clf(x, y)
+        with open('Queries/model.pkl', 'wb') as pkl:
+            pickle.dump(clf, pkl)
+        with open('Queries/data.pkl', 'wb') as pkl:
+            pickle.dump(vect, pkl)
+
 
 if __name__ == "__main__":
     # main()
     fn = "Queries/normalized_with_intents.txt"
     x, y, vect = create_vectorizer(fn)
     clf = create_clf(x, y)
-    query = "What are Professor Khosmood's office hours?"
+    query = "what's the enrollment capacity of 014-0257?"
     print(
         f"For query '{query}' predicting these probabilities {clf.predict_proba(vectorize_query(vect, query=query))}"
     )
-
