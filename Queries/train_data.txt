@@ -972,3 +972,42 @@ Who is using 020-0132 [time]?|[professor] is using [location] [time]|2
 What's the capacity of 038-0219?|The capacity of [location] is [int]|2
 What's the enrollment capacity of 025-0104?|The enrollment capacity of [location] is [int]|2
 Which classes are being taight in 014-0232B?|[course] is being taught in [location]|2
+Does the 003-0201 have a class in session?|[yes]|2
+What classes are taught in 052-0E03|List of [class-number]|2
+Tell me the classes that are taught in 025-0111|List of [class-number]|2
+Can you give me the classes that are taught in 025-0110|List of [class-number]|2
+Which classes are taught in 020-0124|List of [class-number]|2
+How many classes are taught in 014-0255|Number of classes|2
+What is the number of sections of stat 462 being taught this quarter in 014-0245?|Number of sections|2
+Is 020-0129 Available after [time]?|Yes|2
+Is 034-0228 Available before [time]?|No|2
+Who is using 014-0215 [time]?|[professor] is using [location] [time]|2
+What's the capacity of 014-0245?|The capacity of [location] is [int]|2
+What's the enrollment capacity of 014-0205?|The enrollment capacity of [location] is [int]|2
+Which classes are being taight in 020-0129?|[course] is being taught in [location]|2
+Does the 186-C300 have a class in session?|[yes]|2
+What classes are taught in 035-0319|List of [class-number]|2
+Tell me the classes that are taught in 025-0107D|List of [class-number]|2
+Can you give me the classes that are taught in 022-0212|List of [class-number]|2
+Which classes are taught in 014-0219|List of [class-number]|2
+How many classes are taught in 192-0242|Number of classes|2
+What is the number of sections of csc 494 being taught this quarter in 014-0216?|Number of sections|2
+Is 005-0225 Available after [time]?|Yes|2
+Is 192-0333 Available before [time]?|No|2
+Who is using 010-0126 [time]?|[professor] is using [location] [time]|2
+What's the capacity of 025-0102?|The capacity of [location] is [int]|2
+What's the enrollment capacity of 002-0204?|The enrollment capacity of [location] is [int]|2
+Which classes are being taight in 038-0121?|[course] is being taught in [location]|2
+Does the 025-0225 have a class in session?|[yes]|2
+What classes are taught in 020-0145|List of [class-number]|2
+Tell me the classes that are taught in 025-0235|List of [class-number]|2
+Can you give me the classes that are taught in 014-0209|List of [class-number]|2
+Which classes are taught in 020-0132|List of [class-number]|2
+How many classes are taught in 014-0203|Number of classes|2
+What is the number of sections of csc 599 being taught this quarter in 014-0227?|Number of sections|2
+Is 186-C200 Available after [time]?|Yes|2
+Is 020-0129 Available before [time]?|No|2
+Who is using 020-0132 [time]?|[professor] is using [location] [time]|2
+What's the capacity of 038-0219?|The capacity of [location] is [int]|2
+What's the enrollment capacity of 025-0104?|The enrollment capacity of [location] is [int]|2
+Which classes are being taight in 014-0232B?|[course] is being taught in [location]|2
