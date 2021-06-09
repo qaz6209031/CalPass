@@ -10,7 +10,6 @@ from sklearn import tree
 from sklearn.gaussian_process import GaussianProcessClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.neural_network import MLPClassifier
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
@@ -41,7 +40,7 @@ def get_features(inText):
 
 def get_data(filename):
     queries, labels = [], []
-    with open(filename, "r", encoding="utf-8") as f:
+    with open(filename, "r") as f:
         data = f.readlines()
     for line in data:
 
@@ -50,13 +49,6 @@ def get_data(filename):
 
     # queries = [list(get_features(query)) for query in queries]
     return queries, labels
-
-
-"""
-TODO: thoughts are need to classify each line into what category of question we want to answer
-    Fooad suggests making another classifier here, and then checking what it does.
-    Probably want a DecisionTreeClassifier from SKL
-"""
 
 
 def create_vectorizer(fn):
@@ -69,13 +61,12 @@ def create_vectorizer(fn):
         
     Returns
     ------
-    Tuple:
-        X
-            Vectorized inputs
-        sample_labels: List[int]
-            Labels for the inputs
-        tfidf: TfidfVectorizer
-            Vectorizer
+    X
+        TFIDF vectorized dense matrices for input
+    sample_labels: List[int]
+        Integer Labels for the inputs
+    tfidf: TfidfVectorizer
+        Vectorizer
     """
 
     questions, sample_labels = get_data(fn)
@@ -85,6 +76,11 @@ def create_vectorizer(fn):
     X = tfidf.fit_transform(questions)
     X = X.todense()
     return X, sample_labels, tfidf
+
+
+def vectorize_query(vector: TfidfVectorizer, query: str) -> np.ndarray:
+    # query needs to be a list for vector to transform as it expects individual documents
+    return vector.transform([query]).todense()
 
 
 def show_stats(clf: list, x, y):
@@ -135,6 +131,25 @@ def label_inputs(clf, vect: TfidfVectorizer):
     print(f"ratio correct: {correct} / {total} = {correct / total}")
 
 
+def create_clf(x_train, y_train):
+    """Creates a Gaussian Process CLF from sklearn and fits it
+    
+    Parameters
+    ----
+    x_train: list
+        TFIDF vectorized dense matrix
+    y_train: list[int]
+        list of labels
+        
+    Returns
+    ----
+    clf: sklearn.gaussian_process.GaussianProcessClassifier
+    """
+    clf = GaussianProcessClassifier()
+    clf.fit(x_train, y_train)
+    return clf
+
+
 def main():
     # https://scikit-learn.org/stable/auto_examples/semi_supervised/plot_self_training_varying_threshold.html#sphx-glr-auto-examples-semi-supervised-plot-self-training-varying-threshold-py
     fn = "Queries/normalized_with_intents.txt"
@@ -145,20 +160,18 @@ def main():
     x_train, x_test, y_train, y_test = train_test_split(
         X, labels, random_state=3, test_size=0.5
     )
-    clf = tree.DecisionTreeClassifier()
-    clf.fit(x_train, y_train)
-    clf2 = GaussianProcessClassifier()
-    clf2.fit(x_train, y_train)
-    print(f"{type(clf2).__name__} training acc: {clf2.score(x_train, y_train)}")
-    clf3 = RandomForestClassifier()
-    clf3.fit(x_train, y_train)
-    print(f"{type(clf3).__name__} training acc: {clf3.score(x_train, y_train)}")
-    clf4 = KNeighborsClassifier(n_neighbors=3, weights="distance").fit(x_train, y_train)
-    print(f"{type(clf4).__name__} training acc: {clf4.score(x_train, y_train)}")
-    clf5 = MLPClassifier(max_iter=1000).fit(x_train, y_train)
-    print(f"{type(clf5).__name__} training acc: {clf5.score(x_train, y_train)}")
-    classes = [clf, clf2, clf3, clf4, clf5]
-    print()
+    # clf = tree.DecisionTreeClassifier()
+    # clf.fit(x_train, y_train)
+    # clf2 = GaussianProcessClassifier()
+    # clf2.fit(x_train, y_train)
+    # print(f"{type(clf2).__name__} training acc: {clf2.score(x_train, y_train)}")
+    # clf3 = RandomForestClassifier()
+    # clf3.fit(x_train, y_train)
+    # print(f"{type(clf3).__name__} training acc: {clf3.score(x_train, y_train)}")
+    # clf4 = KNeighborsClassifier(n_neighbors=3, weights="distance").fit(x_train, y_train)
+    # print(f"{type(clf4).__name__} training acc: {clf4.score(x_train, y_train)}")
+    gaus_clf = create_clf(x_train=x_train, y_train=y_train)
+    classes = [gaus_clf]
     for t in list(set(labels)):
         print(list(y_train).count(t), "training data points for class", t, end=" | ")
         print(list(y_test).count(t), "testing data points for class", t)
@@ -169,9 +182,9 @@ def main():
         print(
             f"accuracy {accuracy_score(y_test, c.predict(x_test))} from {type(c).__name__}"
         )
-    testing = clf2.predict_proba(x_test[0])
-    print(f"Predicting on {LABELS[y_test[0]]} = {testing}")
-    show_stats(classes, x_test, y_test)
+    # testing = clf2.predict_proba(x_test[0])
+    # print(f"Predicting on {LABELS[y_test[0]]} = {testing}")
+    # show_stats(classes, x_test, y_test)
 
     # label_inputs(clf2, vect)
 
@@ -185,7 +198,12 @@ def main():
 
 
 if __name__ == "__main__":
-    # fn = "Queries\\normalized_with_intents.txt"
-    # q, a, l = get_data(fn)
-    # print(get_features(q[0]))
-    main()
+    # main()
+    fn = "Queries/normalized_with_intents.txt"
+    x, y, vect = create_vectorizer(fn)
+    clf = create_clf(x, y)
+    query = "What are Professor Khosmood's office hours?"
+    print(
+        f"For query '{query}' predicting these probabilities {clf.predict_proba(vectorize_query(vect, query=query))}"
+    )
+
