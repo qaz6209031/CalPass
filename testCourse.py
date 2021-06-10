@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
-from calpass import getCourseInfo
+from calpass import getCourseInfo, normalizeQuery
 
-in_file = open('./Queries/normalized_with_intents.txt', 'r')
+in_file = open('./Queries/train_data.txt', 'r')
 
 rows = []
 answered = 0
@@ -12,10 +12,7 @@ for line in in_file:
    question = words[0].lower()
    answer = words[1]
    label = words[2]
-
-   question = question.replace('[course]', 'csc 482')
-   question = question.replace('[course code]', 'csc 482')
-   question = question.replace('[class number]', 'csc 482')
+   question = normalizeQuery(question)
    response = getCourseInfo(question)
 
    if response:

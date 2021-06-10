@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
-from calpass import getProfessorInfo
+from calpass import getProfessorInfo, normalizeQuery
 
-in_file = open('./Queries/normalized_with_intents.txt', 'r')
+in_file = open('./Queries/train_data.txt', 'r')
 
 rows = []
 answered = 0
@@ -14,11 +14,9 @@ for line in in_file:
    label = words[2]
    if label != '0':
       continue
-   if 'office hour' in question:
+   if 'office hour' in question: # Can't find office hour information from web
       continue
-   question = question.replace('[professor]', 'Khosmood Foaad')
-   question = question.replace('[course]', 'csc 482')
-   question = question.replace('[course code]', 'csc 482')
+   question = normalizeQuery(question)
    response = getProfessorInfo(question)
    if not response:
       response = np.nan
