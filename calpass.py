@@ -9,7 +9,7 @@ import numpy as np
 PROFESSOR_TABLE, COURSE_TABLE = getData()
 
 def main():
-	pass
+	print(normalizeQuery("What courses will professor foaad khosmood teach spring 2021?"))
 '''
 Once the query get classified as professor, call this function and return proper response
 Answered 68% of all professor related quesiton now
@@ -83,13 +83,13 @@ def getCourseInfo(query):
 	LOCATION_KEYS = ['location', 'where', 'building', 'room', 'virtual']
 	NAME_KEYS = ['name', 'called', 'description']
 	PROF_KEYS = ['who', 'professor', 'instructor', 'faculty']
-	DROP_KEYS = ['drop', 'dropped', 'withdraw']
+	DROP_KEYS = ['drop', 'dropped', 'withdraw', 'dropping']
 	START_KEYS = ['start', 'start time']
 	END_KEYS = ['end', 'end time']
-	DAYS_KEYS = ['day']
-	ENROLL_KEYS = ['enroll', 'enrollment', 'capacity', 'cap', 'available', 'open', 'remaining']
-	COURSE_NUMBER_KEYS = ['course number']
-	TYPE_KEYS = ['type']
+	DAYS_KEYS = ['day', 'section']
+	ENROLL_KEYS = ['enroll', 'enrollment', 'capacity', 'cap', 'available', 'open', 'remaining', 'seats']
+	COURSE_NUMBER_KEYS = ['course number', 'class number', 'class code']
+	TYPE_KEYS = ['type', 'lab']
 
 	courseName = getCourseName(query)
 	if not courseName:
