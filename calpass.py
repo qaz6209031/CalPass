@@ -1,7 +1,7 @@
 from data import getData
 from difflib import SequenceMatcher
 import nltk
-nltk.download('wordnet') # in order to use lemmatizer
+# nltk.download('wordnet') # in order to use lemmatizer
 from nltk.stem import WordNetLemmatizer
 import re
 import numpy as np
@@ -22,7 +22,7 @@ def getProfessorInfo(query):
 	DEPARTMENT_KEYS = ['department']
 	EMAIL_KEYS = ['email', 'message']
 	TITLE_KEYS = ['title', 'type of teacher']
-	TEACH_KEYS = ['teach', 'teaching', 'taught', 'instruct', 'courses']
+	TEACH_KEYS = ['teach', 'teaching', 'taught', 'instruct', 'courses', 'class', 'section']
 	ALIAS_KEYS = ['alias', 'username']
 	SIMILARITY = 0.8
 
@@ -56,7 +56,7 @@ def getProfessorInfo(query):
 	elif title and not table['title'].empty:
 		response = f"Professor {name}'s title is {table['title'].iloc[0]}"
 	elif alias and not table['email'].empty:
-		response = f"Professor {name}'s alia is {table['email'].iloc[0].split('@')[0]}"
+		response = f"Professor {name}'s alias is {table['email'].iloc[0].split('@')[0]}"
 	elif teach:
 		filter = (COURSE_TABLE['Professor'] == name)
 		courses = COURSE_TABLE.loc[filter].Course.to_list()
@@ -90,6 +90,9 @@ def getCourseInfo(query):
 	ENROLL_KEYS = ['enroll', 'enrollment', 'capacity', 'cap', 'available', 'open', 'remaining', 'seats']
 	COURSE_NUMBER_KEYS = ['course number', 'class number', 'class code']
 	TYPE_KEYS = ['type', 'lab']
+	NSECTIONS_KEYS = ['number', 'section', 'opening', 'taught', 'teach', 'offer', 'take']
+	TIMES_KEYS = ['time', 'day', 'when', 'MWF', 'TR', 'MTWRF', 'get out']
+	CAPACITY_KEYS = ['capacity', 'seat', 'spot', 'enroll']
 
 	courseName = getCourseName(query)
 	if not courseName:
@@ -108,6 +111,9 @@ def getCourseInfo(query):
 	enroll = extractEntity(query, ENROLL_KEYS, SIMILARITY) 
 	courseNumber = extractEntity(query, COURSE_NUMBER_KEYS, SIMILARITY) 
 	types =  extractEntity(query, TYPE_KEYS, SIMILARITY) 
+	nsections = extractEntity(query, NSECTIONS_KEYS, SIMILARITY)
+	times = extractEntity(query, TIMES_KEYS, SIMILARITY)
+	capacity = extractEntity(query, CAPACITY_KEYS, SIMILARITY)
 	
 	response = ''
 	if waitlist:
@@ -143,6 +149,19 @@ def getCourseInfo(query):
 	elif types:
 		for index, row in table.iterrows():
 			response += f"{courseName} section {row['Section']} is {row['Course Type']}. "
+	elif nsections:
+		response += f'There are {table.shape[0]} sections of {courseName}.'
+	elif times:
+		response += f'There are {table.shape[0]} sections of {courseName}. They are offered at the following times:'
+		for index, row in table.iterrows():
+			if row['Days'] == np.nan:
+				response += f"{row['Course']}-{row['Section']}: N/A"	
+			else:
+				response += f"{row['Course']}-{row['Section']}: {row['Days']}, {row['Start Time']}-{row['End Time']}"
+	elif capacity:
+		response += f'There are {table.shape[0]} sections of {courseName}.'
+		for index, row in table.iterrows():
+			response += f"{row['Course']}-{row['Section']}:  {row['Enrollment Capacity']} seats, {row['Enrolled']} enrolled, {row['Waitlisted']} waitlisted"
 	else:
 		response = None
 	
@@ -154,8 +173,9 @@ def getBuildingInfo(query):
 
 	COURSES_KEYS = ['class', 'classes', 'course', 'courses']
 	SECTIONS_KEYS = ['section', 'sections']
-	PROFESSOR_KEYS = ['professor', 'professors', 'teacher', 'teachers', 'instructor', 'faculty', 'office']
+	PROFESSOR_KEYS = ['professor', 'professors', 'teacher', 'teachers', 'instructor', 'faculty', 'office', 'teach']
 	CAPACITY_KEYS = ['capacity', 'fit', 'size']
+	AVAILABILITY_KEYS = ['available', 'occupied', 'free']
 	
 	buildingNum = getBuildingNum(query)
 	if not buildingNum:
@@ -168,6 +188,7 @@ def getBuildingInfo(query):
 	sections = extractEntity(query, SECTIONS_KEYS, SIMILARITY)
 	professor = extractEntity(query, PROFESSOR_KEYS, SIMILARITY)
 	capacity = extractEntity(query, CAPACITY_KEYS, SIMILARITY)
+	availability = extractEntity(query, AVAILABILITY_KEYS, SIMILARITY)
 	
 	response = ''
 	if courses:
@@ -178,11 +199,18 @@ def getBuildingInfo(query):
 		buildingStr = ', '.join(courseSections)
 		response = f'The following sections are taught in {buildingNum}, {buildingStr}.'
 	elif professor:
-		for index, row in filteredProfsTable:
+		for index, row in filteredProfsTable.iterrows():
 			response += f"{row['name']}'s office is at {buildingNum}."
 	elif capacity:
-		for index, row in filteredCoursesTable:
+		for index, row in filteredCoursesTable.iterrows():
 			response += f"{buildingNum}'s capacity for {row['Course']} is {row['Location Capacity']}."
+	elif availability:
+		if filteredProfsTable.shape[0]:
+			response += f"{buildingNum} is occupied during the following professor(s) office hours: {', '.join(list(filteredProfsTable['name'].tolist()))}"
+		if filteredCoursesTable.shape[0]:
+			response += f"{buildingNum} is occupied at the following times for classes:"
+			for index, row in filteredCoursesTable.iterrows():
+				response += f"{row['Course']}-{row['Section']}: {row['Days']}, {row['Start Time']}-{row['End Time']}"
 	else:
 		response = None
 	
