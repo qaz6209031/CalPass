@@ -8,10 +8,11 @@ from nltk.tag import pos_tag
 import numpy as np
 from nltk.corpus import stopwords
 from nltk.stem.snowball import EnglishStemmer
-from nltk.stem.lancaster import LancasterStemmer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.gaussian_process import GaussianProcessClassifier
+from sklearn.semi_supervised import LabelPropagation
+from sklearn.svm import SVC
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -73,7 +74,11 @@ def create_vectorizer(fn):
 
     questions, sample_labels = get_data(fn)
     tfidf = TfidfVectorizer(
-        ngram_range=(1, 2), max_features=10000, norm="l1", preprocessor=get_features
+        ngram_range=(1, 3),
+        max_features=1500,
+        norm="l1",
+        preprocessor=get_features,
+        binary=True,
     )
     X = tfidf.fit_transform(questions)
     X = X.todense()
@@ -90,7 +95,9 @@ def show_stats(clf: list, x, y):
     ax = ax.flatten()
     for c, a in zip(clf, ax):
         plot_confusion_matrix(c, x, y, ax=a, cmap="Blues")
-        a.title.set_text(type(c).__name__)
+        a.set_title(type(c).__name__, pad=0.01)
+    else:
+        fig.delaxes(ax[-1])
     plt.show()
 
 
@@ -145,59 +152,135 @@ def create_clf(x_train, y_train):
         
     Returns
     ----
-    clf: sklearn.gaussian_process.GaussianProcessClassifier
+    clf: sklearn.neighbors.KNeighborsClassifier
     """
     # TODO: retry other clf
-    clf = GaussianProcessClassifier()
-    clf.fit(x_train, y_train)
+    clf = KNeighborsClassifier(n_neighbors=13, weights="distance", p=1, n_jobs=-1,).fit(
+        x_train, y_train
+    )
     return clf
 
 
 """
-Training Acc
-0.75 when max_depth None, 0.635 when 22
-doesn't change for estimators
-min_samples_split - higher when this is less, 0.65 when 2. 0.6 when 20
-min_samples_leaf - 
-
-Testing Acc maxes when (each change is compounded on in order)
-n_estimators ~1000, spiked around 1600 also, 0.45
-max_depth = 22, 0.49
-min_samples_split  - higher when this is greater, 0.496 20
-min_samples_leaf - 
+max_features 0 or 450?
 """
 
 
-def test_forest():
-    fn = "Queries/normalized_with_intents.txt"
+def test_neighbor():
+    fn = TRAINED_FILE
     X, labels, vect = create_vectorizer(fn)
     random.shuffle(X)
     print(len(vect.get_feature_names()))
     x_train, x_test, y_train, y_test = train_test_split(
         X, labels, random_state=3, test_size=0.3
     )
-    est = np.arange(1, 11, 1)
+    classes = ["ball_tree", "kd_tree", "brute"]
     train_acc = []
     test_acc = []
-    for val in est:
-        forest = RandomForestClassifier(
-            n_estimators=1000,
-            max_depth=22,
-            min_samples_split=20,
-            min_samples_leaf=val,
-            random_state=10,
+    fig, axs = plt.subplots(1, 1, sharey=True, figsize=(10, 6))
+    fig.suptitle("Accuracy of Model vs Algorithms")
+    axs.set_ylabel("Accuracy")
+    axs.set_xlabel("algorithm")
+    for i, class_m in enumerate(classes):
+        forest = KNeighborsClassifier(
+            n_neighbors=13, weights="distance", p=1, algorithm=class_m, n_jobs=-1,
         ).fit(x_train, y_train)
         train_acc.append(forest.score(x_train, y_train))
         test_acc.append(accuracy_score(y_test, forest.predict(x_test)))
 
-    plt.plot(est, train_acc, c="b", marker="*", label="Training")
-    plt.plot(est, test_acc, c="r", marker="o", label="Testing")
+    # for i, m in enumerate(classes):
+    #     axs[i].plot(est, train_acc[i], c="b", marker="*", label="Training")
+    #     axs[i].plot(est, test_acc[i], c="r", marker="o", label="Testing")
+    #     axs[i].set_title(m if m is not None else "No Class")
+    axs.plot(classes, train_acc, c="b", marker="*", label="Training")
+    axs.plot(classes, test_acc, c="r", marker="o", label="Testing")
+    _, top = plt.ylim()
+    plt.ylim(0, top + 0.1)
+    plt.legend()
+    plt.show()
+
+
+def test_propagation():
+    fn = TRAINED_FILE
+    X, labels, vect = create_vectorizer(fn)
+    random.shuffle(X)
+    print(len(vect.get_feature_names()))
+    x_train, x_test, y_train, y_test = train_test_split(
+        X, labels, random_state=3, test_size=0.3
+    )
+    classes = ["knn", "rbf"]
+    est = np.linspace(0.000001, 0.01, 100)
+    train_acc = [[] for _ in range(len(classes))]
+    test_acc = [[] for _ in range(len(classes))]
+    fig, axs = plt.subplots(1, len(classes), sharey=True, figsize=(10, 6))
+    fig.suptitle("Accuracy of Model for Multiple Kernel vs Parameter")
+    axs[0].set_ylabel("Accuracy")
+    axs[0].set_xlabel("tol")
+    for i, class_m in enumerate(classes):
+        for val in est:
+            forest = LabelPropagation(
+                kernel=class_m, gamma=29.7, n_neighbors=3, tol=val, n_jobs=-1,
+            ).fit(x_train, y_train)
+            train_acc[i].append(forest.score(x_train, y_train))
+            test_acc[i].append(accuracy_score(y_test, forest.predict(x_test)))
+
+    for i, m in enumerate(classes):
+        axs[i].plot(est, train_acc[i], c="b", marker="*", label="Training")
+        axs[i].plot(est, test_acc[i], c="r", marker="o", label="Testing")
+        axs[i].set_title(m if m is not None else "No Class")
+    # axs.plot(classes, train_acc, c="b", marker="*", label="Training")
+    # axs.plot(classes, test_acc, c="r", marker="o", label="Testing")
+    _, top = plt.ylim()
+    plt.ylim(0, top + 0.1)
+    plt.legend()
+    plt.show()
+
+
+def test_forest():
+    fn = TRAINED_FILE
+    X, labels, vect = create_vectorizer(fn)
+    random.shuffle(X)
+    print(len(vect.get_feature_names()))
+    x_train, x_test, y_train, y_test = train_test_split(
+        X, labels, random_state=3, test_size=0.3
+    )
+    classes = ["balanced", "balanced_subsample", "None"]
+    est = np.arange(1, 682, 75)
+    train_acc = [[] for _ in range(len(classes))]
+    test_acc = [[] for _ in range(len(classes))]
+    fig, axs = plt.subplots(1, 1, sharey=True, figsize=(10, 6))
+    fig.suptitle("Accuracy of Model vs Multiple classes")
+    axs.set_ylabel("Accuracy")
+    axs.set_xlabel("Class")
+    for i, class_m in enumerate(classes):
+        forest = RandomForestClassifier(
+            n_estimators=950,
+            criterion="entropy",
+            max_depth=7,
+            max_features=0.001,
+            min_impurity_decrease=0.2,
+            ccp_alpha=0.116,
+            max_samples=600,
+            class_weight=class_m if class_m != "None" else None,
+            n_jobs=-1,
+            random_state=10,
+        ).fit(x_train, y_train)
+        train_acc[i].append(forest.score(x_train, y_train))
+        test_acc[i].append(accuracy_score(y_test, forest.predict(x_test)))
+
+    # for i, m in enumerate(classes):
+    #     axs[i].plot(est, train_acc[i], c="b", marker="*", label="Training")
+    #     axs[i].plot(est, test_acc[i], c="r", marker="o", label="Testing")
+    #     axs[i].set_title(m if m is not None else "No Class")
+    axs.plot(classes, train_acc, c="b", marker="*", label="Training")
+    axs.plot(classes, test_acc, c="r", marker="o", label="Testing")
+    _, top = plt.ylim()
+    plt.ylim(0, top + 0.1)
     plt.legend()
     plt.show()
 
 
 def main():
-    # https://scikit-learn.org/stable/auto_examples/semi_supervised/plot_self_training_varying_threshold.html#sphx-glr-auto-examples-semi-supervised-plot-self-training-varying-threshold-py
     fn = TRAINED_FILE
 
     X, labels, vect = create_vectorizer(fn)
@@ -210,10 +293,22 @@ def main():
     clf2 = GaussianProcessClassifier()
     clf2.fit(x_train, y_train)
     print(f"{type(clf2).__name__} training acc: {clf2.score(x_train, y_train)}")
-    clf3 = RandomForestClassifier(n_estimators=200)
+    clf3 = RandomForestClassifier(
+        n_estimators=950,
+        max_depth=7,
+        max_features=0.001,
+        min_impurity_decrease=0.2,
+        ccp_alpha=0.116,
+        max_samples=600,
+        class_weight=None,
+        n_jobs=-1,
+        random_state=10,
+    )
     clf3.fit(x_train, y_train)
     print(f"{type(clf3).__name__} training acc: {clf3.score(x_train, y_train)}")
-    clf4 = KNeighborsClassifier(n_neighbors=2, weights="distance").fit(x_train, y_train)
+    clf4 = KNeighborsClassifier(
+        n_neighbors=13, weights="distance", p=1, n_jobs=-1,
+    ).fit(x_train, y_train)
     print(f"{type(clf4).__name__} training acc: {clf4.score(x_train, y_train)}")
     classes = [clf2, clf3, clf4]
     print()
@@ -230,7 +325,7 @@ def main():
 
     # testing = clf2.predict_proba(x_test[0])
     # print(f"Predicting on {LABELS[y_test[0]]} = {testing}")
-    # show_stats(classes, x_test, y_test)
+    show_stats(classes, x_test, y_test)
 
     # label_inputs(clf2, vect)
 
@@ -256,8 +351,7 @@ def load_model():
 
 
 if __name__ == "__main__":
-    # main()
-    test_forest()
+    main()
     # fn = TRAINED_FILE
     # x, y, vect = create_vectorizer(fn)
     # clf = create_clf(x, y)
