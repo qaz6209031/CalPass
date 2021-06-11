@@ -162,11 +162,6 @@ def create_clf(x_train, y_train):
     return clf
 
 
-"""
-max_features 0 or 450?
-"""
-
-
 def test_neighbor():
     fn = TRAINED_FILE
     X, labels, vect = create_vectorizer(fn)
@@ -201,86 +196,6 @@ def test_neighbor():
     plt.show()
 
 
-def test_propagation():
-    fn = TRAINED_FILE
-    X, labels, vect = create_vectorizer(fn)
-    random.shuffle(X)
-    print(len(vect.get_feature_names()))
-    x_train, x_test, y_train, y_test = train_test_split(
-        X, labels, random_state=3, test_size=0.3
-    )
-    classes = ["knn", "rbf"]
-    est = np.linspace(0.000001, 0.01, 100)
-    train_acc = [[] for _ in range(len(classes))]
-    test_acc = [[] for _ in range(len(classes))]
-    fig, axs = plt.subplots(1, len(classes), sharey=True, figsize=(10, 6))
-    fig.suptitle("Accuracy of Model for Multiple Kernel vs Parameter")
-    axs[0].set_ylabel("Accuracy")
-    axs[0].set_xlabel("tol")
-    for i, class_m in enumerate(classes):
-        for val in est:
-            forest = LabelPropagation(
-                kernel=class_m, gamma=29.7, n_neighbors=3, tol=val, n_jobs=-1,
-            ).fit(x_train, y_train)
-            train_acc[i].append(forest.score(x_train, y_train))
-            test_acc[i].append(accuracy_score(y_test, forest.predict(x_test)))
-
-    for i, m in enumerate(classes):
-        axs[i].plot(est, train_acc[i], c="b", marker="*", label="Training")
-        axs[i].plot(est, test_acc[i], c="r", marker="o", label="Testing")
-        axs[i].set_title(m if m is not None else "No Class")
-    # axs.plot(classes, train_acc, c="b", marker="*", label="Training")
-    # axs.plot(classes, test_acc, c="r", marker="o", label="Testing")
-    _, top = plt.ylim()
-    plt.ylim(0, top + 0.1)
-    plt.legend()
-    plt.show()
-
-
-def test_forest():
-    fn = TRAINED_FILE
-    X, labels, vect = create_vectorizer(fn)
-    random.shuffle(X)
-    print(len(vect.get_feature_names()))
-    x_train, x_test, y_train, y_test = train_test_split(
-        X, labels, random_state=3, test_size=0.3
-    )
-    classes = ["balanced", "balanced_subsample", "None"]
-    est = np.arange(1, 682, 75)
-    train_acc = [[] for _ in range(len(classes))]
-    test_acc = [[] for _ in range(len(classes))]
-    fig, axs = plt.subplots(1, 1, sharey=True, figsize=(10, 6))
-    fig.suptitle("Accuracy of Model vs Multiple classes")
-    axs.set_ylabel("Accuracy")
-    axs.set_xlabel("Class")
-    for i, class_m in enumerate(classes):
-        forest = RandomForestClassifier(
-            n_estimators=950,
-            criterion="entropy",
-            max_depth=7,
-            max_features=0.001,
-            min_impurity_decrease=0.2,
-            ccp_alpha=0.116,
-            max_samples=600,
-            class_weight=class_m if class_m != "None" else None,
-            n_jobs=-1,
-            random_state=10,
-        ).fit(x_train, y_train)
-        train_acc[i].append(forest.score(x_train, y_train))
-        test_acc[i].append(accuracy_score(y_test, forest.predict(x_test)))
-
-    # for i, m in enumerate(classes):
-    #     axs[i].plot(est, train_acc[i], c="b", marker="*", label="Training")
-    #     axs[i].plot(est, test_acc[i], c="r", marker="o", label="Testing")
-    #     axs[i].set_title(m if m is not None else "No Class")
-    axs.plot(classes, train_acc, c="b", marker="*", label="Training")
-    axs.plot(classes, test_acc, c="r", marker="o", label="Testing")
-    _, top = plt.ylim()
-    plt.ylim(0, top + 0.1)
-    plt.legend()
-    plt.show()
-
-
 def main():
     fn = TRAINED_FILE
 
@@ -298,7 +213,7 @@ def main():
             n_estimators=val,
             random_state=5,
             n_jobs=-1,
-        ).fit(x_train, y_train)
+        ).fit(X=x_train, y=y_train)
         print(f"{type(clf).__name__} training acc: {clf.score(x_train, y_train)}")
         acc.append(accuracy_score(y_test, clf.predict(x_test)))
     for t in list(set(labels)):
