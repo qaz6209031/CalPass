@@ -2,12 +2,15 @@ import click
 import pickle
 
 import calpass
-from keywords import load_model, vectorize_query, LABELS
+from keywords import get_features, load_model, vectorize_query, LABELS
 
 @click.group(invoke_without_command=True)
 @click.option('--show_signal', default=False, is_flag=True, help='Display signal for chat bot response')
 @click.pass_context
 def cli(ctx, show_signal):
+   """
+   To quit: Ctrl+C, Enter
+   """
    obj = ctx.obj
 
    model = obj['model']
@@ -22,31 +25,33 @@ def cli(ctx, show_signal):
 
       bucket = LABELS[model.predict(vectorize_query(vect, query=query))[0]]
 
-      # DEBUG:
-      click.echo(f'bucket={bucket}')
-
       if bucket == 'Professor':
-         signal = 'Normal'
-         response = calpass.getProfessorInfo(query)
+         info_obj = calpass.getProfessorInfo(query)
       elif bucket == 'Course':
-         signal = 'Normal'
-         response = calpass.getCourseInfo(query)
+         info_obj = calpass.getCourseInfo(query)
       elif bucket == 'Building':
-         signal = 'Normal'
-         response = calpass.getBuildingInfo(query)
+         info_obj = calpass.getBuildingInfo(query)
       elif bucket == 'End':
-         signal = 'End'
-         click.echo('Goodbye!')
+         if show_signal:
+            click.echo('[end conversation] Goodbye!')
+         else:
+            click.echo('Goodbye!')
          return
-
-      if response is None or bucket == 'Other':
-         signal = 'Unknown'
-         response = "I don't understand"
+      elif bucket == 'Other':
+         info_obj = {
+            'type': 'unknown',
+            'error': '',
+            'target': '',
+            'response': 'failed to determine type of question'
+         }
    
+      signal_str = ''
       if show_signal:
-         click.echo(f'[{signal}]: {response}')
-      else:
-         click.echo(response)
+         for info_key in ['type', 'error', 'target']:
+            if info_obj[info_key]:
+               signal_str += f"[{info_key}: {info_obj[info_key]}] "
+   
+      click.echo(signal_str + info_obj['response'])
 
 def main():
    load_model()
