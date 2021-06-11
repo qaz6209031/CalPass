@@ -17,9 +17,9 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import plot_confusion_matrix
 import matplotlib.pyplot as plt
 
-# nltk.download('punkt')
-# nltk.download('stopwords')
-# nltk.download('averaged_perceptron_tagger')
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
 
 
 LABELS = ["Professor", "Course", "Building", "Other", "End"]
