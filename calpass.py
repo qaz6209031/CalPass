@@ -48,13 +48,13 @@ def getProfessorInfo(query):
 	table = PROFESSOR_TABLE.loc[filter]
 
 	# Get the hint of query
-	phone = extractEntity(query, PHONE_KEYS, SIMILARITY) 
-	officeLocation = extractEntity(query, OFFICE_LOCATION_KEYS, SIMILARITY) 
-	department = extractEntity(query, DEPARTMENT_KEYS, SIMILARITY) 
-	email = extractEntity(query, EMAIL_KEYS, SIMILARITY) 
-	title = extractEntity(query, TITLE_KEYS, SIMILARITY) 
-	teach = extractEntity(query, TEACH_KEYS, SIMILARITY) 
-	alias = extractEntity(query, ALIAS_KEYS, SIMILARITY) 
+	phone, _  = extractEntity(query, PHONE_KEYS, SIMILARITY) 
+	officeLocation, _ = extractEntity(query, OFFICE_LOCATION_KEYS, SIMILARITY) 
+	department, _ = extractEntity(query, DEPARTMENT_KEYS, SIMILARITY) 
+	email, _ = extractEntity(query, EMAIL_KEYS, SIMILARITY) 
+	title, _ = extractEntity(query, TITLE_KEYS, SIMILARITY) 
+	teach, _ = extractEntity(query, TEACH_KEYS, SIMILARITY) 
+	alias, _ = extractEntity(query, ALIAS_KEYS, SIMILARITY) 
 
 	if phone and not table['phone'].empty:
 		infoObj['response'] = f"Professor {name}'s phone number is {table['phone'].iloc[0]}"
@@ -73,7 +73,7 @@ def getProfessorInfo(query):
 		courses = COURSE_TABLE.loc[filter].Course.to_list()
 		#Yes / No question
 		if any([query.startswith(w) for w in ['does', 'did', 'is']]):
-			course = extractEntity(query, ALL_COURSES, SIMILARITY) 
+			course, _ = extractEntity(query, ALL_COURSES, SIMILARITY) 
 			infoObj['response'] = 'Yes' if course else 'No'
 		else:
 			courseStr = ' '.join(courses)
@@ -125,20 +125,20 @@ def getCourseInfo(query):
 	filter = (COURSE_TABLE['Course'] == courseName)
 	table = COURSE_TABLE.loc[filter]
 
-	waitlist = extractEntity(query, WAIT_LIST_KEYS, SIMILARITY) 
-	location = extractEntity(query, LOCATION_KEYS, SIMILARITY) 
-	name = extractEntity(query, NAME_KEYS, SIMILARITY) 
-	professor = extractEntity(query, PROF_KEYS, SIMILARITY) 
-	drop = extractEntity(query, DROP_KEYS, SIMILARITY) 
-	start = extractEntity(query, START_KEYS, SIMILARITY) 
-	end = extractEntity(query, END_KEYS, SIMILARITY) 
-	day = extractEntity(query, DAYS_KEYS, SIMILARITY) 
-	enroll = extractEntity(query, ENROLL_KEYS, SIMILARITY) 
-	courseNumber = extractEntity(query, COURSE_NUMBER_KEYS, SIMILARITY) 
-	types =  extractEntity(query, TYPE_KEYS, SIMILARITY) 
-	nsections = extractEntity(query, NSECTIONS_KEYS, SIMILARITY)
-	times = extractEntity(query, TIMES_KEYS, SIMILARITY)
-	capacity = extractEntity(query, CAPACITY_KEYS, SIMILARITY)
+	waitlist, _ = extractEntity(query, WAIT_LIST_KEYS, SIMILARITY) 
+	location, _ = extractEntity(query, LOCATION_KEYS, SIMILARITY) 
+	name, _ = extractEntity(query, NAME_KEYS, SIMILARITY) 
+	professor, _ = extractEntity(query, PROF_KEYS, SIMILARITY) 
+	drop, _ = extractEntity(query, DROP_KEYS, SIMILARITY) 
+	start, _ = extractEntity(query, START_KEYS, SIMILARITY) 
+	end, _ = extractEntity(query, END_KEYS, SIMILARITY) 
+	day, _ = extractEntity(query, DAYS_KEYS, SIMILARITY) 
+	enroll, _ = extractEntity(query, ENROLL_KEYS, SIMILARITY) 
+	courseNumber, _ = extractEntity(query, COURSE_NUMBER_KEYS, SIMILARITY) 
+	types, _ =  extractEntity(query, TYPE_KEYS, SIMILARITY) 
+	nsections, _ = extractEntity(query, NSECTIONS_KEYS, SIMILARITY)
+	times, _ = extractEntity(query, TIMES_KEYS, SIMILARITY)
+	capacity, _ = extractEntity(query, CAPACITY_KEYS, SIMILARITY)
 	
 	infoObj['response'] = ''
 	if waitlist:
@@ -223,11 +223,11 @@ def getBuildingInfo(query):
 	filteredProfsTable = PROFESSOR_TABLE.loc[PROFESSOR_TABLE['office'] == buildingNum]
 	filteredCoursesTable = COURSE_TABLE.loc[COURSE_TABLE['Location'] == buildingNum]
 
-	courses = extractEntity(query, COURSES_KEYS, SIMILARITY) 
-	sections = extractEntity(query, SECTIONS_KEYS, SIMILARITY)
-	professor = extractEntity(query, PROFESSOR_KEYS, SIMILARITY)
-	capacity = extractEntity(query, CAPACITY_KEYS, SIMILARITY)
-	availability = extractEntity(query, AVAILABILITY_KEYS, SIMILARITY)
+	courses, _ = extractEntity(query, COURSES_KEYS, SIMILARITY) 
+	sections, _ = extractEntity(query, SECTIONS_KEYS, SIMILARITY)
+	professor, _ = extractEntity(query, PROFESSOR_KEYS, SIMILARITY)
+	capacity, _ = extractEntity(query, CAPACITY_KEYS, SIMILARITY)
+	availability, _ = extractEntity(query, AVAILABILITY_KEYS, SIMILARITY)
 	
 	if courses:
 		courseStr = ', '.join(list(set(filteredCoursesTable.Course.tolist())))
