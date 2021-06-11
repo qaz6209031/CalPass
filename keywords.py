@@ -155,7 +155,7 @@ def create_clf(x_train, y_train):
     # TODO: retry other clf
     clf = BaggingClassifier(
         base_estimator=DecisionTreeClassifier(max_depth=22,),
-        n_estimators=val,
+        n_estimators=25,
         random_state=5,
         n_jobs=-1,
     ).fit(x_train, y_train)
