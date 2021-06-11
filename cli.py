@@ -33,7 +33,7 @@ def cli(ctx, show_signal):
          info_obj = calpass.getBuildingInfo(query)
       elif bucket == 'End':
          if show_signal:
-            click.echo('[end conversation] Goodbye!')
+            click.echo('[type: end] Goodbye!')
          else:
             click.echo('Goodbye!')
          return
