@@ -9,7 +9,10 @@ import numpy as np
 PROFESSOR_TABLE, COURSE_TABLE = getData()
 
 def main():
-	print(normalizeQuery("What courses will professor foaad khosmood teach spring 2021?"))
+	LOCATIONS_RAW = set(PROFESSOR_TABLE.office) | set(COURSE_TABLE.Location)
+	# remove nan from locations
+	LOCATIONS = [loc for loc in LOCATIONS_RAW if str(loc) != 'nan'] 
+	print(LOCATIONS)
 '''
 Once the query get classified as professor, call this function and return proper response
 Answered 68% of all professor related quesiton now
@@ -210,7 +213,7 @@ def getBuildingInfo(query):
 		'response': ''
 	}
 
-	foundName, buildingNum = getCourseName(query)
+	foundName, buildingNum = getBuildingNum(query)
 	if not foundName:
 		infoObj['error'] = 'failed to find building number match'
 		infoObj['response'] = f'Did you mean {buildingNum}?'
