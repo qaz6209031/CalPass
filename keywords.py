@@ -8,11 +8,9 @@ from nltk.tag import pos_tag
 import numpy as np
 from nltk.corpus import stopwords
 from nltk.stem.snowball import EnglishStemmer
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import BaggingClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.gaussian_process import GaussianProcessClassifier
-from sklearn.semi_supervised import LabelPropagation
-from sklearn.svm import SVC
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -90,7 +88,7 @@ def vectorize_query(vector: TfidfVectorizer, query: str) -> np.ndarray:
     return vector.transform([query]).todense()
 
 
-def show_stats(clf: list, x, y):
+def show_class_stats(clf: list, x, y):
     fig, ax = plt.subplots(2, ceil(len(clf) / 2), figsize=(12, 5))
     ax = ax.flatten()
     for c, a in zip(clf, ax):
@@ -289,43 +287,39 @@ def main():
     x_train, x_test, y_train, y_test = train_test_split(
         X, labels, random_state=3, test_size=0.3
     )
-
-    clf2 = GaussianProcessClassifier()
-    clf2.fit(x_train, y_train)
-    print(f"{type(clf2).__name__} training acc: {clf2.score(x_train, y_train)}")
-    clf3 = RandomForestClassifier(
-        n_estimators=950,
-        max_depth=7,
-        max_features=0.001,
-        min_impurity_decrease=0.2,
-        ccp_alpha=0.116,
-        max_samples=600,
-        class_weight=None,
-        n_jobs=-1,
-        random_state=10,
-    )
-    clf3.fit(x_train, y_train)
-    print(f"{type(clf3).__name__} training acc: {clf3.score(x_train, y_train)}")
-    clf4 = KNeighborsClassifier(
-        n_neighbors=13, weights="distance", p=1, n_jobs=-1,
-    ).fit(x_train, y_train)
-    print(f"{type(clf4).__name__} training acc: {clf4.score(x_train, y_train)}")
-    classes = [clf2, clf3, clf4]
-    print()
+    acc = []
+    est = np.arange(4, 26, 3)
+    for val in est:
+        clf = BaggingClassifier(
+            base_estimator=DecisionTreeClassifier(max_depth=22,),
+            n_estimators=val,
+            random_state=5,
+            n_jobs=-1,
+        ).fit(x_train, y_train)
+        print(f"{type(clf).__name__} training acc: {clf.score(x_train, y_train)}")
+        acc.append(accuracy_score(y_test, clf.predict(x_test)))
     for t in list(set(labels)):
         print(list(y_train).count(t), "training data points for class", t, end=" | ")
         print(list(y_test).count(t), "testing data points for class", t)
 
     print(f"{len(y_test)} testing points")
-
-    for c in classes:
-        print(
-            f"accuracy {accuracy_score(y_test, c.predict(x_test))} from {type(c).__name__}"
-        )
+    plt.plot(est, acc, c="r", marker="o", alpha=0.6, label="Bagging Accuracy")
+    plt.plot(
+        est,
+        np.array([0.43 for _ in range(len(est))]),
+        "r--",
+        alpha=0.4,
+        label="KNeighbor solo, acc max",
+    )
+    plt.legend()
+    plt.ylabel("Accuracy")
+    plt.xlabel("Num DecisionTree Estimators")
+    plt.title("Bagging Classifier Accuracy vs num of estimators")
+    plt.show()
 
     # testing = clf2.predict_proba(x_test[0])
     # print(f"Predicting on {LABELS[y_test[0]]} = {testing}")
-    show_stats(classes, x_test, y_test)
+    # show_class_stats(classes, x_test, y_test)
 
     # label_inputs(clf2, vect)
 
