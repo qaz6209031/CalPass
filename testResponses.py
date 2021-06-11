@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from calpass import getProfessorInfo, getCourseInfo, getBuildingInfo, normalizeQuery
 
-in_file = open('./Queries/normalized_with_intents.txt', 'r')
+in_file = open('./Queries/train_data.txt', 'r')
 out_file = open('./unanswered_queries.txt', 'w')
 
 professorLabel = '0'
@@ -18,12 +18,6 @@ for line in in_file:
    answer = words[1]
    label = words[2]
 
-   question = question.replace('[professor]', 'Khosmood Foaad')
-   question = question.replace('[course]', 'csc 482')
-   question = question.replace('[course code]', 'csc 482')
-   question = question.replace('[class-number]', 'csc 482')
-   question = question.replace('[coursename]', 'csc 482')
-   question = question.replace('[location]', '014-0252')
    question = normalizeQuery(question)
 
    if label == professorLabel:
