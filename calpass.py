@@ -26,11 +26,22 @@ def getProfessorInfo(query):
 	ALIAS_KEYS = ['alias', 'username']
 	SIMILARITY = 0.8
 
-	# Get the name of professor
-	name = getProfName(query)
+	infoObj = {
+		'type': 'professor',
+		'error': '',
+		'target': '',
+		'response': ''
+	}
 
-	if not name:
-		return None
+	# Get the name of professor
+	foundName, name = getProfName(query)
+
+	if not foundName:
+		infoObj['error'] = 'failed to find professor name match'
+		infoObj['response'] = f'Did you mean {name}?'
+		return infoObj
+	else:
+		infoObj['target'] = name
 
 	# Pull out data based on name
 	filter = (PROFESSOR_TABLE['name'] == name)
@@ -46,31 +57,32 @@ def getProfessorInfo(query):
 	alias = extractEntity(query, ALIAS_KEYS, SIMILARITY) 
 
 	if phone and not table['phone'].empty:
-		response = f"Professor {name}'s phone number is {table['phone'].iloc[0]}"
+		infoObj['response'] = f"Professor {name}'s phone number is {table['phone'].iloc[0]}"
 	elif officeLocation and not table['office'].empty:
-		response = f"Professor {name}'s office location is {table['office'].iloc[0]}"
+		infoObj['response'] = f"Professor {name}'s office location is {table['office'].iloc[0]}"
 	elif department and not table['department'].empty:
-		response = f"Professor {name}'s department is {table['department'].iloc[0]}"
+		infoObj['response'] = f"Professor {name}'s department is {table['department'].iloc[0]}"
 	elif email and not table['email'].empty:
-		response = f"Professor {name}'s email is {table['email'].iloc[0]}"
+		infoObj['response'] = f"Professor {name}'s email is {table['email'].iloc[0]}"
 	elif title and not table['title'].empty:
-		response = f"Professor {name}'s title is {table['title'].iloc[0]}"
+		infoObj['response'] = f"Professor {name}'s title is {table['title'].iloc[0]}"
 	elif alias and not table['email'].empty:
-		response = f"Professor {name}'s alias is {table['email'].iloc[0].split('@')[0]}"
+		infoObj['response'] = f"Professor {name}'s alias is {table['email'].iloc[0].split('@')[0]}"
 	elif teach:
 		filter = (COURSE_TABLE['Professor'] == name)
 		courses = COURSE_TABLE.loc[filter].Course.to_list()
 		#Yes / No question
 		if any([query.startswith(w) for w in ['does', 'did', 'is']]):
 			course = extractEntity(query, ALL_COURSES, SIMILARITY) 
-			response = 'Yes' if course else 'No'
+			infoObj['response'] = 'Yes' if course else 'No'
 		else:
 			courseStr = ' '.join(courses)
-			response = f"Professor {name} is teaching {courseStr} Fall 2021"
+			infoObj['response'] = f"Professor {name} is teaching {courseStr} Fall 2021"
 	else:
-		response = None
+		infoObj['error'] = 'failed to determine question'
+		infoObj['response'] = "I don't understand."
 
-	return response
+	return infoObj
 '''
 Logic related to course info
 Answered 43% percent of all course related question
@@ -94,9 +106,22 @@ def getCourseInfo(query):
 	TIMES_KEYS = ['time', 'day', 'when', 'MWF', 'TR', 'MTWRF', 'get out']
 	CAPACITY_KEYS = ['capacity', 'seat', 'spot', 'enroll']
 
-	courseName = getCourseName(query)
-	if not courseName:
-		return None
+	infoObj = {
+		'type': 'course',
+		'error': '',
+		'target': '',
+		'response': ''
+	}
+
+	foundName, courseName = getCourseName(query)
+	if not foundName:
+		infoObj['error'] = 'failed to find course name match'
+		infoObj['response'] = f'Did you mean {courseName}?'
+		return infoObj
+	else:
+		infoObj['target'] = courseName
+
+
 	filter = (COURSE_TABLE['Course'] == courseName)
 	table = COURSE_TABLE.loc[filter]
 
@@ -115,57 +140,58 @@ def getCourseInfo(query):
 	times = extractEntity(query, TIMES_KEYS, SIMILARITY)
 	capacity = extractEntity(query, CAPACITY_KEYS, SIMILARITY)
 	
-	response = ''
+	infoObj['response'] = ''
 	if waitlist:
 		for index, row in table.iterrows():
-			response += f"There are {row['Waitlisted']} people on the waitlist of {courseName} section {row['Section']}. "
+			infoObj['response'] += f"There are {row['Waitlisted']} people on the waitlist of {courseName} section {row['Section']}.\n"
 	elif location:
 		for index, row in table.iterrows():
-			response += f"Location of {courseName} section {row['Section']} is {row['Location']}. "
+			infoObj['response'] += f"Location of {courseName} section {row['Section']} is {row['Location']}.\n"
 	elif name:
-		response = f"{courseName} is {table['Name'].iloc[0]}"
+		infoObj['response'] = f"{courseName} is {table['Name'].iloc[0]}"
 	elif professor:
 		profString = ', '.join(list(set(table.Professor.to_list())))
-		response = f"{profString} are teaching {courseName}"
+		infoObj['response'] = f"{profString} are teaching {courseName}"
 	elif drop:
 		for index, row in table.iterrows():
-			response += f"There are {row['Dropped']} people drop {courseName} section {row['Section']}. "
+			infoObj['response'] += f"There are {row['Dropped']} people drop {courseName} section {row['Section']}.\n"
 	elif start:
 		for index, row in table.iterrows():
-			response += f"Start time of {courseName} section {row['Section']} is {row['Days']} {row['Start Time']}. "
+			infoObj['response'] += f"Start time of {courseName} section {row['Section']} is {row['Days']} {row['Start Time']}.\n"
 	elif end:
 		for index, row in table.iterrows():
-			response += f"End time of {courseName} section {row['Section']} is {row['Days']} {row['End Time']}. "
+			infoObj['response'] += f"End time of {courseName} section {row['Section']} is {row['Days']} {row['End Time']}.\n"
 	elif day:
 		for index, row in table.iterrows():
-			response += f"{courseName} section {row['Section']} will be taught in {row['Days']}. "
+			infoObj['response'] += f"{courseName} section {row['Section']} will be taught in {row['Days']}.\n"
 	elif enroll:
-		response += f"Enrollment capacity of {courseName} is {table['Enrollment Capacity'].iloc[0]}. "
+		infoObj['response'] += f"Enrollment capacity of {courseName} is {table['Enrollment Capacity'].iloc[0]}. \n"
 		for index, row in table.iterrows():
-			response += f"Section {row['Section']} enrolled: {row['Enrolled']}. "
+			infoObj['response'] += f"Section {row['Section']} enrolled: {row['Enrolled']}.\n"
 	elif courseNumber:
 		for index, row in table.iterrows():
-			response += f"{courseName} section {row['Section']} has course number {row['Course Number']}. "
+			infoObj['response'] += f"{courseName} section {row['Section']} has course number {row['Course Number']}.\n"
 	elif types:
 		for index, row in table.iterrows():
-			response += f"{courseName} section {row['Section']} is {row['Course Type']}. "
+			infoObj['response'] += f"{courseName} section {row['Section']} is {row['Course Type']}.\n"
 	elif nsections:
-		response += f'There are {table.shape[0]} sections of {courseName}.'
+		infoObj['response'] += f'There are {table.shape[0]} sections of {courseName}.\n'
 	elif times:
-		response += f'There are {table.shape[0]} sections of {courseName}. They are offered at the following times:'
+		infoObj['response'] += f'There are {table.shape[0]} sections of {courseName}. They are offered at the following times:\n'
 		for index, row in table.iterrows():
 			if row['Days'] == np.nan:
-				response += f"{row['Course']}-{row['Section']}: N/A"	
+				infoObj['response'] += f"{row['Course']}-{row['Section']}: N/A\n"
 			else:
-				response += f"{row['Course']}-{row['Section']}: {row['Days']}, {row['Start Time']}-{row['End Time']}"
+				infoObj['response'] += f"{row['Course']}-{row['Section']}: {row['Days']}, {row['Start Time']}-{row['End Time']}\n"
 	elif capacity:
-		response += f'There are {table.shape[0]} sections of {courseName}.'
+		infoObj['response'] += f'There are {table.shape[0]} sections of {courseName}.\n'
 		for index, row in table.iterrows():
-			response += f"{row['Course']}-{row['Section']}:  {row['Enrollment Capacity']} seats, {row['Enrolled']} enrolled, {row['Waitlisted']} waitlisted"
+			infoObj['response'] += f"{row['Course']}-{row['Section']}:  {row['Enrollment Capacity']} seats, {row['Enrolled']} enrolled, {row['Waitlisted']} waitlisted.\n"
 	else:
-		response = None
+		infoObj['error'] = 'failed to determine question'
+		infoObj['response'] = "I don't understand."
 	
-	return response
+	return infoObj
 
 # Logic related to building info
 def getBuildingInfo(query):
@@ -177,9 +203,22 @@ def getBuildingInfo(query):
 	CAPACITY_KEYS = ['capacity', 'fit', 'size']
 	AVAILABILITY_KEYS = ['available', 'occupied', 'free']
 	
-	buildingNum = getBuildingNum(query)
-	if not buildingNum:
-		return None
+	infoObj = {
+		'type': 'building',
+		'error': '',
+		'target': '',
+		'response': ''
+	}
+
+	foundName, buildingNum = getCourseName(query)
+	if not foundName:
+		infoObj['error'] = 'failed to find building number match'
+		infoObj['response'] = f'Did you mean {buildingNum}?'
+		return infoObj
+	else:
+		infoObj['target'] = buildingNum
+
+		
 
 	filteredProfsTable = PROFESSOR_TABLE.loc[PROFESSOR_TABLE['office'] == buildingNum]
 	filteredCoursesTable = COURSE_TABLE.loc[COURSE_TABLE['Location'] == buildingNum]
@@ -190,31 +229,31 @@ def getBuildingInfo(query):
 	capacity = extractEntity(query, CAPACITY_KEYS, SIMILARITY)
 	availability = extractEntity(query, AVAILABILITY_KEYS, SIMILARITY)
 	
-	response = ''
 	if courses:
 		courseStr = ', '.join(list(set(filteredCoursesTable.Course.tolist())))
-		response = f'The following courses are taught in {buildingNum}, {courseStr}.'
+		infoObj['response'] = f'The following courses are taught in {buildingNum}, {courseStr}.'
 	elif sections:
 		courseSections = {f"{row['Course']}-{row['Section']}" for index, row in filteredCoursesTable.iterrows()}
 		buildingStr = ', '.join(courseSections)
-		response = f'The following sections are taught in {buildingNum}, {buildingStr}.'
+		infoObj['response'] = f'The following sections are taught in {buildingNum}: {buildingStr}.'
 	elif professor:
 		for index, row in filteredProfsTable.iterrows():
-			response += f"{row['name']}'s office is at {buildingNum}."
+			infoObj['response'] += f"{row['name']}'s office is at {buildingNum}.\n"
 	elif capacity:
 		for index, row in filteredCoursesTable.iterrows():
-			response += f"{buildingNum}'s capacity for {row['Course']} is {row['Location Capacity']}."
+			infoObj['response'] += f"{buildingNum}'s capacity for {row['Course']} is {row['Location Capacity']}.\n"
 	elif availability:
 		if filteredProfsTable.shape[0]:
-			response += f"{buildingNum} is occupied during the following professor(s) office hours: {', '.join(list(filteredProfsTable['name'].tolist()))}"
+			infoObj['response'] += f"{buildingNum} is occupied during the following professor(s) office hours: {', '.join(list(filteredProfsTable['name'].tolist()))}\n"
 		if filteredCoursesTable.shape[0]:
-			response += f"{buildingNum} is occupied at the following times for classes:"
+			infoObj['response'] += f"{buildingNum} is occupied at the following times for classes:\n"
 			for index, row in filteredCoursesTable.iterrows():
-				response += f"{row['Course']}-{row['Section']}: {row['Days']}, {row['Start Time']}-{row['End Time']}"
+				infoObj['response'] += f"{row['Course']}-{row['Section']}: {row['Days']}, {row['Start Time']}-{row['End Time']}\n"
 	else:
-		response = None
+		infoObj['error'] = 'failed to determine question'
+		infoObj['response'] = "I don't understand."
 	
-	return response
+	return infoObj
 
 
 def normalizeQuery(query):
@@ -235,37 +274,34 @@ def getProfName(query):
 	SIMILARITY = 0.9
 	ALL_PROF_NAMES = PROFESSOR_TABLE.name.tolist()
 	# Get the name by full name
-	name = extractEntity(query, ALL_PROF_NAMES, SIMILARITY)
-	if name:
-		return name
+	found, name = extractEntity(query, ALL_PROF_NAMES, SIMILARITY)
+	if found:
+		return found, name
 
 	# Get the name by last name
 	ALL_LAST_NAMES = [name.split(' ')[0] for name in ALL_PROF_NAMES]
-	lastName = extractEntity(query, ALL_LAST_NAMES, SIMILARITY)
-	if lastName:
+	found, lastName = extractEntity(query, ALL_LAST_NAMES, SIMILARITY)
+	if found:
 		for n in ALL_PROF_NAMES:
 			if n.startswith(lastName):
-				return n
+				return found, n
 
 	# Get the name by first name
 	ALL_FIRST_NAMES = [name.split(' ')[1] for name in ALL_PROF_NAMES]
-	firstName = extractEntity(query, ALL_FIRST_NAMES, SIMILARITY)
-	if firstName:
+	found, firstName = extractEntity(query, ALL_FIRST_NAMES, SIMILARITY)
+	if found:
 		for n in ALL_PROF_NAMES:
 			if firstName in n:
-				return n
-	return None
+				return found, n
+
+	return found, name
 
 def getCourseName(query):
 	# Higer similarity ratio for matching names
 	SIMILARITY = 1
 	ALL_COURSES = COURSE_TABLE.Course.tolist()
 
-	name = extractEntity(query, ALL_COURSES, SIMILARITY)
-	if name:
-		return name
-
-	return None
+	return extractEntity(query, ALL_COURSES, SIMILARITY)
 
 def getBuildingNum(query):
 	LOCATIONS_RAW = set(PROFESSOR_TABLE.office) | set(COURSE_TABLE.Location)
@@ -273,11 +309,9 @@ def getBuildingNum(query):
 	LOCATIONS = [loc for loc in LOCATIONS_RAW if str(loc) != 'nan'] 
 	SIMILARITY = 0.9
 
-	buildingNum = extractEntity(query, LOCATIONS, SIMILARITY)
-	if buildingNum:
-		return buildingNum
+	return extractEntity(query, LOCATIONS, SIMILARITY)
 
-	return None
+	
 
 '''
 extract entity from the query
@@ -285,6 +319,9 @@ keywords are list of words that could be in query
 similarity means how close two string are closed to each other (0 ~ 1) 1 means two string are equal
 '''
 def extractEntity(query, keywords, similarity):
+	maxSimilarity = 0
+	closestMatch = keywords[0]
+
 	# Find the similarity between two strings, return value 0 ~ 1
 	def similar(a, b):
 		return SequenceMatcher(None, a, b).ratio()
@@ -301,10 +338,14 @@ def extractEntity(query, keywords, similarity):
 		length = len(key.split())
 		ngramList = ngrams(query, length)
 		for ngram in ngramList:
-			if similar(ngram, key) >= similarity:
-				return key
+			curSimilarity = similar(ngram, key)
+			if curSimilarity >= similarity:
+				return True, key
+			elif curSimilarity > maxSimilarity:
+				maxSimilarity = curSimilarity
+				closestMatch = key
 
-	return None
+	return False, closestMatch
 
 if __name__ == "__main__":
 	main()
